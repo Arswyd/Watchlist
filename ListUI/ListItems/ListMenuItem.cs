@@ -12,13 +12,14 @@ namespace ListUI.ListItems
 {
     public partial class ListMenuItem : UserControl
     {
-        private string active;
-        IWireUpRequest callingForm;
-        public ListMenuItem(string activeGroup, IWireUpRequest caller)
+        string active;
+        LibraryUI callingForm;
+
+        public ListMenuItem(string activeGroup, LibraryUI libraryUI)
         {
             InitializeComponent();
 
-            callingForm = caller;
+            callingForm = libraryUI;
             active = activeGroup;
 
         }

@@ -8,13 +8,22 @@ using System.Threading.Tasks;
 
 namespace ListLibrary.Model
 {
-    public class SeriesModel : ListItemModel
+    public class SeriesModel : ItemModel
     {
 
-        public int WatchedSe { get; set; }
+        public int CurrentSe { get; set; }
         public int WatchedEp { get; set; }
         public int TotalSe { get; set; }
         public string TotalEp { get; set; }
+        public bool FinishedRunning { get; set; }
+
+        public int CurrentSeasonTotalEp
+        {
+            get
+            {
+                return Convert.ToInt32(TotalEp.Split(';')[CurrentSe]);
+            }
+        }
         public override string PictureDir
         {
             get
@@ -31,34 +40,19 @@ namespace ListLibrary.Model
 
         }
 
-        public SeriesModel(string title, string seriesURL, string pictureURL, string score, string totalSe, string totalEp, string watchedSe, string watchedEp, bool favourite, string notes, string listGroup, string pictureDir)
+        public SeriesModel(string title, string seriesURL, string pictureURL, decimal score, int totalSe, string totalEp, int watchedSe, int watchedEp, bool favourite, string notes, string listGroup)
         {
             Title = title;
             Url = seriesURL;
             PictureUrl = pictureURL;
-
-            decimal scoreValue = 0;
-            decimal.TryParse(score, out scoreValue);
-            Score = scoreValue;
-
-            int totalSeValue = 0;
-            int.TryParse(totalSe, out totalSeValue);
-            TotalSe = totalSeValue;
-
+            Score = score;
+            TotalSe = totalSe;
             TotalEp = totalEp;
-
-            int watchedSeValue = 0;
-            int.TryParse(watchedSe, out watchedSeValue);
-            WatchedSe = watchedSeValue;
-
-            int watchedEpValue = 0;
-            int.TryParse(watchedSe, out watchedEpValue);
-            WatchedEp = watchedEpValue;
-
+            CurrentSe = watchedSe;
+            WatchedEp = watchedEp;
             Favourite = favourite;
             Notes = notes;
             ListGroup = listGroup;
-            PictureDir = pictureDir;
         }
     }
 

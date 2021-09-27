@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ListLibrary.Model
 {
-    public class ListItemModel
+    public class ItemModel
     {
         public int ID { get; set; }
         public string Title { get; set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ListLibrary.Model
 {
-    public class GameModel : ListItemModel
+    public class GameModel : ItemModel
     {
         public override string PictureDir
         {
@@ -24,20 +24,15 @@ namespace ListLibrary.Model
 
         }
 
-        public GameModel(string title, string gameURL, string pictureURL, string score, bool favourite, string notes, string listGroup, string pictureDir)
+        public GameModel(string title, string url, string pictureURL, decimal score, bool favourite, string notes, string listGroup)
         {
             Title = title;
-            Url = gameURL;
+            Url = url;
             PictureUrl = pictureURL;
-
-            decimal scoreValue = 0;
-            decimal.TryParse(score, out scoreValue);
-            Score = scoreValue;
-
+            Score = score;
             Favourite = favourite;
             Notes = notes;
             ListGroup = listGroup;
-            PictureDir = pictureDir;
         }
     }
 }

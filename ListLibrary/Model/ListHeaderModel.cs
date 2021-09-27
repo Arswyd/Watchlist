@@ -9,6 +9,8 @@ namespace ListLibrary.Model
     public class ListHeaderModel
     {
         public string ListType { get; set; }
-        public string ListHeaderName { get; set; }
+        public string ListGroup { get; set; }
+        public int SortOrder { get; set; }
+        public int Count { get; set; }
     }
 }

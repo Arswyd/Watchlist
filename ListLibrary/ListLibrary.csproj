@@ -51,11 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\SqliteDataAccess.cs" />
-    <Compile Include="ListSettings\ISettingsConnection.cs" />
-    <Compile Include="Model\ListItemModel.cs" />
+    <Compile Include="Model\ItemModel.cs" />
     <Compile Include="Model\ListHeaderModel.cs" />
-    <Compile Include="ListSettings\ListSettingsProcessor.cs" />
-    <Compile Include="ListSettings\SettingsConnector.cs" />
     <Compile Include="Model\SeriesModel.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\AnimeModel.cs" />
@@ -69,7 +66,6 @@
     <None Include="Database\LocalDB.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ListSettings\ListSettings.csv" />
     <None Include="Lists\AnimeList.csv" />
     <None Include="Lists\GameList.csv" />
     <None Include="Lists\SeriesList.csv" />

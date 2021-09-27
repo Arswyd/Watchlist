@@ -1,7 +1,5 @@
 ﻿using ListLibrary;
 using ListLibrary.Model;
-using ListLibrary.ListSettings;
-using ListLibrary.DataAccess;
 using ListUI.Forms;
 using ListUI.ListItems;
 using System;
@@ -21,17 +19,17 @@ namespace ListUI
     public partial class LibraryUI : Form
     {
         public List<ListHeaderModel> newlistsettings = SqliteDataAccess.LoadListHeaders();
-        public List<ListItemModel> itemlist = new List<ListItemModel>();
+        public List<ItemModel> itemlist = new List<ItemModel>();
         private string activeGroup;
-        private string loadthislist;
+        private string activeListType;
 
         public LibraryUI(string startuplist)
         {
             InitializeComponent();
 
-            loadthislist = startuplist;
+            activeListType = startuplist;
 
-            if (loadthislist == "Game")
+            if (activeListType == "Game")
             {
                 activeGroup = "Playing";
             }
@@ -40,376 +38,192 @@ namespace ListUI
                 activeGroup = "Watching";
             }
 
-            LoadList();
-            CheckButton();
-            WireUpAll();
+            WireUpLibraryForm();
+        }
 
+        public void WireUpLibraryForm()
+        {
+            Application.UseWaitCursor = true;
+
+            LoadList();
+            CheckButtons();
+
+            if (activeListType == "Anime")
+            {
+                CreateMenuItems();
+                InitializeListLoading();
+                flowLayoutPanel1.Focus();
+                searchBar.Text = "";
+            }
+            if (activeListType == "Series")
+            {
+                flowLayoutPanel1.Focus();
+                searchBar.Text = "";
+            }
+            if (activeListType == "Game")
+            {
+                flowLayoutPanel1.Focus();
+                searchBar.Text = "";
+            }
+
+            Application.UseWaitCursor = false;
         }
 
         public void LoadList()
         {
-            switch(loadthislist)
-            {
-                case "Anime":
-                    (List<AnimeModel>)itemlist = SqliteDataAccess.LoadAnimeGroup(activeGroup);
-                    break;
-            }
-        }
+            itemlist.Clear();
 
-        public void WireUpAll()
-        {
-            if (loadthislist == "Anime")
-            {
-                WireUpAnimeList();
-                WireUpAnimeMenu(activeGroup);
-                flowLayoutPanel1.Focus();
-                searchBar.Text = "";
-            }
-            if (loadthislist == "Series")
-            {
-                WireUpSeriesList();
-                WireUpSeriesMenu(activeGroup);
-                flowLayoutPanel1.Focus();
-                searchBar.Text = "";
-            }
-            if (loadthislist == "Game")
-            {
-                WireUpGameList();
-                WireUpGameMenu(activeGroup);
-                flowLayoutPanel1.Focus();
-                searchBar.Text = "";
-            }
-        }
-
-        public void WireUpAnimeList()
-        {
             if (activeGroup == "All")
             {
-                int yscroll = flowLayoutPanel1.AutoScrollPosition.Y;
-                //flowLayoutPanel1.Visible = false;
-                flowLayoutPanel1.Controls.Clear();
-
-                foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Anime"))
+                switch (activeListType)
                 {
-                    AddAnimeListGroup(listsetting.ListHeaderName);
+                    case "Anime":
+                        itemlist.AddRange(SqliteDataAccess.LoadAllAnime());
+                        break;
+                    case "Game":
+                        break;
+                    case "Series":
+                        break;
                 }
+            }
+            else
+            { 
+                switch (activeListType)
+                {
+                    case "Anime":
+                        itemlist.AddRange(SqliteDataAccess.LoadAnimeGroup(CreateFilteredSqlString(activeGroup)));
+                        break;
+                    case "Game":
+                        break;
+                    case "Series":
+                        break;
+                }
+            }
+        }
 
-                flowLayoutPanel1.VerticalScroll.Value = (-1) * yscroll;
-                //flowLayoutPanel1.Visible = true;
+        private string CreateFilteredSqlString(string activeGroup)
+        {
+            if (activeListType == "Anime")
+            {
+                return "SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.Score, A.Year, A.Favourite, A.Notes, A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed " +
+                       "FROM Anime AS A WHERE ListGroup=\"" + activeGroup + "\"";
             }
             else
             {
-                int yscroll = flowLayoutPanel1.AutoScrollPosition.Y;
-                //flowLayoutPanel1.Visible = false;
-                flowLayoutPanel1.Controls.Clear();
-
-                AddAnimeListGroup(activeGroup);
-
-                flowLayoutPanel1.VerticalScroll.Value = (-1) * yscroll;
-                //flowLayoutPanel1.Visible = true;
+                return "";
             }
         }
-        public void WireUpAnimeMenu(string activeGroup)
+
+        public void CreateMenuItems()
         {
 
             listMenuPanel.Controls.Clear();
 
-            ListMenuItem t = new ListMenuItem(activeGroup, this);
-            t.MenuItemName("All");
-            t.MenuItemCount(animelist.Count.ToString());
+            ListMenuItem allMenuItem = new ListMenuItem(activeGroup, this);
+            allMenuItem.MenuItemName("All");
+            allMenuItem.MenuItemCount(newlistsettings.Where(n => n.ListType == "Anime").Sum(n => n.Count).ToString());
             if (activeGroup == "All")
             {
-                t.ActiveColor();
+                allMenuItem.ActiveColor();
             }
-            listMenuPanel.Controls.Add(t);
+            listMenuPanel.Controls.Add(allMenuItem);
 
-            foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Anime"))
+            foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Anime").OrderBy(n => n.SortOrder))
             {
-                ListMenuItem p = new ListMenuItem(activeGroup, this);
-                p.MenuItemName(listsetting.ListHeaderName);
-                p.MenuItemCount(animelist.Count(s => s.ListGroup == listsetting.ListHeaderName).ToString());
-                if (listsetting.ListHeaderName == activeGroup)
+                ListMenuItem menuitem = new ListMenuItem(activeGroup, this);
+                menuitem.MenuItemName(listsetting.ListGroup);
+                menuitem.MenuItemCount(listsetting.Count.ToString());
+                if (listsetting.ListGroup == activeGroup)
                 {
-                    p.ActiveColor();
+                    menuitem.ActiveColor();
                 }
-                listMenuPanel.Controls.Add(p);
+                listMenuPanel.Controls.Add(menuitem);
             }
         }
-        private void AddAnimeListGroup(string z)
-        {
-            ListHeader p = new ListHeader();
-            flowLayoutPanel1.Controls.Add(p);
-            p.HeaderName(z);
 
-            foreach (AnimeModel model in animelist.Where(y => y.ListGroup == z).OrderByDescending(x => x.Score).ThenBy(x => x.Name))
+        public void InitializeListLoading()
+        {
+            int yscroll = flowLayoutPanel1.AutoScrollPosition.Y;
+
+            // TODO : Dispose
+            flowLayoutPanel1.Controls.Clear();
+
+            if (activeGroup == "All")
             {
-                AnimeListItem u = new AnimeListItem(this);
-                u.AddAnime(model);
-                flowLayoutPanel1.Controls.Add(u);
+                foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Anime"))
+                {
+                    LoadListItems(listsetting.ListGroup);
+                }
+            }
+            else
+            {
+                LoadListItems(activeGroup);
+            }
+
+            flowLayoutPanel1.VerticalScroll.Value = (-1) * yscroll;
+            //flowLayoutPanel1.Visible = true;
+        }
+
+        private void LoadListItems(string headerText)
+        {
+            ListHeader listHeader = new ListHeader();
+            listHeader.HeaderName(headerText);
+            flowLayoutPanel1.Controls.Add(listHeader);
+
+            foreach (ItemModel item in itemlist.Where(n => n.ListGroup == headerText))
+            {
+                ListItem listItem = new ListItem(this);
+                listItem.AddItem(item);
+                flowLayoutPanel1.Controls.Add(listItem);
             }
 
             flowLayoutPanel1.Update();
         }
 
-        public void WireUpSeriesList()
+        public void ModifyItem(ItemModel item, ListItem listItem)
         {
-            if (activeGroup == "All")
-            {
-                int yscroll = flowLayoutPanel1.AutoScrollPosition.Y;
-                flowLayoutPanel1.Visible = false;
-                flowLayoutPanel1.Controls.Clear();
-
-                foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Series"))
-                {
-                    AddSeriesListGroup(listsetting.ListHeaderName);
-                }
-
-                flowLayoutPanel1.VerticalScroll.Value = (-1) * yscroll;
-                flowLayoutPanel1.Visible = true;
-            }
-            else
-            {
-                int yscroll = flowLayoutPanel1.AutoScrollPosition.Y;
-                flowLayoutPanel1.Visible = false;
-                flowLayoutPanel1.Controls.Clear();
-
-                AddSeriesListGroup(activeGroup);
-
-                flowLayoutPanel1.VerticalScroll.Value = (-1) * yscroll;
-                flowLayoutPanel1.Visible = true;
-            }
-        }
-        public void WireUpSeriesMenu(string activeGroup)
-        {
-
-            listMenuPanel.Controls.Clear();
-
-            ListMenuItem t = new ListMenuItem(activeGroup, this);
-            t.MenuItemName("All");
-            t.MenuItemCount(serieslist.Count.ToString());
-            if (activeGroup == "All")
-            {
-                t.ActiveColor();
-            }
-            listMenuPanel.Controls.Add(t);
-
-            foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Series"))
-            {
-                ListMenuItem p = new ListMenuItem(activeGroup, this);
-                p.MenuItemName(listsetting.ListHeaderName);
-                p.MenuItemCount(serieslist.Count(s => s.ListGroup == listsetting.ListHeaderName).ToString());
-                if (listsetting.ListHeaderName == activeGroup)
-                {
-                    p.ActiveColor();
-                }
-                listMenuPanel.Controls.Add(p);
-            }
-        }
-        private void AddSeriesListGroup(string z)
-        {
-            ListHeader p = new ListHeader();
-            flowLayoutPanel1.Controls.Add(p);
-            p.HeaderName(z);
-
-            foreach (SeriesModel model in serieslist.Where(y => y.ListGroup == z).OrderByDescending(x => x.Score).ThenBy(x => x.Name))
-            {
-                SeriesListItem u = new SeriesListItem(this);
-                u.AddSeries(model);
-                flowLayoutPanel1.Controls.Add(u);
-            }
+            OverlayForm overlay = new OverlayForm();
+            overlay.Show(this);
+            overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
+            ItemDetailForm frm = new ItemDetailForm(activeListType, item, this);
+            frm.ShowDialog();
+            flowLayoutPanel1.Focus();
+            overlay.Close();
         }
 
-        public void WireUpGameList()
+        public void WireUpRequest(string listGroup)
         {
-            if (activeGroup == "All")
-            {
-                int yscroll = flowLayoutPanel1.AutoScrollPosition.Y;
-                flowLayoutPanel1.Visible = false;
-                flowLayoutPanel1.Controls.Clear();
-
-                foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Game"))
-                {
-                    AddGameListGroup(listsetting.ListHeaderName);
-                }
-
-                flowLayoutPanel1.VerticalScroll.Value = (-1) * yscroll;
-                flowLayoutPanel1.Visible = true;
-            }
-            else
-            {
-                int yscroll = flowLayoutPanel1.AutoScrollPosition.Y;
-                flowLayoutPanel1.Visible = false;
-                flowLayoutPanel1.Controls.Clear();
-
-                AddGameListGroup(activeGroup);
-
-                flowLayoutPanel1.VerticalScroll.Value = (-1) * yscroll;
-                flowLayoutPanel1.Visible = true;
-            }
-        }
-        public void WireUpGameMenu(string activeGroup)
-        {
-            listMenuPanel.Controls.Clear();
-
-            ListMenuItem t = new ListMenuItem(activeGroup, this);
-            t.MenuItemName("All");
-            t.MenuItemCount(gamelist.Count.ToString());
-            if (activeGroup == "All")
-            {
-                t.ActiveColor();
-            }
-            listMenuPanel.Controls.Add(t);
-
-            foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Game"))
-            {
-                ListMenuItem p = new ListMenuItem(activeGroup, this);
-                p.MenuItemName(listsetting.ListHeaderName);
-                p.MenuItemCount(gamelist.Count(s => s.ListGroup == listsetting.ListHeaderName).ToString());
-                if (listsetting.ListHeaderName == activeGroup)
-                {
-                    p.ActiveColor();
-                }
-                listMenuPanel.Controls.Add(p);
-            }
-        }
-        private void AddGameListGroup(string z)
-        {
-            ListHeader p = new ListHeader();
-            flowLayoutPanel1.Controls.Add(p);
-            p.HeaderName(z);
-
-            foreach (GameModel model in gamelist.Where(y => y.ListGroup == z).OrderByDescending(x => x.Score).ThenBy(x => x.Name))
-            {
-                GameListItem u = new GameListItem(this);
-                u.AddGame(model);
-                flowLayoutPanel1.Controls.Add(u);
-            }
+            flowLayoutPanel1.VerticalScroll.Value = 0;
+            activeGroup = listGroup;
+            WireUpLibraryForm();
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            OverlayForm qwe = new OverlayForm();
-            qwe.Show(this);
-            qwe.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
-
-            if (loadthislist == "Anime")
-            {
-                AddAnimeForm frm = new AddAnimeForm(this);
-                frm.ShowDialog();
-            }
-            if (loadthislist == "Series")
-            {
-                AddSeriesForm frm = new AddSeriesForm(this);
-                frm.ShowDialog();
-            }
-            if (loadthislist == "Game")
-            {
-                AddGameForm frm = new AddGameForm(this);
-                frm.ShowDialog();
-            }
-            flowLayoutPanel1.Focus();
-            qwe.Close();
-        }
-
-        public void ModifyAnimeRequest(AnimeModel model)
-        {
-            OverlayForm qwe = new OverlayForm();
-            qwe.Show(this);
-            qwe.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
-            AddAnimeForm frm = new AddAnimeForm(model, this);
+            OverlayForm overlay = new OverlayForm();
+            overlay.Show(this);
+            overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
+            ItemDetailForm frm = new ItemDetailForm(activeListType, this);
             frm.ShowDialog();
             flowLayoutPanel1.Focus();
-            qwe.Close();
-        }
-        public void ModifyGameRequest(GameModel model)
-        {
-            OverlayForm qwe = new OverlayForm();
-            qwe.Show(this);
-            qwe.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
-            AddGameForm frm = new AddGameForm(model, this);
-            frm.ShowDialog();
-            flowLayoutPanel1.Focus();
-            qwe.Close();
-        }
-        public void ModifySeriesRequest(SeriesModel model)
-        {
-            OverlayForm qwe = new OverlayForm();
-            qwe.Show(this);
-            qwe.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
-            AddSeriesForm frm = new AddSeriesForm(model, this);
-            frm.ShowDialog();
-            flowLayoutPanel1.Focus();
-            qwe.Close();
+            overlay.Close();
         }
 
-        public void AnimeItemComplete(AnimeModel model)
+        private void CheckButtons()
         {
-            animelist.Add(model);
-            WireUpAll();
-        }
-
-        public void SeriesItemComplete(SeriesModel model)
-        {
-            serieslist.Add(model);
-            WireUpAll();
-        }
-        public void GameItemComplete(GameModel model)
-        {
-            gamelist.Add(model);
-            WireUpAll();
-        }
-
-        public void AddAnimeWatchedEpisode(List<AnimeModel> modifylist)
-        {
-            animelist = modifylist;
-            WireUpAll();
-        }
-        public void AddSeriesWatchedEpisode(List<SeriesModel> modifylist)
-        {
-            serieslist = modifylist;
-            WireUpAll();
-        }
-
-        public void AnimeDeleteComplete(List<AnimeModel> modifylist)
-        {
-            animelist = modifylist;
-            WireUpAll();
-        }
-
-        public void SeriesDeleteComplete(List<SeriesModel> modifylist)
-        {
-            serieslist = modifylist;
-            WireUpAll();
-        }
-        public void GameDeleteComplete(List<GameModel> modifylist)
-        {
-            gamelist = modifylist;
-            WireUpAll();
-        }
-
-        public void WireUpRequest(string groupName)
-        {
-            flowLayoutPanel1.VerticalScroll.Value = 0;
-            activeGroup = groupName;
-            WireUpAll();
-            //WireUpMenu(activeGroup);
-        }
-
-        private void CheckButton()
-        {
-            if (loadthislist == "Anime")
+            if (activeListType == "Anime")
             {
                 animeButton.Enabled = false;
                 seriesButton.Enabled = true;
                 gameButton.Enabled = true;
             }
-            if (loadthislist == "Series")
+            if (activeListType == "Series")
             {
                 animeButton.Enabled = true;
                 seriesButton.Enabled = false;
                 gameButton.Enabled = true;
             }
-            if (loadthislist == "Game")
+            if (activeListType == "Game")
             {
                 animeButton.Enabled = true;
                 seriesButton.Enabled = true;
@@ -420,28 +234,25 @@ namespace ListUI
         private void animeButton_Click(object sender, EventArgs e)
         {
             flowLayoutPanel1.VerticalScroll.Value = 0;
-            loadthislist = "Anime";
+            activeListType = "Anime";
             activeGroup = "Watching";
-            CheckButton();
-            WireUpAll();
+            WireUpLibraryForm();
         }
 
         private void seriesButton_Click(object sender, EventArgs e)
         {
             flowLayoutPanel1.VerticalScroll.Value = 0;
-            loadthislist = "Series";
+            activeListType = "Series";
             activeGroup = "Watching";
-            CheckButton();
-            WireUpAll();
+            WireUpLibraryForm();
         }
 
         private void gameButton_Click(object sender, EventArgs e)
         {
             flowLayoutPanel1.VerticalScroll.Value = 0;
-            loadthislist = "Game";
+            activeListType = "Game";
             activeGroup = "Playing";
-            CheckButton();
-            WireUpAll();
+            WireUpLibraryForm();
         }
 
         private void animeButton_MouseEnter(object sender, EventArgs e)
@@ -480,108 +291,9 @@ namespace ListUI
             gameButton.Location = new Point(140, 10);
         }
 
-        private void searchBar_TextChanged(object sender, EventArgs e)
-        {
-            flowLayoutPanel1.Controls.Clear();
-
-            if (loadthislist == "Anime")
-            {
-                if (searchBar.Text != "")
-                {
-                    if (activeGroup=="All")
-                    {
-                        foreach (AnimeModel model in animelist.Where(y => y.Name.ToLower().Contains(searchBar.Text) || y.Name.Contains(searchBar.Text)).OrderByDescending(x => x.Score).ThenBy(x => x.Name))
-                        {
-                            AnimeListItem u = new AnimeListItem(this);
-                            u.AddAnime(model);
-                            flowLayoutPanel1.Controls.Add(u);
-                        }
-                    }
-                    else
-                    {
-                        foreach (AnimeModel model in animelist.Where(y => (y.Name.ToLower().Contains(searchBar.Text) || y.Name.Contains(searchBar.Text)) && y.ListGroup == activeGroup).OrderByDescending(x => x.Score).ThenBy(x => x.Name))
-                        {
-                            AnimeListItem u = new AnimeListItem(this);
-                            u.AddAnime(model);
-                            flowLayoutPanel1.Controls.Add(u);
-                        }
-                    }
-
-                }
-                else
-                {
-                    WireUpAll();
-                }
-            }
-
-            if (loadthislist == "Series")
-            {
-                if (searchBar.Text != "")
-                {
-                    if (activeGroup == "All")
-                    {
-                        foreach (SeriesModel model in serieslist.Where(y => y.Name.ToLower().Contains(searchBar.Text) || y.Name.Contains(searchBar.Text)).OrderByDescending(x => x.Score).ThenBy(x => x.Name))
-                        {
-                            SeriesListItem u = new SeriesListItem(this);
-                            u.AddSeries(model);
-                            flowLayoutPanel1.Controls.Add(u);
-                        }
-                    }
-                    else
-                    {
-                        foreach (SeriesModel model in serieslist.Where(y => (y.Name.ToLower().Contains(searchBar.Text) || y.Name.Contains(searchBar.Text)) && y.ListGroup == activeGroup).OrderByDescending(x => x.Score).ThenBy(x => x.Name))
-                        {
-                            SeriesListItem u = new SeriesListItem(this);
-                            u.AddSeries(model);
-                            flowLayoutPanel1.Controls.Add(u);
-                        }
-                    }
-                }
-                else
-                {
-                    WireUpAll();
-                }
-            }
-
-            if (loadthislist == "Game")
-            {
-                if (searchBar.Text != "")
-                {
-                    if (activeGroup == "All")
-                    {
-                        foreach (GameModel model in gamelist.Where(y => y.Name.ToLower().Contains(searchBar.Text) || y.Name.Contains(searchBar.Text)).OrderByDescending(x => x.Score).ThenBy(x => x.Name))
-                        {
-                            GameListItem u = new GameListItem(this);
-                            u.AddGame(model);
-                            flowLayoutPanel1.Controls.Add(u);
-                        }
-                    }
-                    else
-                    {
-                        foreach (GameModel model in gamelist.Where(y => (y.Name.ToLower().Contains(searchBar.Text) || y.Name.Contains(searchBar.Text)) && y.ListGroup == activeGroup).OrderByDescending(x => x.Score).ThenBy(x => x.Name))
-                        {
-                            GameListItem u = new GameListItem(this);
-                            u.AddGame(model);
-                            flowLayoutPanel1.Controls.Add(u);
-                        }
-                    }
-                }
-                else
-                {
-                    WireUpAll();
-                }
-            }
-
-        }
-
         private void flowLayoutPanel1_Click(object sender, EventArgs e)
         {
             flowLayoutPanel1.Focus();
-        }
-
-        private void LibraryUI_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

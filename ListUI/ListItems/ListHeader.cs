@@ -17,9 +17,9 @@ namespace ListUI.ListItems
         {
             InitializeComponent();
         }
-        public void HeaderName(string z)
+        public void HeaderName(string headerText)
         {
-            headerName.Text = z;
+            headerName.Text = headerText;
         }
     }
 }

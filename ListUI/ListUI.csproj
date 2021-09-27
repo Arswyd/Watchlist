@@ -59,23 +59,11 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\AddGameForm.cs">
+    <Compile Include="Forms\ItemDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddGameForm.Designer.cs">
-      <DependentUpon>AddGameForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\AddSeriesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AddSeriesForm.Designer.cs">
-      <DependentUpon>AddSeriesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\AddAnimeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AddAnimeForm.Designer.cs">
-      <DependentUpon>AddAnimeForm.cs</DependentUpon>
+    <Compile Include="Forms\ItemDetailForm.Designer.cs">
+      <DependentUpon>ItemDetailForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\OverlayForm.cs">
       <SubType>Form</SubType>
@@ -90,18 +78,6 @@
       <DependentUpon>LibraryUI.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ListItems\GameListItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ListItems\GameListItem.Designer.cs">
-      <DependentUpon>GameListItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ListItems\SeriesListItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ListItems\SeriesListItem.Designer.cs">
-      <DependentUpon>SeriesListItem.cs</DependentUpon>
-    </Compile>
     <Compile Include="ListItems\ListMenuItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -114,11 +90,11 @@
     <Compile Include="ListItems\ListHeader.Designer.cs">
       <DependentUpon>ListHeader.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListItems\AnimeListItem.cs">
+    <Compile Include="ListItems\ListItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ListItems\AnimeListItem.Designer.cs">
-      <DependentUpon>AnimeListItem.cs</DependentUpon>
+    <Compile Include="ListItems\ListItem.Designer.cs">
+      <DependentUpon>ListItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,14 +104,8 @@
     <Compile Include="StartUpUI.Designer.cs">
       <DependentUpon>StartUpUI.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\AddGameForm.resx">
-      <DependentUpon>AddGameForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddSeriesForm.resx">
-      <DependentUpon>AddSeriesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddAnimeForm.resx">
-      <DependentUpon>AddAnimeForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ItemDetailForm.resx">
+      <DependentUpon>ItemDetailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OverlayForm.resx">
       <DependentUpon>OverlayForm.cs</DependentUpon>
@@ -143,20 +113,14 @@
     <EmbeddedResource Include="LibraryUI.resx">
       <DependentUpon>LibraryUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ListItems\GameListItem.resx">
-      <DependentUpon>GameListItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListItems\SeriesListItem.resx">
-      <DependentUpon>SeriesListItem.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ListItems\ListMenuItem.resx">
       <DependentUpon>ListMenuItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ListItems\ListHeader.resx">
       <DependentUpon>ListHeader.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ListItems\AnimeListItem.resx">
-      <DependentUpon>AnimeListItem.cs</DependentUpon>
+    <EmbeddedResource Include="ListItems\ListItem.resx">
+      <DependentUpon>ListItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -232,6 +196,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\search2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nocover.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />

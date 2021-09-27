@@ -18,13 +18,10 @@ namespace ListUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            GlobalConfig.InitializeSettings();
-            GlobalConfig.InitializeConnections(true);
+            //GlobalConfig.InitializeSettings();
+            //GlobalConfig.InitializeConnections(true);
 
             Application.Run(new StartUpUI());
-
-            //Application.Run(new LibraryUI());
-
         }
     }
 }
