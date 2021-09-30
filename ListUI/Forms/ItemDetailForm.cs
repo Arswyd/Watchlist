@@ -64,6 +64,13 @@ namespace ListUI.Forms
             callingForm = libraryUI;
             currentItem = item;
 
+            if (listType == "Anime")
+                newlistsettings = SqliteDataAccess.LoadAnimeListHeaders();
+            else if (listType == "Game")
+                newlistsettings = SqliteDataAccess.LoadGameListHeaders();
+            else if (listType == "Series")
+                newlistsettings = SqliteDataAccess.LoadSeriesListHeaders();
+
             WireUpFrom();
             LoadForm(currentItem);
         }

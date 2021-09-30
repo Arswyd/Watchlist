@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using ListLibrary.Database;
+using ListUI.Properties;
 
 namespace ListUI
 {
@@ -22,6 +23,8 @@ namespace ListUI
         public List<ItemModel> itemlist = new List<ItemModel>();
         private string activeGroup;
         private string activeListType;
+        bool isFiltered = false;
+        bool isAscending = false;
 
         public LibraryUI(string startuplist)
         {
@@ -38,6 +41,10 @@ namespace ListUI
                 activeGroup = "Watching";
             }
 
+            cbOrderBy.Items.Add("Score");
+            cbOrderBy.Items.Add("Title");
+            cbOrderBy.Text = "Score";
+
             WireUpLibraryForm();
         }
 
@@ -53,21 +60,21 @@ namespace ListUI
                 CreateMenuItems();
                 InitializeListLoading();
                 pListItemPanel.Focus();
-                searchBar.Text = "";
+                txbTitleSearch.Text = "";
             }
             if (activeListType == "Series")
             {
                 CreateMenuItems();
                 InitializeListLoading();
                 pListItemPanel.Focus();
-                searchBar.Text = "";
+                txbTitleSearch.Text = "";
             }
             if (activeListType == "Game")
             {
                 CreateMenuItems();
                 InitializeListLoading();
                 pListItemPanel.Focus();
-                searchBar.Text = "";
+                txbTitleSearch.Text = "";
             }
 
             Application.UseWaitCursor = false;
@@ -77,35 +84,17 @@ namespace ListUI
         {
             itemlist.Clear();
 
-            if (activeGroup == "All")
+            switch (activeListType)
             {
-                switch (activeListType)
-                {
-                    case "Anime":
-                        itemlist.AddRange(SqliteDataAccess.LoadAllAnime());
-                        break;
-                    case "Game":
-                        itemlist.AddRange(SqliteDataAccess.LoadAllGame());
-                        break;
-                    case "Series":
-                        itemlist.AddRange(SqliteDataAccess.LoadAllSeries());
-                        break;
-                }
-            }
-            else
-            { 
-                switch (activeListType)
-                {
-                    case "Anime":
-                        itemlist.AddRange(SqliteDataAccess.LoadAnimeGroup(CreateFilteredSqlString(activeGroup)));
-                        break;
-                    case "Game":
-                        itemlist.AddRange(SqliteDataAccess.LoadGameGroup(CreateFilteredSqlString(activeGroup)));
-                        break;
-                    case "Series":
-                        itemlist.AddRange(SqliteDataAccess.LoadSeriesGroup(CreateFilteredSqlString(activeGroup)));
-                        break;
-                }
+                case "Anime":
+                    itemlist.AddRange(SqliteDataAccess.LoadAnimeGroup(CreateFilteredSqlString(activeGroup)));
+                    break;
+                case "Game":
+                    itemlist.AddRange(SqliteDataAccess.LoadGameGroup(CreateFilteredSqlString(activeGroup)));
+                    break;
+                case "Series":
+                    itemlist.AddRange(SqliteDataAccess.LoadSeriesGroup(CreateFilteredSqlString(activeGroup)));
+                    break;
             }
         }
 
@@ -114,22 +103,82 @@ namespace ListUI
             if (activeListType == "Anime")
             {
                 return "SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.Score, A.Year, A.Favourite, A.Notes, A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed " +
-                       "FROM Anime AS A WHERE ListGroup=\"" + activeGroup + "\"";
+                       "FROM Anime AS A" + CreateWhereString();
             }
             if (activeListType == "Game")
             {
                 return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup " +
-                       "FROM Games AS G WHERE ListGroup=\"" + activeGroup + "\"";
+                       "FROM Games AS G" + CreateWhereString();
             }
             if (activeListType == "Series")
             {
                 return "SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.Score, S.Year, S.Favourite, S.Notes, S.ListGroup, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning " +
-                       "FROM Series AS S WHERE ListGroup=\"" + activeGroup + "\"";
+                       "FROM Series AS S" + CreateWhereString();
             }
             else
             {
                 return "";
             }
+        }
+
+        private string CreateWhereString()
+        {
+            string c = "";
+            string sWhere = " WHERE (1=1)";
+
+            if (activeListType == "Anime")
+                c = "A";            
+            else if (activeListType == "Game")
+                c = "G";
+            else if (activeListType == "Series")
+                c = "S";
+
+            if(activeGroup !="All")
+            {
+                sWhere = sWhere + " AND ListGroup = '" + activeGroup + "'";
+            }
+            if (isFiltered)
+            {
+                if (txbTitleSearch.Text != "")
+                    sWhere = sWhere + " AND " + c +".Title LIKE '%" + txbTitleSearch.Text + "%'";
+                if (txbYearSearch.Text != "")
+                    sWhere = sWhere + " AND " + c + ".Year =" + Convert.ToInt32(txbTitleSearch.Text);
+                if (chFavouriteSearch.CheckState == CheckState.Checked)
+                    sWhere = sWhere + " AND " + c + ".Favourite = 1";
+                else if (chFavouriteSearch.CheckState == CheckState.Unchecked)
+                    sWhere = sWhere + " AND " + c + ".Favourite = 0";
+                if (activeListType == "Anime")
+                {
+                    if (chDubbedSearch.CheckState == CheckState.Checked)
+                        sWhere = sWhere + " AND " + c + ".Dubbed = 1";
+                    else if (chDubbedSearch.CheckState == CheckState.Unchecked)
+                        sWhere = sWhere + " AND " + c + ".Dubbed = 0";
+                }
+                if (activeListType == "Series")
+                {
+                    if (chFinishedSearch.CheckState == CheckState.Checked)
+                        sWhere = sWhere + " AND " + c + ".FinishedRunning = 1";
+                    else if (chFinishedSearch.CheckState == CheckState.Unchecked)
+                        sWhere = sWhere + " AND " + c + ".FinishedRunning = 0";
+                }
+            }
+
+            if (cbOrderBy.SelectedItem.ToString() == "Score")
+            {
+                if (isAscending)
+                    sWhere = sWhere + " ORDER BY " + c + ".Score ASC, " + c + ".Title ASC";
+                else
+                    sWhere = sWhere + " ORDER BY " + c + ".Score DESC, " + c + ".Title ASC";
+            }
+            else if (cbOrderBy.SelectedItem.ToString() == "Title")
+            {
+                if (isAscending)
+                    sWhere = sWhere + " ORDER BY " + c + ".Title ASC";
+                else
+                    sWhere = sWhere + " ORDER BY " + c + ".Title DESC";
+            }
+
+            return sWhere;
         }
 
         public void CreateMenuItems()
@@ -329,6 +378,108 @@ namespace ListUI
         private void flowLayoutPanel1_Click(object sender, EventArgs e)
         {
             pListItemPanel.Focus();
+        }
+
+        private void cbOrderBy_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if(cbOrderBy.SelectedItem.ToString() == "Score")
+            {
+                isAscending = false;
+                pbSorting.Image = Resources.sort_desc;
+            }
+            else if (cbOrderBy.SelectedItem.ToString() == "Title")
+            {
+                isAscending = true;
+                pbSorting.Image = Resources.sort_asc;
+            }
+
+            WireUpLibraryForm();
+        }
+
+        private void pbFilter_Click(object sender, EventArgs e)
+        {
+            isFiltered = !isFiltered;
+
+            if (isFiltered)
+            {
+                pbFilter.Image = Resources.clear_filter;
+                lbTitleSearch.Enabled = true;
+                lbTitleSearch.Visible = true;
+                txbTitleSearch.Enabled = true;
+                txbTitleSearch.Visible = true;
+                lbYearSearch.Enabled = true;
+                lbYearSearch.Visible = true;
+                txbYearSearch.Enabled = true;
+                txbYearSearch.Visible = true;
+                chFavouriteSearch.Enabled = true;
+                chFavouriteSearch.Visible = true;
+                if (activeListType == "Anime")
+                {
+                    chDubbedSearch.Enabled = true;
+                    chDubbedSearch.Visible = true;
+                }
+                if (activeListType == "Series")
+                {
+                    chFinishedSearch.Enabled = true;
+                    chFinishedSearch.Visible = true;
+                }
+                pbSearch.Enabled = true;
+                pbSearch.Visible = true;
+            }
+            else
+            {
+                pbFilter.Image = Resources.filter;
+                lbTitleSearch.Enabled = false;
+                lbTitleSearch.Visible = false;
+                txbTitleSearch.Enabled = false;
+                txbTitleSearch.Visible = false;
+                txbTitleSearch.Text = "";
+                lbYearSearch.Enabled = false;
+                lbYearSearch.Visible = false;
+                txbYearSearch.Enabled = false;
+                txbYearSearch.Visible = false;
+                txbYearSearch.Text = "";
+                chFavouriteSearch.Enabled = false;
+                chFavouriteSearch.Visible = false;
+                chFavouriteSearch.Checked = false;
+                if (activeListType == "Anime")
+                {
+                    chDubbedSearch.Enabled = false;
+                    chDubbedSearch.Visible = false;
+                    chDubbedSearch.Checked = false;
+                }
+                if (activeListType == "Series")
+                {
+                    chFinishedSearch.Enabled = false;
+                    chFinishedSearch.Visible = false;
+                    chFinishedSearch.Checked = false;
+                }
+                pbSearch.Enabled = false;
+                pbSearch.Visible = false;
+
+                WireUpLibraryForm();
+            }
+        }
+
+        private void pbSorting_Click(object sender, EventArgs e)
+        {
+            isAscending = !isAscending;
+
+            if(isAscending)
+            {
+                pbSorting.Image = Resources.sort_asc;
+            }
+            else
+            {
+                pbSorting.Image = Resources.sort_desc;
+            }
+
+            WireUpLibraryForm();
+        }
+
+        private void pbSearch_Click(object sender, EventArgs e)
+        {
+            WireUpLibraryForm();
         }
     }
 }

@@ -30,18 +30,32 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibraryUI));
             this.pListItemPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.searchBar = new System.Windows.Forms.TextBox();
-            this.searchPicture = new System.Windows.Forms.PictureBox();
+            this.txbTitleSearch = new System.Windows.Forms.TextBox();
             this.pListHeaderPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.animeButton = new System.Windows.Forms.Panel();
-            this.seriesButton = new System.Windows.Forms.Panel();
-            this.gameButton = new System.Windows.Forms.Panel();
             this.addButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.searchPicture)).BeginInit();
+            this.pbSorting = new System.Windows.Forms.PictureBox();
+            this.pbSearch = new System.Windows.Forms.PictureBox();
+            this.pbFilter = new System.Windows.Forms.PictureBox();
+            this.cbOrderBy = new System.Windows.Forms.ComboBox();
+            this.lbSorting = new System.Windows.Forms.Label();
+            this.chDubbedSearch = new System.Windows.Forms.CheckBox();
+            this.chFavouriteSearch = new System.Windows.Forms.CheckBox();
+            this.lbYearSearch = new System.Windows.Forms.Label();
+            this.lbTitleSearch = new System.Windows.Forms.Label();
+            this.txbYearSearch = new System.Windows.Forms.TextBox();
+            this.gameButton = new System.Windows.Forms.Panel();
+            this.seriesButton = new System.Windows.Forms.Panel();
+            this.animeButton = new System.Windows.Forms.Panel();
+            this.chFinishedSearch = new System.Windows.Forms.CheckBox();
+            this.pbSettings = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSorting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFilter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).BeginInit();
             this.SuspendLayout();
             // 
             // pListItemPanel
@@ -54,26 +68,18 @@
             this.pListItemPanel.TabIndex = 2;
             this.pListItemPanel.Click += new System.EventHandler(this.flowLayoutPanel1_Click);
             // 
-            // searchBar
+            // txbTitleSearch
             // 
-            this.searchBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
-            this.searchBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.searchBar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.searchBar.Location = new System.Drawing.Point(1142, 12);
-            this.searchBar.Multiline = true;
-            this.searchBar.Name = "searchBar";
-            this.searchBar.Size = new System.Drawing.Size(200, 40);
-            this.searchBar.TabIndex = 4;
-            // 
-            // searchPicture
-            // 
-            this.searchPicture.Image = global::ListUI.Properties.Resources.search2;
-            this.searchPicture.Location = new System.Drawing.Point(1106, 18);
-            this.searchPicture.Name = "searchPicture";
-            this.searchPicture.Size = new System.Drawing.Size(30, 30);
-            this.searchPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.searchPicture.TabIndex = 5;
-            this.searchPicture.TabStop = false;
+            this.txbTitleSearch.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbTitleSearch.Enabled = false;
+            this.txbTitleSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txbTitleSearch.ForeColor = System.Drawing.SystemColors.Control;
+            this.txbTitleSearch.Location = new System.Drawing.Point(357, 36);
+            this.txbTitleSearch.Multiline = true;
+            this.txbTitleSearch.Name = "txbTitleSearch";
+            this.txbTitleSearch.Size = new System.Drawing.Size(200, 28);
+            this.txbTitleSearch.TabIndex = 4;
+            this.txbTitleSearch.Visible = false;
             // 
             // pListHeaderPanel
             // 
@@ -82,46 +88,6 @@
             this.pListHeaderPanel.Name = "pListHeaderPanel";
             this.pListHeaderPanel.Size = new System.Drawing.Size(199, 617);
             this.pListHeaderPanel.TabIndex = 5;
-            // 
-            // animeButton
-            // 
-            this.animeButton.BackgroundImage = global::ListUI.Properties.Resources.anime;
-            this.animeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.animeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.animeButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.animeButton.Location = new System.Drawing.Point(10, 10);
-            this.animeButton.Name = "animeButton";
-            this.animeButton.Size = new System.Drawing.Size(50, 50);
-            this.animeButton.TabIndex = 6;
-            this.animeButton.Click += new System.EventHandler(this.animeButton_Click);
-            this.animeButton.MouseEnter += new System.EventHandler(this.animeButton_MouseEnter);
-            this.animeButton.MouseLeave += new System.EventHandler(this.animeButton_MouseLeave);
-            // 
-            // seriesButton
-            // 
-            this.seriesButton.BackgroundImage = global::ListUI.Properties.Resources.series;
-            this.seriesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.seriesButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.seriesButton.Location = new System.Drawing.Point(75, 10);
-            this.seriesButton.Name = "seriesButton";
-            this.seriesButton.Size = new System.Drawing.Size(50, 50);
-            this.seriesButton.TabIndex = 7;
-            this.seriesButton.Click += new System.EventHandler(this.seriesButton_Click);
-            this.seriesButton.MouseEnter += new System.EventHandler(this.seriesButton_MouseEnter);
-            this.seriesButton.MouseLeave += new System.EventHandler(this.seriesButton_MouseLeave);
-            // 
-            // gameButton
-            // 
-            this.gameButton.BackgroundImage = global::ListUI.Properties.Resources.game;
-            this.gameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.gameButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.gameButton.Location = new System.Drawing.Point(140, 10);
-            this.gameButton.Name = "gameButton";
-            this.gameButton.Size = new System.Drawing.Size(50, 50);
-            this.gameButton.TabIndex = 8;
-            this.gameButton.Click += new System.EventHandler(this.gameButton_Click);
-            this.gameButton.MouseEnter += new System.EventHandler(this.gameButton_MouseEnter);
-            this.gameButton.MouseLeave += new System.EventHandler(this.gameButton_MouseLeave);
             // 
             // addButton
             // 
@@ -150,17 +116,230 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
-            this.panel2.Controls.Add(this.searchPicture);
+            this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel2.Controls.Add(this.pbSettings);
+            this.panel2.Controls.Add(this.pbSorting);
+            this.panel2.Controls.Add(this.pbSearch);
+            this.panel2.Controls.Add(this.pbFilter);
+            this.panel2.Controls.Add(this.cbOrderBy);
+            this.panel2.Controls.Add(this.lbSorting);
+            this.panel2.Controls.Add(this.chDubbedSearch);
+            this.panel2.Controls.Add(this.chFavouriteSearch);
+            this.panel2.Controls.Add(this.lbYearSearch);
+            this.panel2.Controls.Add(this.lbTitleSearch);
+            this.panel2.Controls.Add(this.txbYearSearch);
             this.panel2.Controls.Add(this.gameButton);
-            this.panel2.Controls.Add(this.searchBar);
+            this.panel2.Controls.Add(this.txbTitleSearch);
             this.panel2.Controls.Add(this.seriesButton);
             this.panel2.Controls.Add(this.animeButton);
+            this.panel2.Controls.Add(this.chFinishedSearch);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1354, 70);
             this.panel2.TabIndex = 6;
+            // 
+            // pbSorting
+            // 
+            this.pbSorting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbSorting.Image = global::ListUI.Properties.Resources.sort_desc;
+            this.pbSorting.Location = new System.Drawing.Point(484, 0);
+            this.pbSorting.Name = "pbSorting";
+            this.pbSorting.Size = new System.Drawing.Size(30, 30);
+            this.pbSorting.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSorting.TabIndex = 19;
+            this.pbSorting.TabStop = false;
+            this.pbSorting.Click += new System.EventHandler(this.pbSorting_Click);
+            // 
+            // pbSearch
+            // 
+            this.pbSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbSearch.Enabled = false;
+            this.pbSearch.Image = global::ListUI.Properties.Resources.search;
+            this.pbSearch.Location = new System.Drawing.Point(916, 31);
+            this.pbSearch.Name = "pbSearch";
+            this.pbSearch.Size = new System.Drawing.Size(30, 30);
+            this.pbSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSearch.TabIndex = 18;
+            this.pbSearch.TabStop = false;
+            this.pbSearch.Visible = false;
+            this.pbSearch.Click += new System.EventHandler(this.pbSearch_Click);
+            // 
+            // pbFilter
+            // 
+            this.pbFilter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbFilter.Image = global::ListUI.Properties.Resources.filter;
+            this.pbFilter.Location = new System.Drawing.Point(245, 33);
+            this.pbFilter.Name = "pbFilter";
+            this.pbFilter.Size = new System.Drawing.Size(30, 30);
+            this.pbFilter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbFilter.TabIndex = 17;
+            this.pbFilter.TabStop = false;
+            this.pbFilter.Click += new System.EventHandler(this.pbFilter_Click);
+            // 
+            // cbOrderBy
+            // 
+            this.cbOrderBy.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.cbOrderBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cbOrderBy.FormattingEnabled = true;
+            this.cbOrderBy.Location = new System.Drawing.Point(357, 1);
+            this.cbOrderBy.Name = "cbOrderBy";
+            this.cbOrderBy.Size = new System.Drawing.Size(121, 28);
+            this.cbOrderBy.TabIndex = 16;
+            this.cbOrderBy.SelectionChangeCommitted += new System.EventHandler(this.cbOrderBy_SelectionChangeCommitted);
+            // 
+            // lbSorting
+            // 
+            this.lbSorting.AutoSize = true;
+            this.lbSorting.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbSorting.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbSorting.Location = new System.Drawing.Point(240, 0);
+            this.lbSorting.Name = "lbSorting";
+            this.lbSorting.Size = new System.Drawing.Size(111, 26);
+            this.lbSorting.TabIndex = 15;
+            this.lbSorting.Text = "Order by:";
+            // 
+            // chDubbedSearch
+            // 
+            this.chDubbedSearch.AutoSize = true;
+            this.chDubbedSearch.Checked = true;
+            this.chDubbedSearch.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chDubbedSearch.Enabled = false;
+            this.chDubbedSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.chDubbedSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.chDubbedSearch.Location = new System.Drawing.Point(815, 37);
+            this.chDubbedSearch.Name = "chDubbedSearch";
+            this.chDubbedSearch.Size = new System.Drawing.Size(91, 24);
+            this.chDubbedSearch.TabIndex = 13;
+            this.chDubbedSearch.Text = "Dubbed";
+            this.chDubbedSearch.UseVisualStyleBackColor = true;
+            this.chDubbedSearch.Visible = false;
+            // 
+            // chFavouriteSearch
+            // 
+            this.chFavouriteSearch.AutoSize = true;
+            this.chFavouriteSearch.Checked = true;
+            this.chFavouriteSearch.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chFavouriteSearch.Enabled = false;
+            this.chFavouriteSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.chFavouriteSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.chFavouriteSearch.Location = new System.Drawing.Point(705, 38);
+            this.chFavouriteSearch.Name = "chFavouriteSearch";
+            this.chFavouriteSearch.Size = new System.Drawing.Size(103, 24);
+            this.chFavouriteSearch.TabIndex = 12;
+            this.chFavouriteSearch.Text = "Favourite";
+            this.chFavouriteSearch.ThreeState = true;
+            this.chFavouriteSearch.UseVisualStyleBackColor = true;
+            this.chFavouriteSearch.Visible = false;
+            // 
+            // lbYearSearch
+            // 
+            this.lbYearSearch.AutoSize = true;
+            this.lbYearSearch.Enabled = false;
+            this.lbYearSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbYearSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.lbYearSearch.Location = new System.Drawing.Point(563, 35);
+            this.lbYearSearch.Name = "lbYearSearch";
+            this.lbYearSearch.Size = new System.Drawing.Size(70, 26);
+            this.lbYearSearch.TabIndex = 11;
+            this.lbYearSearch.Text = "Year:";
+            this.lbYearSearch.Visible = false;
+            // 
+            // lbTitleSearch
+            // 
+            this.lbTitleSearch.AutoSize = true;
+            this.lbTitleSearch.BackColor = System.Drawing.Color.Transparent;
+            this.lbTitleSearch.Enabled = false;
+            this.lbTitleSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbTitleSearch.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbTitleSearch.Location = new System.Drawing.Point(287, 37);
+            this.lbTitleSearch.Name = "lbTitleSearch";
+            this.lbTitleSearch.Size = new System.Drawing.Size(64, 26);
+            this.lbTitleSearch.TabIndex = 10;
+            this.lbTitleSearch.Text = "Title:";
+            this.lbTitleSearch.Visible = false;
+            // 
+            // txbYearSearch
+            // 
+            this.txbYearSearch.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbYearSearch.Enabled = false;
+            this.txbYearSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.txbYearSearch.ForeColor = System.Drawing.SystemColors.Control;
+            this.txbYearSearch.Location = new System.Drawing.Point(639, 34);
+            this.txbYearSearch.MaxLength = 4;
+            this.txbYearSearch.Multiline = true;
+            this.txbYearSearch.Name = "txbYearSearch";
+            this.txbYearSearch.Size = new System.Drawing.Size(60, 28);
+            this.txbYearSearch.TabIndex = 9;
+            this.txbYearSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbYearSearch.Visible = false;
+            // 
+            // gameButton
+            // 
+            this.gameButton.BackgroundImage = global::ListUI.Properties.Resources.game;
+            this.gameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.gameButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.gameButton.Location = new System.Drawing.Point(140, 10);
+            this.gameButton.Name = "gameButton";
+            this.gameButton.Size = new System.Drawing.Size(50, 50);
+            this.gameButton.TabIndex = 8;
+            this.gameButton.Click += new System.EventHandler(this.gameButton_Click);
+            this.gameButton.MouseEnter += new System.EventHandler(this.gameButton_MouseEnter);
+            this.gameButton.MouseLeave += new System.EventHandler(this.gameButton_MouseLeave);
+            // 
+            // seriesButton
+            // 
+            this.seriesButton.BackgroundImage = global::ListUI.Properties.Resources.series;
+            this.seriesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.seriesButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.seriesButton.Location = new System.Drawing.Point(75, 10);
+            this.seriesButton.Name = "seriesButton";
+            this.seriesButton.Size = new System.Drawing.Size(50, 50);
+            this.seriesButton.TabIndex = 7;
+            this.seriesButton.Click += new System.EventHandler(this.seriesButton_Click);
+            this.seriesButton.MouseEnter += new System.EventHandler(this.seriesButton_MouseEnter);
+            this.seriesButton.MouseLeave += new System.EventHandler(this.seriesButton_MouseLeave);
+            // 
+            // animeButton
+            // 
+            this.animeButton.BackgroundImage = global::ListUI.Properties.Resources.anime;
+            this.animeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.animeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.animeButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.animeButton.Location = new System.Drawing.Point(10, 10);
+            this.animeButton.Name = "animeButton";
+            this.animeButton.Size = new System.Drawing.Size(50, 50);
+            this.animeButton.TabIndex = 6;
+            this.animeButton.Click += new System.EventHandler(this.animeButton_Click);
+            this.animeButton.MouseEnter += new System.EventHandler(this.animeButton_MouseEnter);
+            this.animeButton.MouseLeave += new System.EventHandler(this.animeButton_MouseLeave);
+            // 
+            // chFinishedSearch
+            // 
+            this.chFinishedSearch.AutoSize = true;
+            this.chFinishedSearch.Checked = true;
+            this.chFinishedSearch.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chFinishedSearch.Enabled = false;
+            this.chFinishedSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.chFinishedSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.chFinishedSearch.Location = new System.Drawing.Point(815, 40);
+            this.chFinishedSearch.Name = "chFinishedSearch";
+            this.chFinishedSearch.Size = new System.Drawing.Size(96, 24);
+            this.chFinishedSearch.TabIndex = 14;
+            this.chFinishedSearch.Text = "Finished";
+            this.chFinishedSearch.UseVisualStyleBackColor = true;
+            this.chFinishedSearch.Visible = false;
+            // 
+            // pbSettings
+            // 
+            this.pbSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbSettings.Image = global::ListUI.Properties.Resources.settings;
+            this.pbSettings.Location = new System.Drawing.Point(1292, 12);
+            this.pbSettings.Name = "pbSettings";
+            this.pbSettings.Size = new System.Drawing.Size(50, 50);
+            this.pbSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSettings.TabIndex = 20;
+            this.pbSettings.TabStop = false;
             // 
             // LibraryUI
             // 
@@ -177,18 +356,20 @@
             this.Name = "LibraryUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "My Little Library";
-            ((System.ComponentModel.ISupportInitialize)(this.searchPicture)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSorting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFilter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.FlowLayoutPanel pListItemPanel;
-        private System.Windows.Forms.TextBox searchBar;
-        private System.Windows.Forms.PictureBox searchPicture;
+        private System.Windows.Forms.TextBox txbTitleSearch;
         private System.Windows.Forms.FlowLayoutPanel pListHeaderPanel;
         private System.Windows.Forms.Panel animeButton;
         private System.Windows.Forms.Panel seriesButton;
@@ -196,6 +377,18 @@
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ComboBox cbOrderBy;
+        private System.Windows.Forms.Label lbSorting;
+        private System.Windows.Forms.CheckBox chFinishedSearch;
+        private System.Windows.Forms.CheckBox chDubbedSearch;
+        private System.Windows.Forms.CheckBox chFavouriteSearch;
+        private System.Windows.Forms.Label lbYearSearch;
+        private System.Windows.Forms.Label lbTitleSearch;
+        private System.Windows.Forms.TextBox txbYearSearch;
+        private System.Windows.Forms.PictureBox pbFilter;
+        private System.Windows.Forms.PictureBox pbSorting;
+        private System.Windows.Forms.PictureBox pbSearch;
+        private System.Windows.Forms.PictureBox pbSettings;
     }
 }
 

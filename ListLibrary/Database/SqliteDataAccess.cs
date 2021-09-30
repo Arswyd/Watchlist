@@ -45,14 +45,6 @@ namespace ListLibrary.Database
 
         #region Anime SQL
 
-        public static List<AnimeModel> LoadAllAnime()
-        {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                var output = cnn.Query<AnimeModel>("SELECT * FROM Anime");
-                return output.ToList();
-            }
-        }
         public static List<AnimeModel> LoadAnimeGroup(string sqlString)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
@@ -102,15 +94,6 @@ namespace ListLibrary.Database
         // Game SQL
 
         #region Game SQL
-
-        public static List<GameModel> LoadAllGame()
-        {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                var output = cnn.Query<GameModel>("SELECT * FROM Games");
-                return output.ToList();
-            }
-        }
 
         public static List<GameModel> LoadGameGroup(string sqlString)
         {
@@ -162,14 +145,6 @@ namespace ListLibrary.Database
 
         #region Series SQL
 
-        public static List<SeriesModel> LoadAllSeries()
-        {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                var output = cnn.Query<SeriesModel>("SELECT * FROM Series");
-                return output.ToList();
-            }
-        }
         public static List<SeriesModel> LoadSeriesGroup(string sqlString)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
