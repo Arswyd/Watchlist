@@ -19,7 +19,7 @@ namespace ListLibrary.Model
         { 
             get
             {
-                var dir = @"..\Pictures\Anime\" + ID.ToString("D6") + ".jpg";
+                var dir = @"..\..\..\ListLibrary\Pictures\Anime\" + ID.ToString("D6") + ".jpg";
                 return dir;
             } 
         }

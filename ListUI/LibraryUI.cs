@@ -18,7 +18,7 @@ namespace ListUI
 {
     public partial class LibraryUI : Form
     {
-        public List<ListHeaderModel> newlistsettings = SqliteDataAccess.LoadListHeaders();
+        public List<ListHeaderModel> headerList; // = SqliteDataAccess.LoadListHeaders();
         public List<ItemModel> itemlist = new List<ItemModel>();
         private string activeGroup;
         private string activeListType;
@@ -52,17 +52,21 @@ namespace ListUI
             {
                 CreateMenuItems();
                 InitializeListLoading();
-                flowLayoutPanel1.Focus();
+                pListItemPanel.Focus();
                 searchBar.Text = "";
             }
             if (activeListType == "Series")
             {
-                flowLayoutPanel1.Focus();
+                CreateMenuItems();
+                InitializeListLoading();
+                pListItemPanel.Focus();
                 searchBar.Text = "";
             }
             if (activeListType == "Game")
             {
-                flowLayoutPanel1.Focus();
+                CreateMenuItems();
+                InitializeListLoading();
+                pListItemPanel.Focus();
                 searchBar.Text = "";
             }
 
@@ -81,8 +85,10 @@ namespace ListUI
                         itemlist.AddRange(SqliteDataAccess.LoadAllAnime());
                         break;
                     case "Game":
+                        itemlist.AddRange(SqliteDataAccess.LoadAllGame());
                         break;
                     case "Series":
+                        itemlist.AddRange(SqliteDataAccess.LoadAllSeries());
                         break;
                 }
             }
@@ -94,8 +100,10 @@ namespace ListUI
                         itemlist.AddRange(SqliteDataAccess.LoadAnimeGroup(CreateFilteredSqlString(activeGroup)));
                         break;
                     case "Game":
+                        itemlist.AddRange(SqliteDataAccess.LoadGameGroup(CreateFilteredSqlString(activeGroup)));
                         break;
                     case "Series":
+                        itemlist.AddRange(SqliteDataAccess.LoadSeriesGroup(CreateFilteredSqlString(activeGroup)));
                         break;
                 }
             }
@@ -108,6 +116,16 @@ namespace ListUI
                 return "SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.Score, A.Year, A.Favourite, A.Notes, A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed " +
                        "FROM Anime AS A WHERE ListGroup=\"" + activeGroup + "\"";
             }
+            if (activeListType == "Game")
+            {
+                return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup " +
+                       "FROM Games AS G WHERE ListGroup=\"" + activeGroup + "\"";
+            }
+            if (activeListType == "Series")
+            {
+                return "SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.Score, S.Year, S.Favourite, S.Notes, S.ListGroup, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning " +
+                       "FROM Series AS S WHERE ListGroup=\"" + activeGroup + "\"";
+            }
             else
             {
                 return "";
@@ -116,41 +134,53 @@ namespace ListUI
 
         public void CreateMenuItems()
         {
+            pListHeaderPanel.Controls.Clear();
 
-            listMenuPanel.Controls.Clear();
+            pListHeaderPanel.SuspendLayout();
+
+            if (activeListType == "Anime")
+                headerList = SqliteDataAccess.LoadAnimeListHeaders();
+            else if (activeListType == "Game")
+                headerList = SqliteDataAccess.LoadGameListHeaders();
+            else if (activeListType == "Series")
+                headerList = SqliteDataAccess.LoadSeriesListHeaders();
 
             ListMenuItem allMenuItem = new ListMenuItem(activeGroup, this);
             allMenuItem.MenuItemName("All");
-            allMenuItem.MenuItemCount(newlistsettings.Where(n => n.ListType == "Anime").Sum(n => n.Count).ToString());
+            allMenuItem.MenuItemCount(headerList.Sum(n => n.Count).ToString());
             if (activeGroup == "All")
             {
                 allMenuItem.ActiveColor();
             }
-            listMenuPanel.Controls.Add(allMenuItem);
+            pListHeaderPanel.Controls.Add(allMenuItem);
 
-            foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Anime").OrderBy(n => n.SortOrder))
+            foreach (ListHeaderModel listsetting in headerList.OrderBy(n => n.SortOrder))
             {
-                ListMenuItem menuitem = new ListMenuItem(activeGroup, this);
-                menuitem.MenuItemName(listsetting.ListGroup);
-                menuitem.MenuItemCount(listsetting.Count.ToString());
+                ListMenuItem menuItem = new ListMenuItem(activeGroup, this);
+                menuItem.MenuItemName(listsetting.ListGroup);
+                menuItem.MenuItemCount(listsetting.Count.ToString());
                 if (listsetting.ListGroup == activeGroup)
                 {
-                    menuitem.ActiveColor();
+                    menuItem.ActiveColor();
                 }
-                listMenuPanel.Controls.Add(menuitem);
+                pListHeaderPanel.Controls.Add(menuItem);
             }
+
+            pListHeaderPanel.ResumeLayout();
         }
 
         public void InitializeListLoading()
         {
-            int yscroll = flowLayoutPanel1.AutoScrollPosition.Y;
+            int yscroll = pListItemPanel.AutoScrollPosition.Y;
 
             // TODO : Dispose
-            flowLayoutPanel1.Controls.Clear();
+            pListItemPanel.Controls.Clear();
+
+            pListItemPanel.SuspendLayout();
 
             if (activeGroup == "All")
             {
-                foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Anime"))
+                foreach (ListHeaderModel listsetting in headerList.Where(n => n.ListType == activeListType))
                 {
                     LoadListItems(listsetting.ListGroup);
                 }
@@ -160,41 +190,46 @@ namespace ListUI
                 LoadListItems(activeGroup);
             }
 
-            flowLayoutPanel1.VerticalScroll.Value = (-1) * yscroll;
-            //flowLayoutPanel1.Visible = true;
+            pListItemPanel.VerticalScroll.Value = (-1) * yscroll;
+
+            pListItemPanel.ResumeLayout();
         }
 
         private void LoadListItems(string headerText)
         {
             ListHeader listHeader = new ListHeader();
             listHeader.HeaderName(headerText);
-            flowLayoutPanel1.Controls.Add(listHeader);
+            pListItemPanel.Controls.Add(listHeader);
 
             foreach (ItemModel item in itemlist.Where(n => n.ListGroup == headerText))
             {
                 ListItem listItem = new ListItem(this);
                 listItem.AddItem(item);
-                flowLayoutPanel1.Controls.Add(listItem);
+                pListItemPanel.Controls.Add(listItem);
             }
 
-            flowLayoutPanel1.Update();
+            pListItemPanel.Update();
         }
 
-        public void ModifyItem(ItemModel item, ListItem listItem)
+        public void ModifyItem(ItemModel item, int index)
         {
             OverlayForm overlay = new OverlayForm();
             overlay.Show(this);
             overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
-            ItemDetailForm frm = new ItemDetailForm(activeListType, item, this);
+            ItemDetailForm frm = new ItemDetailForm(activeListType, item, index, this);
             frm.ShowDialog();
-            flowLayoutPanel1.Focus();
+            pListItemPanel.Focus();
             overlay.Close();
+
+            WireUpLibraryForm();
         }
 
         public void WireUpRequest(string listGroup)
         {
-            flowLayoutPanel1.VerticalScroll.Value = 0;
+            pListItemPanel.VerticalScroll.Value = 0;
             activeGroup = listGroup;
+
+            //TODO: Elimination of reloading flowlayout panel
             WireUpLibraryForm();
         }
 
@@ -205,7 +240,7 @@ namespace ListUI
             overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
             ItemDetailForm frm = new ItemDetailForm(activeListType, this);
             frm.ShowDialog();
-            flowLayoutPanel1.Focus();
+            pListItemPanel.Focus();
             overlay.Close();
         }
 
@@ -233,7 +268,7 @@ namespace ListUI
 
         private void animeButton_Click(object sender, EventArgs e)
         {
-            flowLayoutPanel1.VerticalScroll.Value = 0;
+            pListItemPanel.VerticalScroll.Value = 0;
             activeListType = "Anime";
             activeGroup = "Watching";
             WireUpLibraryForm();
@@ -241,7 +276,7 @@ namespace ListUI
 
         private void seriesButton_Click(object sender, EventArgs e)
         {
-            flowLayoutPanel1.VerticalScroll.Value = 0;
+            pListItemPanel.VerticalScroll.Value = 0;
             activeListType = "Series";
             activeGroup = "Watching";
             WireUpLibraryForm();
@@ -249,7 +284,7 @@ namespace ListUI
 
         private void gameButton_Click(object sender, EventArgs e)
         {
-            flowLayoutPanel1.VerticalScroll.Value = 0;
+            pListItemPanel.VerticalScroll.Value = 0;
             activeListType = "Game";
             activeGroup = "Playing";
             WireUpLibraryForm();
@@ -293,7 +328,7 @@ namespace ListUI
 
         private void flowLayoutPanel1_Click(object sender, EventArgs e)
         {
-            flowLayoutPanel1.Focus();
+            pListItemPanel.Focus();
         }
     }
 }

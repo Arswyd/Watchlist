@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibraryUI));
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pListItemPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.searchBar = new System.Windows.Forms.TextBox();
             this.searchPicture = new System.Windows.Forms.PictureBox();
-            this.listMenuPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.pListHeaderPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.animeButton = new System.Windows.Forms.Panel();
             this.seriesButton = new System.Windows.Forms.Panel();
             this.gameButton = new System.Windows.Forms.Panel();
@@ -44,15 +44,15 @@
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // flowLayoutPanel1
+            // pListItemPanel
             // 
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(206, 76);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1148, 685);
-            this.flowLayoutPanel1.TabIndex = 2;
-            this.flowLayoutPanel1.Click += new System.EventHandler(this.flowLayoutPanel1_Click);
+            this.pListItemPanel.AutoScroll = true;
+            this.pListItemPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.pListItemPanel.Location = new System.Drawing.Point(206, 76);
+            this.pListItemPanel.Name = "pListItemPanel";
+            this.pListItemPanel.Size = new System.Drawing.Size(1148, 685);
+            this.pListItemPanel.TabIndex = 2;
+            this.pListItemPanel.Click += new System.EventHandler(this.flowLayoutPanel1_Click);
             // 
             // searchBar
             // 
@@ -75,13 +75,13 @@
             this.searchPicture.TabIndex = 5;
             this.searchPicture.TabStop = false;
             // 
-            // listMenuPanel
+            // pListHeaderPanel
             // 
-            this.listMenuPanel.BackColor = System.Drawing.Color.Transparent;
-            this.listMenuPanel.Location = new System.Drawing.Point(0, 0);
-            this.listMenuPanel.Name = "listMenuPanel";
-            this.listMenuPanel.Size = new System.Drawing.Size(199, 617);
-            this.listMenuPanel.TabIndex = 5;
+            this.pListHeaderPanel.BackColor = System.Drawing.Color.Transparent;
+            this.pListHeaderPanel.Location = new System.Drawing.Point(0, 0);
+            this.pListHeaderPanel.Name = "pListHeaderPanel";
+            this.pListHeaderPanel.Size = new System.Drawing.Size(199, 617);
+            this.pListHeaderPanel.TabIndex = 5;
             // 
             // animeButton
             // 
@@ -142,7 +142,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
             this.panel1.Controls.Add(this.addButton);
-            this.panel1.Controls.Add(this.listMenuPanel);
+            this.panel1.Controls.Add(this.pListHeaderPanel);
             this.panel1.Location = new System.Drawing.Point(0, 76);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 685);
@@ -170,7 +170,7 @@
             this.ClientSize = new System.Drawing.Size(1354, 761);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.pListItemPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -186,10 +186,10 @@
         }
 
         #endregion
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel pListItemPanel;
         private System.Windows.Forms.TextBox searchBar;
         private System.Windows.Forms.PictureBox searchPicture;
-        private System.Windows.Forms.FlowLayoutPanel listMenuPanel;
+        private System.Windows.Forms.FlowLayoutPanel pListHeaderPanel;
         private System.Windows.Forms.Panel animeButton;
         private System.Windows.Forms.Panel seriesButton;
         private System.Windows.Forms.Panel gameButton;

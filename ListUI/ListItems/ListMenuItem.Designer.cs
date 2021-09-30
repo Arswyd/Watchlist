@@ -29,47 +29,48 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.listGroupCount = new System.Windows.Forms.Label();
-            this.listGroupName = new System.Windows.Forms.Label();
+            this.lbListGroupCount = new System.Windows.Forms.Label();
+            this.lbListGroupName = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
-            this.panel1.Controls.Add(this.listGroupCount);
-            this.panel1.Controls.Add(this.listGroupName);
+            this.panel1.Controls.Add(this.lbListGroupCount);
+            this.panel1.Controls.Add(this.lbListGroupName);
             this.panel1.Location = new System.Drawing.Point(5, 5);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(185, 28);
             this.panel1.TabIndex = 0;
             this.panel1.Click += new System.EventHandler(this.panel1_Click);
             this.panel1.MouseEnter += new System.EventHandler(this.panel1_MouseEnter);
+            this.panel1.MouseLeave += new System.EventHandler(this.panel1_MouseLeave);
             // 
-            // listGroupCount
+            // lbListGroupCount
             // 
-            this.listGroupCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.listGroupCount.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.listGroupCount.Location = new System.Drawing.Point(150, 7);
-            this.listGroupCount.Name = "listGroupCount";
-            this.listGroupCount.Size = new System.Drawing.Size(28, 13);
-            this.listGroupCount.TabIndex = 0;
-            this.listGroupCount.Text = "999";
-            this.listGroupCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.listGroupCount.Click += new System.EventHandler(this.listGroupCount_Click);
+            this.lbListGroupCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbListGroupCount.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbListGroupCount.Location = new System.Drawing.Point(150, 7);
+            this.lbListGroupCount.Name = "lbListGroupCount";
+            this.lbListGroupCount.Size = new System.Drawing.Size(28, 13);
+            this.lbListGroupCount.TabIndex = 0;
+            this.lbListGroupCount.Text = "999";
+            this.lbListGroupCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbListGroupCount.Click += new System.EventHandler(this.listGroupCount_Click);
             // 
-            // listGroupName
+            // lbListGroupName
             // 
-            this.listGroupName.AutoSize = true;
-            this.listGroupName.BackColor = System.Drawing.Color.Transparent;
-            this.listGroupName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.listGroupName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.listGroupName.Location = new System.Drawing.Point(5, 5);
-            this.listGroupName.Name = "listGroupName";
-            this.listGroupName.Size = new System.Drawing.Size(84, 17);
-            this.listGroupName.TabIndex = 0;
-            this.listGroupName.Text = "Completed";
-            this.listGroupName.Click += new System.EventHandler(this.listGroupName_Click);
+            this.lbListGroupName.AutoSize = true;
+            this.lbListGroupName.BackColor = System.Drawing.Color.Transparent;
+            this.lbListGroupName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbListGroupName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbListGroupName.Location = new System.Drawing.Point(5, 5);
+            this.lbListGroupName.Name = "lbListGroupName";
+            this.lbListGroupName.Size = new System.Drawing.Size(84, 17);
+            this.lbListGroupName.TabIndex = 0;
+            this.lbListGroupName.Text = "Completed";
+            this.lbListGroupName.Click += new System.EventHandler(this.listGroupName_Click);
             // 
             // ListMenuItem
             // 
@@ -81,7 +82,6 @@
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "ListMenuItem";
             this.Size = new System.Drawing.Size(195, 38);
-            this.MouseLeave += new System.EventHandler(this.ListMenuItem_MouseLeave);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -91,7 +91,7 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label listGroupCount;
-        private System.Windows.Forms.Label listGroupName;
+        private System.Windows.Forms.Label lbListGroupCount;
+        private System.Windows.Forms.Label lbListGroupName;
     }
 }

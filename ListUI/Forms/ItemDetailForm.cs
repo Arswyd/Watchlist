@@ -17,11 +17,12 @@ namespace ListUI.Forms
 {
     public partial class ItemDetailForm : Form
     {
-        public List<ListHeaderModel> newlistsettings = SqliteDataAccess.LoadListHeaders();
+        List<ListHeaderModel> newlistsettings;
         bool newitem = true;
         bool userclosing = true;
         bool favouriteChanged = false;
         string listType;
+        int itemIndex;
 
         ItemModel currentItem;
         LibraryUI callingForm;
@@ -36,25 +37,29 @@ namespace ListUI.Forms
             if (listType == "Anime")
             {
                 currentItem = new AnimeModel();
+                newlistsettings = SqliteDataAccess.LoadAnimeListHeaders();
             }
-            else if (listType == "Games")
+            else if (listType == "Game")
             {
                 currentItem = new GameModel();
+                newlistsettings = SqliteDataAccess.LoadGameListHeaders();
             }
             else if (listType == "Series")
             {
                 currentItem = new SeriesModel();
+                newlistsettings = SqliteDataAccess.LoadSeriesListHeaders();
             }
 
             WireUpFrom();
             LoadForm(currentItem);
         }
 
-        public ItemDetailForm(string activeListType, ItemModel item, LibraryUI libraryUI)
+        public ItemDetailForm(string activeListType, ItemModel item, int index, LibraryUI libraryUI)
         {
             InitializeComponent();
 
             newitem = false;
+            itemIndex = index;
             listType = activeListType;
             callingForm = libraryUI;
             currentItem = item;
@@ -67,45 +72,45 @@ namespace ListUI.Forms
         {
             if (listType == "Anime")
             {
-                lbTotalEp.Visible = true;
                 lbTotalEp.Enabled = true;
-                txbTotalEp.Visible = true;
+                lbTotalEp.Visible = true;
                 txbTotalEp.Enabled = true;
-                lbWatchedEp.Visible = true;
+                txbTotalEp.Visible = true;
                 lbWatchedEp.Enabled = true;
-                txbWatchedEp.Visible = true;
+                lbWatchedEp.Visible = true;
                 txbWatchedEp.Enabled = true;
-                lbSeason.Visible = true;
+                txbWatchedEp.Visible = true;
                 lbSeason.Enabled = true;
-                cbSeason.Visible = true;
+                lbSeason.Visible = true;
                 cbSeason.Enabled = true;
-                chDubbed.Visible = true;
+                cbSeason.Visible = true;
                 chDubbed.Enabled = true;
+                chDubbed.Visible = true;
             }
             else if (listType == "Series")
             {
-                lbTotalEp.Visible = true;
                 lbTotalEp.Enabled = true;
-                txbTotalEp.Visible = true;
+                lbTotalEp.Visible = true;
                 txbTotalEp.Enabled = true;
+                txbTotalEp.Visible = true;
                 txbTotalEp.MaxLength = 100;
-                lbWatchedEp.Visible = true;
                 lbWatchedEp.Enabled = true;
-                txbWatchedEp.Visible = true;
+                lbWatchedEp.Visible = true;
                 txbWatchedEp.Enabled = true;
-                lbTotalSe.Visible = true;
+                txbWatchedEp.Visible = true;
                 lbTotalSe.Enabled = true;
-                txbTotalSe.Visible = true;
+                lbTotalSe.Visible = true;
                 txbTotalSe.Enabled = true;
-                lbCurrentSe.Visible = true;
+                txbTotalSe.Visible = true;
                 lbCurrentSe.Enabled = true;
-                txbCurrentSe.Visible = true;
+                lbCurrentSe.Visible = true;
                 txbCurrentSe.Enabled = true;
-                chFinished.Visible = true;
+                txbCurrentSe.Visible = true;
                 chFinished.Enabled = true;
+                chFinished.Visible = true;
             }
 
-            foreach (ListHeaderModel listsetting in newlistsettings.Where(n => n.ListType == "Anime"))
+            foreach (ListHeaderModel listsetting in newlistsettings)
             {
                 cbListGroup.Items.Add(listsetting.ListGroup);
             }
@@ -198,13 +203,13 @@ namespace ListUI.Forms
                     }
                     else if (currentItem is SeriesModel)
                     {
-                        //SqliteDataAccess.SaveSeries((SeriesModel)currentItem);
-                        //currentItem.ID = SqliteDataAccess.GetLastSeriesID();
+                        SqliteDataAccess.SaveSeries((SeriesModel)currentItem);
+                        currentItem.ID = SqliteDataAccess.GetLastSeriesID();
                     }
                     else if (currentItem is GameModel)
                     {
-                        //SqliteDataAccess.SaveGame((GameModel)currentItem);
-                        //currentItem.ID = SqliteDataAccess.GetLastGameID();
+                        SqliteDataAccess.SaveGame((GameModel)currentItem);
+                        currentItem.ID = SqliteDataAccess.GetLastGameID();
                     }
                 }
                 else
@@ -215,11 +220,11 @@ namespace ListUI.Forms
                     }
                     else if (currentItem is SeriesModel)
                     {
-                        //SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
+                        SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
                     }
                     else if (currentItem is GameModel)
                     {
-                        //SqliteDataAccess.UpdateGame((GameModel)currentItem);
+                        SqliteDataAccess.UpdateGame((GameModel)currentItem);
                     }
                 }
 
@@ -233,6 +238,8 @@ namespace ListUI.Forms
                 MessageBox.Show("Invalid inputs!");
                 return;
             }
+
+            //TODO: modify according to listitem index
 
             this.Close();
         }
@@ -461,8 +468,6 @@ namespace ListUI.Forms
 
         private void deletePicture_Click(object sender, EventArgs e)
         {
-            //TODO: Add Delete Series and Games
-
             userclosing = false;
 
             if(MessageBox.Show("Do you want to delete this?","Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
@@ -473,11 +478,11 @@ namespace ListUI.Forms
                 }
                 else if (currentItem is SeriesModel)
                 {
-                    //SqliteDataAccess.DeleteSeries((SeriesModel)currentItem);
+                    SqliteDataAccess.DeleteSeries((SeriesModel)currentItem);
                 }
                 else if (currentItem is GameModel)
                 {
-                    //SqliteDataAccess.DeleteGame((GameModel)currentItem);
+                    SqliteDataAccess.DeleteGame((GameModel)currentItem);
                 }
 
                 if (File.Exists(currentItem.PictureDir))

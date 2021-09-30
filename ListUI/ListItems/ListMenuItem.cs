@@ -21,17 +21,16 @@ namespace ListUI.ListItems
 
             callingForm = libraryUI;
             active = activeGroup;
-
         }
 
         public void MenuItemName(string z)
         {
-            listGroupName.Text = z;
+            lbListGroupName.Text = z;
         }
 
         public void MenuItemCount(string r)
         {
-            listGroupCount.Text = r;
+            lbListGroupCount.Text = r;
         }
 
         public void ActiveColor()
@@ -42,26 +41,16 @@ namespace ListUI.ListItems
 
         private void panel1_MouseEnter(object sender, EventArgs e)
         {
-            if (listGroupName.Text != active)
+            if (lbListGroupName.Text != active)
             {
                 Color myColor = Color.FromArgb(255, 40, 40, 60);
                 panel1.BackColor = myColor;
-                //listGroupCount.Visible = true;
-            }
-        }
-
-        private void ListMenuItem_MouseLeave(object sender, EventArgs e)
-        {
-            if (listGroupName.Text != active)
-            {
-                panel1.BackColor = Color.Transparent;
-                //listGroupCount.Visible = false;
             }
         }
 
         private void panel1_Click(object sender, EventArgs e)
         {
-            callingForm.WireUpRequest(listGroupName.Text);
+            callingForm.WireUpRequest(lbListGroupName.Text);
         }
 
         private void listGroupName_Click(object sender, EventArgs e)
@@ -72,6 +61,14 @@ namespace ListUI.ListItems
         private void listGroupCount_Click(object sender, EventArgs e)
         {
             this.panel1_Click(sender, e);
+        }
+
+        private void panel1_MouseLeave(object sender, EventArgs e)
+        {
+            if (lbListGroupName.Text != active)
+            {
+                panel1.BackColor = Color.Transparent;
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ namespace ListUI.ListItems
 {
     public partial class ListItem : UserControl
     {
+        string listGroup;
         ItemModel currentItem;
         LibraryUI callerForm;
 
@@ -43,6 +44,7 @@ namespace ListUI.ListItems
         public void AddItem(ItemModel item)
         {
             currentItem = item;
+            listGroup = item.ListGroup;
 
             if (!File.Exists(item.PictureDir))
             {
@@ -123,16 +125,6 @@ namespace ListUI.ListItems
             }
         }
 
-        private void listItemPicture_MouseEnter(object sender, EventArgs e)
-        {
-            panel1.Visible = true;
-        }
-
-        private void AnimeListItem_MouseLeave(object sender, EventArgs e)
-        {
-            panel1.Visible = false;
-        }
-
         private void listItemName_Click(object sender, EventArgs e)
         {
             //TODO: Kell ez?
@@ -153,20 +145,15 @@ namespace ListUI.ListItems
             }
         }
 
-        private void panel2_MouseLeave(object sender, EventArgs e)
-        {
-            panel1.Visible = false;
-        }
-
         private void plusWatched_Click(object sender, EventArgs e)
         {
             lbPlusEp.Enabled = false;
             Application.UseWaitCursor = true;
 
-            if (lbItemScore.Text == "N/A")
-            {
-                lbItemScore.Text = "0";
-            }
+            //if (lbItemScore.Text == "N/A")
+            //{
+            //    lbItemScore.Text = "0";
+            //}
 
             if (currentItem is AnimeModel)
             {
@@ -194,7 +181,9 @@ namespace ListUI.ListItems
 
                     MessageBox.Show("Anime Completed!");
 
-                    //TODO: Reload list
+                    callerForm.WireUpRequest(listGroup);
+
+                    //this.Dispose();
                 }
                 else
                 {
@@ -219,7 +208,9 @@ namespace ListUI.ListItems
 
                     MessageBox.Show("Series Completed!");
 
-                    //TODO: Reload list
+                    callerForm.WireUpRequest(listGroup);
+
+                    //this.Dispose();
                 }
                 else if (!((SeriesModel)currentItem).FinishedRunning && ((SeriesModel)currentItem).CurrentSe == ((SeriesModel)currentItem).TotalSe && ((SeriesModel)currentItem).WatchedEp == (((SeriesModel)currentItem).CurrentSeasonTotalEp - 1))
                 {
@@ -233,7 +224,9 @@ namespace ListUI.ListItems
 
                     MessageBox.Show("Season Completed!");
 
-                    //TODO: Reload list
+                    callerForm.WireUpRequest(listGroup);
+
+                    //this.Dispose();
                 }
                 else
                 {
@@ -268,6 +261,16 @@ namespace ListUI.ListItems
             Application.UseWaitCursor = false;
         }
 
+        private void pbListItem_MouseEnter(object sender, EventArgs e)
+        {
+            panel1.Visible = true;
+        }
+
+        private void pbListItem_MouseLeave(object sender, EventArgs e)
+        {
+            panel1.Visible = false;
+        }
+
         private void listItemScore_MouseEnter(object sender, EventArgs e)
         {
             lbItemScore.Visible = false;
@@ -286,8 +289,9 @@ namespace ListUI.ListItems
             if (!(currentItem is GameModel))
             {
                 panel1.Visible = false;
-                lbItemTitle.ForeColor = Color.LightSteelBlue;
             }
+
+            lbItemTitle.ForeColor = Color.LightSteelBlue;
         }
 
         private void listItemName_MouseLeave(object sender, EventArgs e)
@@ -314,9 +318,9 @@ namespace ListUI.ListItems
                 lbItemScore.Text = "0";
             }
 
-            callerForm.ModifyItem(currentItem, this);
+            callerForm.ModifyItem(currentItem, this.Parent.Controls.GetChildIndex(this));
 
-            AddItem(currentItem);
+            //AddItem(currentItem);
 
             if (lbItemScore.Text == "0")
             {

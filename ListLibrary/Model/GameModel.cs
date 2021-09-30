@@ -14,7 +14,7 @@ namespace ListLibrary.Model
         {
             get
             {
-                var dir = @"..\Pictures\Game\" + ID.ToString("D6") + ".jpg";
+                var dir = @"..\..\..\ListLibrary\Pictures\Game\" + ID.ToString("D6") + ".jpg";
                 return dir;
             }
         }
