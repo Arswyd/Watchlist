@@ -17,7 +17,7 @@ namespace ListUI.Forms
 {
     public partial class ItemDetailForm : Form
     {
-        List<ListHeaderModel> newlistsettings;
+        List<HeaderModel> listHeaders;
         bool newitem = true;
         bool userclosing = true;
         bool favouriteChanged = false;
@@ -37,17 +37,17 @@ namespace ListUI.Forms
             if (listType == "Anime")
             {
                 currentItem = new AnimeModel();
-                newlistsettings = SqliteDataAccess.LoadAnimeListHeaders();
+                listHeaders = SqliteDataAccess.LoadAnimeListHeaders();
             }
             else if (listType == "Game")
             {
                 currentItem = new GameModel();
-                newlistsettings = SqliteDataAccess.LoadGameListHeaders();
+                listHeaders = SqliteDataAccess.LoadGameListHeaders();
             }
             else if (listType == "Series")
             {
                 currentItem = new SeriesModel();
-                newlistsettings = SqliteDataAccess.LoadSeriesListHeaders();
+                listHeaders = SqliteDataAccess.LoadSeriesListHeaders();
             }
 
             WireUpFrom();
@@ -63,13 +63,14 @@ namespace ListUI.Forms
             listType = activeListType;
             callingForm = libraryUI;
             currentItem = item;
+            //currentItem = SqliteDataAccess.LoadAnimeByID(id);
 
             if (listType == "Anime")
-                newlistsettings = SqliteDataAccess.LoadAnimeListHeaders();
+                listHeaders = SqliteDataAccess.LoadAnimeListHeaders();
             else if (listType == "Game")
-                newlistsettings = SqliteDataAccess.LoadGameListHeaders();
+                listHeaders = SqliteDataAccess.LoadGameListHeaders();
             else if (listType == "Series")
-                newlistsettings = SqliteDataAccess.LoadSeriesListHeaders();
+                listHeaders = SqliteDataAccess.LoadSeriesListHeaders();
 
             WireUpFrom();
             LoadForm(currentItem);
@@ -117,7 +118,7 @@ namespace ListUI.Forms
                 chFinished.Visible = true;
             }
 
-            foreach (ListHeaderModel listsetting in newlistsettings)
+            foreach (HeaderModel listsetting in listHeaders)
             {
                 cbListGroup.Items.Add(listsetting.ListGroup);
             }
@@ -435,6 +436,7 @@ namespace ListUI.Forms
                 ((AnimeModel)currentItem).Season = cbSeason.Text;
                 ((AnimeModel)currentItem).TotalEp = Convert.ToInt32(txbTotalEp.Text);
                 ((AnimeModel)currentItem).WatchedEp = Convert.ToInt32(txbWatchedEp.Text);
+                ((AnimeModel)currentItem).Dubbed = chDubbed.Checked;
             }
             else if (currentItem is SeriesModel)
             {
@@ -442,6 +444,7 @@ namespace ListUI.Forms
                 ((SeriesModel)currentItem).CurrentSe = Convert.ToInt32(txbCurrentSe.Text);
                 ((SeriesModel)currentItem).TotalEp = txbTotalEp.Text;
                 ((SeriesModel)currentItem).WatchedEp = Convert.ToInt32(txbWatchedEp.Text);
+                ((SeriesModel)currentItem).FinishedRunning = chFinished.Checked;
             }
         }
 

@@ -19,7 +19,7 @@ namespace ListUI
 {
     public partial class LibraryUI : Form
     {
-        public List<ListHeaderModel> headerList; // = SqliteDataAccess.LoadListHeaders();
+        public List<HeaderModel> headerList; // = SqliteDataAccess.LoadListHeaders();
         public List<ItemModel> itemlist = new List<ItemModel>();
         private string activeGroup;
         private string activeListType;
@@ -203,7 +203,7 @@ namespace ListUI
             }
             pListHeaderPanel.Controls.Add(allMenuItem);
 
-            foreach (ListHeaderModel listsetting in headerList.OrderBy(n => n.SortOrder))
+            foreach (HeaderModel listsetting in headerList.OrderBy(n => n.SortOrder))
             {
                 ListMenuItem menuItem = new ListMenuItem(activeGroup, this);
                 menuItem.MenuItemName(listsetting.ListGroup);
@@ -229,7 +229,7 @@ namespace ListUI
 
             if (activeGroup == "All")
             {
-                foreach (ListHeaderModel listsetting in headerList.Where(n => n.ListType == activeListType))
+                foreach (HeaderModel listsetting in headerList.Where(n => n.ListType == activeListType))
                 {
                     LoadListItems(listsetting.ListGroup);
                 }
@@ -385,12 +385,12 @@ namespace ListUI
             if(cbOrderBy.SelectedItem.ToString() == "Score")
             {
                 isAscending = false;
-                pbSorting.Image = Resources.sort_desc;
+                pbToggleSorting.Image = Resources.sort_desc;
             }
             else if (cbOrderBy.SelectedItem.ToString() == "Title")
             {
                 isAscending = true;
-                pbSorting.Image = Resources.sort_asc;
+                pbToggleSorting.Image = Resources.sort_asc;
             }
 
             WireUpLibraryForm();
@@ -402,7 +402,7 @@ namespace ListUI
 
             if (isFiltered)
             {
-                pbFilter.Image = Resources.clear_filter;
+                pbToggleFilter.Image = Resources.clear_filter;
                 lbTitleSearch.Enabled = true;
                 lbTitleSearch.Visible = true;
                 txbTitleSearch.Enabled = true;
@@ -428,7 +428,7 @@ namespace ListUI
             }
             else
             {
-                pbFilter.Image = Resources.filter;
+                pbToggleFilter.Image = Resources.filter;
                 lbTitleSearch.Enabled = false;
                 lbTitleSearch.Visible = false;
                 txbTitleSearch.Enabled = false;
@@ -467,11 +467,11 @@ namespace ListUI
 
             if(isAscending)
             {
-                pbSorting.Image = Resources.sort_asc;
+                pbToggleSorting.Image = Resources.sort_asc;
             }
             else
             {
-                pbSorting.Image = Resources.sort_desc;
+                pbToggleSorting.Image = Resources.sort_desc;
             }
 
             WireUpLibraryForm();
@@ -480,6 +480,32 @@ namespace ListUI
         private void pbSearch_Click(object sender, EventArgs e)
         {
             WireUpLibraryForm();
+        }
+
+        private void pbToggleSorting_Click_1(object sender, EventArgs e)
+        {
+            pbOrderBy.Visible = !pbOrderBy.Visible;
+            pbOrderBy.Enabled = !pbOrderBy.Enabled;
+            cbOrderBy.Visible = !cbOrderBy.Visible;
+            cbOrderBy.Enabled = !cbOrderBy.Enabled;
+        }
+
+        private void pbSettings_Click(object sender, EventArgs e)
+        {
+            OverlayForm overlay = new OverlayForm();
+            overlay.Show(this);
+            overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
+            SettingsForm frm = new SettingsForm();
+            frm.ShowDialog();
+            pListItemPanel.Focus();
+            overlay.Close();
+
+            WireUpLibraryForm();
+        }
+
+        private void LibraryUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SqliteDataAccess.LogLastLogin();
         }
     }
 }

@@ -21,6 +21,8 @@ namespace ListUI.ListItems
 
             callingForm = libraryUI;
             active = activeGroup;
+
+            lbListGroupName.Parent = panel1;
         }
 
         public void MenuItemName(string z)

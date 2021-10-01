@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ListLibrary.Model
 {
-    public class ListHeaderModel
+    public class HeaderModel
     {
+        public int ID { get; set; }
         public string ListType { get; set; }
         public string ListGroup { get; set; }
         public int SortOrder { get; set; }

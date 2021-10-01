@@ -36,7 +36,7 @@
             this.headerName.AutoSize = true;
             this.headerName.Font = new System.Drawing.Font("Arial", 20F, System.Drawing.FontStyle.Bold);
             this.headerName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.headerName.Location = new System.Drawing.Point(5, 20);
+            this.headerName.Location = new System.Drawing.Point(5, 10);
             this.headerName.Name = "headerName";
             this.headerName.Size = new System.Drawing.Size(108, 32);
             this.headerName.TabIndex = 0;
@@ -49,7 +49,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
             this.Controls.Add(this.headerName);
             this.Name = "ListHeader";
-            this.Size = new System.Drawing.Size(1100, 55);
+            this.Size = new System.Drawing.Size(1100, 45);
             this.ResumeLayout(false);
             this.PerformLayout();
 

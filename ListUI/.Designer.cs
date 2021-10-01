@@ -35,11 +35,12 @@
             this.addButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.pbSorting = new System.Windows.Forms.PictureBox();
+            this.pbToggleSorting = new System.Windows.Forms.PictureBox();
+            this.pbSettings = new System.Windows.Forms.PictureBox();
+            this.pbOrderBy = new System.Windows.Forms.PictureBox();
             this.pbSearch = new System.Windows.Forms.PictureBox();
-            this.pbFilter = new System.Windows.Forms.PictureBox();
+            this.pbToggleFilter = new System.Windows.Forms.PictureBox();
             this.cbOrderBy = new System.Windows.Forms.ComboBox();
-            this.lbSorting = new System.Windows.Forms.Label();
             this.chDubbedSearch = new System.Windows.Forms.CheckBox();
             this.chFavouriteSearch = new System.Windows.Forms.CheckBox();
             this.lbYearSearch = new System.Windows.Forms.Label();
@@ -49,22 +50,22 @@
             this.seriesButton = new System.Windows.Forms.Panel();
             this.animeButton = new System.Windows.Forms.Panel();
             this.chFinishedSearch = new System.Windows.Forms.CheckBox();
-            this.pbSettings = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSorting)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbFilter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbToggleSorting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOrderBy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbToggleFilter)).BeginInit();
             this.SuspendLayout();
             // 
             // pListItemPanel
             // 
             this.pListItemPanel.AutoScroll = true;
             this.pListItemPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
-            this.pListItemPanel.Location = new System.Drawing.Point(206, 76);
+            this.pListItemPanel.Location = new System.Drawing.Point(202, 72);
             this.pListItemPanel.Name = "pListItemPanel";
-            this.pListItemPanel.Size = new System.Drawing.Size(1148, 685);
+            this.pListItemPanel.Size = new System.Drawing.Size(1152, 689);
             this.pListItemPanel.TabIndex = 2;
             this.pListItemPanel.Click += new System.EventHandler(this.flowLayoutPanel1_Click);
             // 
@@ -74,7 +75,7 @@
             this.txbTitleSearch.Enabled = false;
             this.txbTitleSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbTitleSearch.ForeColor = System.Drawing.SystemColors.Control;
-            this.txbTitleSearch.Location = new System.Drawing.Point(357, 36);
+            this.txbTitleSearch.Location = new System.Drawing.Point(520, 32);
             this.txbTitleSearch.Multiline = true;
             this.txbTitleSearch.Name = "txbTitleSearch";
             this.txbTitleSearch.Size = new System.Drawing.Size(200, 28);
@@ -84,9 +85,9 @@
             // pListHeaderPanel
             // 
             this.pListHeaderPanel.BackColor = System.Drawing.Color.Transparent;
-            this.pListHeaderPanel.Location = new System.Drawing.Point(0, 0);
+            this.pListHeaderPanel.Location = new System.Drawing.Point(0, 3);
             this.pListHeaderPanel.Name = "pListHeaderPanel";
-            this.pListHeaderPanel.Size = new System.Drawing.Size(199, 617);
+            this.pListHeaderPanel.Size = new System.Drawing.Size(199, 625);
             this.pListHeaderPanel.TabIndex = 5;
             // 
             // addButton
@@ -96,7 +97,7 @@
             this.addButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.addButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addButton.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.addButton.Location = new System.Drawing.Point(10, 628);
+            this.addButton.Location = new System.Drawing.Point(10, 631);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(178, 50);
             this.addButton.TabIndex = 1;
@@ -109,20 +110,20 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
             this.panel1.Controls.Add(this.addButton);
             this.panel1.Controls.Add(this.pListHeaderPanel);
-            this.panel1.Location = new System.Drawing.Point(0, 76);
+            this.panel1.Location = new System.Drawing.Point(0, 72);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 685);
+            this.panel1.Size = new System.Drawing.Size(200, 689);
             this.panel1.TabIndex = 3;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel2.Controls.Add(this.pbToggleSorting);
             this.panel2.Controls.Add(this.pbSettings);
-            this.panel2.Controls.Add(this.pbSorting);
+            this.panel2.Controls.Add(this.pbOrderBy);
             this.panel2.Controls.Add(this.pbSearch);
-            this.panel2.Controls.Add(this.pbFilter);
+            this.panel2.Controls.Add(this.pbToggleFilter);
             this.panel2.Controls.Add(this.cbOrderBy);
-            this.panel2.Controls.Add(this.lbSorting);
             this.panel2.Controls.Add(this.chDubbedSearch);
             this.panel2.Controls.Add(this.chFavouriteSearch);
             this.panel2.Controls.Add(this.lbYearSearch);
@@ -139,24 +140,50 @@
             this.panel2.Size = new System.Drawing.Size(1354, 70);
             this.panel2.TabIndex = 6;
             // 
-            // pbSorting
+            // pbToggleSorting
             // 
-            this.pbSorting.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSorting.Image = global::ListUI.Properties.Resources.sort_desc;
-            this.pbSorting.Location = new System.Drawing.Point(484, 0);
-            this.pbSorting.Name = "pbSorting";
-            this.pbSorting.Size = new System.Drawing.Size(30, 30);
-            this.pbSorting.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbSorting.TabIndex = 19;
-            this.pbSorting.TabStop = false;
-            this.pbSorting.Click += new System.EventHandler(this.pbSorting_Click);
+            this.pbToggleSorting.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbToggleSorting.Image = global::ListUI.Properties.Resources.sort;
+            this.pbToggleSorting.Location = new System.Drawing.Point(1246, 11);
+            this.pbToggleSorting.Name = "pbToggleSorting";
+            this.pbToggleSorting.Size = new System.Drawing.Size(40, 40);
+            this.pbToggleSorting.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbToggleSorting.TabIndex = 21;
+            this.pbToggleSorting.TabStop = false;
+            this.pbToggleSorting.Click += new System.EventHandler(this.pbToggleSorting_Click_1);
+            // 
+            // pbSettings
+            // 
+            this.pbSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbSettings.Image = global::ListUI.Properties.Resources.settings;
+            this.pbSettings.Location = new System.Drawing.Point(1292, 12);
+            this.pbSettings.Name = "pbSettings";
+            this.pbSettings.Size = new System.Drawing.Size(40, 40);
+            this.pbSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSettings.TabIndex = 20;
+            this.pbSettings.TabStop = false;
+            this.pbSettings.Click += new System.EventHandler(this.pbSettings_Click);
+            // 
+            // pbOrderBy
+            // 
+            this.pbOrderBy.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbOrderBy.Enabled = false;
+            this.pbOrderBy.Image = global::ListUI.Properties.Resources.sort_desc;
+            this.pbOrderBy.Location = new System.Drawing.Point(376, 30);
+            this.pbOrderBy.Name = "pbOrderBy";
+            this.pbOrderBy.Size = new System.Drawing.Size(30, 30);
+            this.pbOrderBy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbOrderBy.TabIndex = 19;
+            this.pbOrderBy.TabStop = false;
+            this.pbOrderBy.Visible = false;
+            this.pbOrderBy.Click += new System.EventHandler(this.pbSorting_Click);
             // 
             // pbSearch
             // 
             this.pbSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbSearch.Enabled = false;
             this.pbSearch.Image = global::ListUI.Properties.Resources.search;
-            this.pbSearch.Location = new System.Drawing.Point(916, 31);
+            this.pbSearch.Location = new System.Drawing.Point(1074, 30);
             this.pbSearch.Name = "pbSearch";
             this.pbSearch.Size = new System.Drawing.Size(30, 30);
             this.pbSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -165,39 +192,30 @@
             this.pbSearch.Visible = false;
             this.pbSearch.Click += new System.EventHandler(this.pbSearch_Click);
             // 
-            // pbFilter
+            // pbToggleFilter
             // 
-            this.pbFilter.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbFilter.Image = global::ListUI.Properties.Resources.filter;
-            this.pbFilter.Location = new System.Drawing.Point(245, 33);
-            this.pbFilter.Name = "pbFilter";
-            this.pbFilter.Size = new System.Drawing.Size(30, 30);
-            this.pbFilter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbFilter.TabIndex = 17;
-            this.pbFilter.TabStop = false;
-            this.pbFilter.Click += new System.EventHandler(this.pbFilter_Click);
+            this.pbToggleFilter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbToggleFilter.Image = global::ListUI.Properties.Resources.filter;
+            this.pbToggleFilter.Location = new System.Drawing.Point(1200, 10);
+            this.pbToggleFilter.Name = "pbToggleFilter";
+            this.pbToggleFilter.Size = new System.Drawing.Size(40, 40);
+            this.pbToggleFilter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbToggleFilter.TabIndex = 17;
+            this.pbToggleFilter.TabStop = false;
+            this.pbToggleFilter.Click += new System.EventHandler(this.pbFilter_Click);
             // 
             // cbOrderBy
             // 
             this.cbOrderBy.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.cbOrderBy.Enabled = false;
             this.cbOrderBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbOrderBy.FormattingEnabled = true;
-            this.cbOrderBy.Location = new System.Drawing.Point(357, 1);
+            this.cbOrderBy.Location = new System.Drawing.Point(249, 32);
             this.cbOrderBy.Name = "cbOrderBy";
             this.cbOrderBy.Size = new System.Drawing.Size(121, 28);
             this.cbOrderBy.TabIndex = 16;
+            this.cbOrderBy.Visible = false;
             this.cbOrderBy.SelectionChangeCommitted += new System.EventHandler(this.cbOrderBy_SelectionChangeCommitted);
-            // 
-            // lbSorting
-            // 
-            this.lbSorting.AutoSize = true;
-            this.lbSorting.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbSorting.ForeColor = System.Drawing.SystemColors.Control;
-            this.lbSorting.Location = new System.Drawing.Point(240, 0);
-            this.lbSorting.Name = "lbSorting";
-            this.lbSorting.Size = new System.Drawing.Size(111, 26);
-            this.lbSorting.TabIndex = 15;
-            this.lbSorting.Text = "Order by:";
             // 
             // chDubbedSearch
             // 
@@ -207,7 +225,7 @@
             this.chDubbedSearch.Enabled = false;
             this.chDubbedSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chDubbedSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.chDubbedSearch.Location = new System.Drawing.Point(815, 37);
+            this.chDubbedSearch.Location = new System.Drawing.Point(977, 34);
             this.chDubbedSearch.Name = "chDubbedSearch";
             this.chDubbedSearch.Size = new System.Drawing.Size(91, 24);
             this.chDubbedSearch.TabIndex = 13;
@@ -223,7 +241,7 @@
             this.chFavouriteSearch.Enabled = false;
             this.chFavouriteSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chFavouriteSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.chFavouriteSearch.Location = new System.Drawing.Point(705, 38);
+            this.chFavouriteSearch.Location = new System.Drawing.Point(868, 34);
             this.chFavouriteSearch.Name = "chFavouriteSearch";
             this.chFavouriteSearch.Size = new System.Drawing.Size(103, 24);
             this.chFavouriteSearch.TabIndex = 12;
@@ -238,7 +256,7 @@
             this.lbYearSearch.Enabled = false;
             this.lbYearSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbYearSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.lbYearSearch.Location = new System.Drawing.Point(563, 35);
+            this.lbYearSearch.Location = new System.Drawing.Point(726, 34);
             this.lbYearSearch.Name = "lbYearSearch";
             this.lbYearSearch.Size = new System.Drawing.Size(70, 26);
             this.lbYearSearch.TabIndex = 11;
@@ -252,7 +270,7 @@
             this.lbTitleSearch.Enabled = false;
             this.lbTitleSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbTitleSearch.ForeColor = System.Drawing.SystemColors.Control;
-            this.lbTitleSearch.Location = new System.Drawing.Point(287, 37);
+            this.lbTitleSearch.Location = new System.Drawing.Point(450, 34);
             this.lbTitleSearch.Name = "lbTitleSearch";
             this.lbTitleSearch.Size = new System.Drawing.Size(64, 26);
             this.lbTitleSearch.TabIndex = 10;
@@ -265,7 +283,7 @@
             this.txbYearSearch.Enabled = false;
             this.txbYearSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbYearSearch.ForeColor = System.Drawing.SystemColors.Control;
-            this.txbYearSearch.Location = new System.Drawing.Point(639, 34);
+            this.txbYearSearch.Location = new System.Drawing.Point(802, 32);
             this.txbYearSearch.MaxLength = 4;
             this.txbYearSearch.Multiline = true;
             this.txbYearSearch.Name = "txbYearSearch";
@@ -322,7 +340,7 @@
             this.chFinishedSearch.Enabled = false;
             this.chFinishedSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chFinishedSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.chFinishedSearch.Location = new System.Drawing.Point(815, 40);
+            this.chFinishedSearch.Location = new System.Drawing.Point(977, 34);
             this.chFinishedSearch.Name = "chFinishedSearch";
             this.chFinishedSearch.Size = new System.Drawing.Size(96, 24);
             this.chFinishedSearch.TabIndex = 14;
@@ -330,22 +348,11 @@
             this.chFinishedSearch.UseVisualStyleBackColor = true;
             this.chFinishedSearch.Visible = false;
             // 
-            // pbSettings
-            // 
-            this.pbSettings.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSettings.Image = global::ListUI.Properties.Resources.settings;
-            this.pbSettings.Location = new System.Drawing.Point(1292, 12);
-            this.pbSettings.Name = "pbSettings";
-            this.pbSettings.Size = new System.Drawing.Size(50, 50);
-            this.pbSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbSettings.TabIndex = 20;
-            this.pbSettings.TabStop = false;
-            // 
             // LibraryUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1354, 761);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -356,13 +363,15 @@
             this.Name = "LibraryUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "My Little Library";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LibraryUI_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSorting)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbFilter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbToggleSorting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbOrderBy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbToggleFilter)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -378,17 +387,17 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ComboBox cbOrderBy;
-        private System.Windows.Forms.Label lbSorting;
         private System.Windows.Forms.CheckBox chFinishedSearch;
         private System.Windows.Forms.CheckBox chDubbedSearch;
         private System.Windows.Forms.CheckBox chFavouriteSearch;
         private System.Windows.Forms.Label lbYearSearch;
         private System.Windows.Forms.Label lbTitleSearch;
         private System.Windows.Forms.TextBox txbYearSearch;
-        private System.Windows.Forms.PictureBox pbFilter;
-        private System.Windows.Forms.PictureBox pbSorting;
+        private System.Windows.Forms.PictureBox pbToggleFilter;
+        private System.Windows.Forms.PictureBox pbOrderBy;
         private System.Windows.Forms.PictureBox pbSearch;
         private System.Windows.Forms.PictureBox pbSettings;
+        private System.Windows.Forms.PictureBox pbToggleSorting;
     }
 }
 

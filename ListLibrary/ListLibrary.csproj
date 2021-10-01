@@ -52,7 +52,8 @@
   <ItemGroup>
     <Compile Include="Database\SqliteDataAccess.cs" />
     <Compile Include="Model\ItemModel.cs" />
-    <Compile Include="Model\ListHeaderModel.cs" />
+    <Compile Include="Model\HeaderModel.cs" />
+    <Compile Include="Model\LogModel.cs" />
     <Compile Include="Model\SeriesModel.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\AnimeModel.cs" />

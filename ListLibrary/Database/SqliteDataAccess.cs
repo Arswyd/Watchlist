@@ -13,31 +13,100 @@ namespace ListLibrary.Database
 {
     public class SqliteDataAccess
     {
+        // Login
+
+        public static List<LogModel> LoadLogs()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<LogModel>("SELECT * FROM Log ORDER BY DATE DESC LIMIT 50");
+                return output.ToList();
+            }
+        }
+        public static void LogLastLogin()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("UPDATE Log SET Date='" + DateTime.Now.ToString() + "' WHERE ID=1");
+            }
+        }
+
         // Headers
 
-        public static List<ListHeaderModel> LoadAnimeListHeaders()
+        public static List<HeaderModel> LoadAnimeListHeaders()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<ListHeaderModel>("SELECT LH.ListType, LH.ListGroup, LH.SortOrder, (SELECT COUNT(1) FROM Anime AS A WHERE A.ListGroup = LH.ListGroup) AS Count FROM ListHeaders AS LH WHERE LH.ListType = 'Anime'");
-                return output.ToList();
-            }
-        }
-        public static List<ListHeaderModel> LoadGameListHeaders()
-        {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
-            {
-                var output = cnn.Query<ListHeaderModel>("SELECT LH.ListType, LH.ListGroup, LH.SortOrder, (SELECT COUNT(1) FROM Games AS G WHERE G.ListGroup = LH.ListGroup) AS Count FROM ListHeaders AS LH WHERE LH.ListType = 'Game'");
+                var output = cnn.Query<HeaderModel>("SELECT LH.ID, LH.ListType, LH.ListGroup, LH.SortOrder, (SELECT COUNT(1) FROM Anime AS A WHERE A.ListGroup = LH.ListGroup) AS Count FROM ListHeaders AS LH WHERE LH.ListType = 'Anime' ORDER BY LH.SortOrder");
                 return output.ToList();
             }
         }
 
-        public static List<ListHeaderModel> LoadSeriesListHeaders()
+        public static List<HeaderModel> LoadGameListHeaders()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<ListHeaderModel>("SELECT LH.ListType, LH.ListGroup, LH.SortOrder, (SELECT COUNT(1) FROM Series AS S WHERE S.ListGroup = LH.ListGroup) AS Count FROM ListHeaders AS LH WHERE LH.ListType = 'Series'");
+                var output = cnn.Query<HeaderModel>("SELECT LH.ID, LH.ListType, LH.ListGroup, LH.SortOrder, (SELECT COUNT(1) FROM Games AS G WHERE G.ListGroup = LH.ListGroup) AS Count FROM ListHeaders AS LH WHERE LH.ListType = 'Game' ORDER BY LH.SortOrder");
                 return output.ToList();
+            }
+        }
+
+        public static List<HeaderModel> LoadSeriesListHeaders()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<HeaderModel>("SELECT LH.ID, LH.ListType, LH.ListGroup, LH.SortOrder, (SELECT COUNT(1) FROM Series AS S WHERE S.ListGroup = LH.ListGroup) AS Count FROM ListHeaders AS LH WHERE LH.ListType = 'Series' ORDER BY LH.SortOrder");
+                return output.ToList();
+            }
+        }
+
+        public static void SaveHeader(HeaderModel header)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("INSERT INTO ListHeaders (ListType, ListGroup, SortOrder) VALUES (@ListType, @ListGroup, @SortOrder)", header);
+                cnn.Execute("INSERT INTO Log (Date, LogText) VALUES ('" + DateTime.Now.ToString() + "', 'Header added to " + header.ListType + ": \"" + header.ListGroup + "\"')");
+            }
+        }
+
+        public static void UpdateHeader(HeaderModel header)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("UPDATE ListHeaders SET ListGroup=@ListGroup, SortOrder=@SortOrder WHERE ID=@ID", header);
+            }
+        }
+
+        public static void DeleteHeader(HeaderModel header)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("DELETE FROM ListHeaders WHERE ID=@ID", header);
+                cnn.Execute("INSERT INTO Log (Date, LogText) VALUES ('" + DateTime.Now.ToString("yyyy.MM.dd. HH:mm") + "', 'Header deleted: " + header.ListGroup + "')");
+            }
+        }
+
+        public static void UpdateAnimeListGroup(string newheader, string oldheader)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("UPDATE Anime SET ListGroup='" + newheader + "' WHERE ListGroup='" + oldheader + "'");
+            }
+        }
+
+        public static void UpdateSeriesListGroup(string newheader, string oldheader)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("UPDATE Series SET ListGroup='" + newheader + "' WHERE ListGroup='" + oldheader + "'");
+            }
+        }
+
+        public static void UpdateGameListGroup(string newheader, string oldheader)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                cnn.Execute("UPDATE Game SET ListGroup='" + newheader + "' WHERE ListGroup='" + oldheader + "'");
             }
         }
 
@@ -51,6 +120,15 @@ namespace ListLibrary.Database
             {
                 var output = cnn.Query<AnimeModel>(sqlString);
                 return output.ToList();
+            }
+        }
+
+        public static AnimeModel LoadAnimeByID(int id)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<AnimeModel>("SELECT * FROM Anime WHERE ID=" + id).First();
+                return output;
             }
         }
 

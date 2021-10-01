@@ -160,7 +160,7 @@
             // pbDubbed
             // 
             this.pbDubbed.BackColor = System.Drawing.Color.Transparent;
-            this.pbDubbed.Image = global::ListUI.Properties.Resources.checkmark;
+            this.pbDubbed.Image = global::ListUI.Properties.Resources.check;
             this.pbDubbed.Location = new System.Drawing.Point(2, 2);
             this.pbDubbed.Name = "pbDubbed";
             this.pbDubbed.Size = new System.Drawing.Size(20, 20);
