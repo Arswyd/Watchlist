@@ -59,6 +59,10 @@ namespace ListUI.ListItems
             {
                 lbItemScore.Text = "N/A";
             }
+            else if(item.Score % 1 == 0)
+            {
+                lbItemScore.Text = item.Score.ToString() + ",0";
+            }
             else
             {
                 lbItemScore.Text = item.Score.ToString();
@@ -80,6 +84,7 @@ namespace ListUI.ListItems
                 }
                 else if (!String.IsNullOrWhiteSpace(item.Notes) && ((AnimeModel)item).Dubbed == true)
                 {
+                    pbDubbed.Show();
                     pbNotes.Show();
                     toolTip1.SetToolTip(pbNotes, item.Notes);
                 }
@@ -100,6 +105,7 @@ namespace ListUI.ListItems
                 }
                 else if (!String.IsNullOrWhiteSpace(item.Notes) && ((SeriesModel)item).FinishedRunning == true)
                 {
+                    pbDubbed.Show();
                     pbNotes.Show();
                     toolTip1.SetToolTip(pbNotes, item.Notes);
                 }
@@ -129,20 +135,20 @@ namespace ListUI.ListItems
         {
             //TODO: Kell ez?
 
-            if (lbItemScore.Text == "N/A")
-            {
-                lbItemScore.Text = "0";
-            }
+            //if (lbItemScore.Text == "N/A")
+            //{
+            //    lbItemScore.Text = "0";
+            //}
 
             if (currentItem.Url.StartsWith("https://"))
             {
                 System.Diagnostics.Process.Start(currentItem.Url);
             }
 
-            if (lbItemScore.Text == "0")
-            {
-                lbItemScore.Text = "N/A";
-            }
+            //if (lbItemScore.Text == "0")
+            //{
+            //    lbItemScore.Text = "N/A";
+            //}
         }
 
         private void plusWatched_Click(object sender, EventArgs e)
@@ -209,8 +215,6 @@ namespace ListUI.ListItems
                     MessageBox.Show("Series Completed!");
 
                     callerForm.WireUpRequest(listGroup);
-
-                    //this.Dispose();
                 }
                 else if (!((SeriesModel)currentItem).FinishedRunning && ((SeriesModel)currentItem).CurrentSe == ((SeriesModel)currentItem).TotalSe && ((SeriesModel)currentItem).WatchedEp == (((SeriesModel)currentItem).CurrentSeasonTotalEp - 1))
                 {
@@ -225,8 +229,6 @@ namespace ListUI.ListItems
                     MessageBox.Show("Season Completed!");
 
                     callerForm.WireUpRequest(listGroup);
-
-                    //this.Dispose();
                 }
                 else
                 {
@@ -247,8 +249,6 @@ namespace ListUI.ListItems
                         lbItemEpisodes.Text = "S" + ((SeriesModel)currentItem).CurrentSe.ToString() + " E" + ((SeriesModel)currentItem).WatchedEp.ToString();
 
                         SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
-
-                        //TODO: Reload list
                     }
                     else
                     {
@@ -268,7 +268,7 @@ namespace ListUI.ListItems
 
         private void pbListItem_MouseLeave(object sender, EventArgs e)
         {
-            panel1.Visible = false;
+
         }
 
         private void listItemScore_MouseEnter(object sender, EventArgs e)
@@ -313,19 +313,29 @@ namespace ListUI.ListItems
         {
             //TODO: Kell ez?
 
-            if (lbItemScore.Text == "N/A")
-            {
-                lbItemScore.Text = "0";
-            }
+            //if (lbItemScore.Text == "N/A")
+            //{
+            //    lbItemScore.Text = "0";
+            //}
 
             callerForm.ModifyItem(currentItem, this.Parent.Controls.GetChildIndex(this));
 
             //AddItem(currentItem);
 
-            if (lbItemScore.Text == "0")
-            {
-                lbItemScore.Text = "N/A";
-            }
+            //if (lbItemScore.Text == "0")
+            //{
+            //    lbItemScore.Text = "N/A";
+            //}
+        }
+
+        private void panel2_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_MouseLeave(object sender, EventArgs e)
+        {
+            panel1.Visible = false;
         }
     }
 }

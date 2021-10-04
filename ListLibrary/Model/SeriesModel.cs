@@ -21,7 +21,7 @@ namespace ListLibrary.Model
         {
             get
             {
-                return Convert.ToInt32(TotalEp.Split(';')[CurrentSe]);
+                return Convert.ToInt32(TotalEp.Split('/')[CurrentSe-1]);
             }
         }
         public override string PictureDir

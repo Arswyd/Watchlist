@@ -129,6 +129,8 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(166, 226);
             this.panel2.TabIndex = 5;
+            this.panel2.MouseEnter += new System.EventHandler(this.panel2_MouseEnter);
+            this.panel2.MouseLeave += new System.EventHandler(this.panel2_MouseLeave);
             // 
             // pbDetails
             // 

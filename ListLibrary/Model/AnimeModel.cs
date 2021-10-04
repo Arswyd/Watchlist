@@ -30,6 +30,7 @@ namespace ListLibrary.Model
             Favourite = false;
             Dubbed = false;
             ListGroup = "Not Aired Yet";
+            Season = "Spring";
         }
 
         //public AnimeModel(string title, string animeURL, string pictureURL, decimal score, int totalEP, int watchedEP, bool dubbed, bool favourite, string notes, string listGroup)

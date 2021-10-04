@@ -45,14 +45,21 @@ namespace ListUI.Forms
             this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colLog = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.bDeleteGame = new System.Windows.Forms.Button();
+            this.bDeleteSeries = new System.Windows.Forms.Button();
+            this.bDeleteAnime = new System.Windows.Forms.Button();
+            this.bExportG = new System.Windows.Forms.Button();
+            this.bExportS = new System.Windows.Forms.Button();
+            this.bExportA = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.bTruncateLog = new System.Windows.Forms.Button();
+            this.bDownloadPicG = new System.Windows.Forms.Button();
+            this.bDownloadPicS = new System.Windows.Forms.Button();
+            this.bDownloadPicA = new System.Windows.Forms.Button();
+            this.bImportG = new System.Windows.Forms.Button();
+            this.bImportS = new System.Windows.Forms.Button();
+            this.bImportA = new System.Windows.Forms.Button();
+            this.bDeleteLog = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -220,100 +227,185 @@ namespace ListUI.Forms
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button6);
-            this.groupBox3.Controls.Add(this.button2);
-            this.groupBox3.Controls.Add(this.button4);
+            this.groupBox3.Controls.Add(this.bDeleteGame);
+            this.groupBox3.Controls.Add(this.bDeleteSeries);
+            this.groupBox3.Controls.Add(this.bDeleteAnime);
+            this.groupBox3.Controls.Add(this.bExportG);
+            this.groupBox3.Controls.Add(this.bExportS);
+            this.groupBox3.Controls.Add(this.bExportA);
             this.groupBox3.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.groupBox3.Location = new System.Drawing.Point(12, 498);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(408, 100);
+            this.groupBox3.Size = new System.Drawing.Size(318, 100);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Export";
             // 
-            // button6
+            // bDeleteGame
             // 
-            this.button6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button6.Location = new System.Drawing.Point(206, 40);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(78, 33);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "Up";
-            this.button6.UseVisualStyleBackColor = true;
+            this.bDeleteGame.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDeleteGame.Location = new System.Drawing.Point(215, 58);
+            this.bDeleteGame.Name = "bDeleteGame";
+            this.bDeleteGame.Size = new System.Drawing.Size(90, 33);
+            this.bDeleteGame.TabIndex = 11;
+            this.bDeleteGame.Text = "Delete Games";
+            this.bDeleteGame.UseVisualStyleBackColor = true;
+            this.bDeleteGame.Click += new System.EventHandler(this.bDeleteGame_Click);
             // 
-            // button2
+            // bDeleteSeries
             // 
-            this.button2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button2.Location = new System.Drawing.Point(120, 40);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(78, 33);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Up";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bDeleteSeries.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDeleteSeries.Location = new System.Drawing.Point(119, 58);
+            this.bDeleteSeries.Name = "bDeleteSeries";
+            this.bDeleteSeries.Size = new System.Drawing.Size(90, 33);
+            this.bDeleteSeries.TabIndex = 10;
+            this.bDeleteSeries.Text = "Delete Series";
+            this.bDeleteSeries.UseVisualStyleBackColor = true;
+            this.bDeleteSeries.Click += new System.EventHandler(this.bDeleteSeries_Click);
             // 
-            // button4
+            // bDeleteAnime
             // 
-            this.button4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button4.Location = new System.Drawing.Point(26, 40);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(78, 33);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "Up";
-            this.button4.UseVisualStyleBackColor = true;
+            this.bDeleteAnime.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDeleteAnime.Location = new System.Drawing.Point(23, 58);
+            this.bDeleteAnime.Name = "bDeleteAnime";
+            this.bDeleteAnime.Size = new System.Drawing.Size(90, 33);
+            this.bDeleteAnime.TabIndex = 9;
+            this.bDeleteAnime.Text = "Delete Anime";
+            this.bDeleteAnime.UseVisualStyleBackColor = true;
+            this.bDeleteAnime.Click += new System.EventHandler(this.bDeleteAnime_Click);
+            // 
+            // bExportG
+            // 
+            this.bExportG.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bExportG.Location = new System.Drawing.Point(212, 19);
+            this.bExportG.Name = "bExportG";
+            this.bExportG.Size = new System.Drawing.Size(90, 33);
+            this.bExportG.TabIndex = 6;
+            this.bExportG.Text = "Export Games";
+            this.bExportG.UseVisualStyleBackColor = true;
+            this.bExportG.Click += new System.EventHandler(this.bExportG_Click);
+            // 
+            // bExportS
+            // 
+            this.bExportS.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bExportS.Location = new System.Drawing.Point(128, 19);
+            this.bExportS.Name = "bExportS";
+            this.bExportS.Size = new System.Drawing.Size(78, 33);
+            this.bExportS.TabIndex = 4;
+            this.bExportS.Text = "Export Series";
+            this.bExportS.UseVisualStyleBackColor = true;
+            this.bExportS.Click += new System.EventHandler(this.bExportS_Click);
+            // 
+            // bExportA
+            // 
+            this.bExportA.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bExportA.Location = new System.Drawing.Point(23, 19);
+            this.bExportA.Name = "bExportA";
+            this.bExportA.Size = new System.Drawing.Size(78, 33);
+            this.bExportA.TabIndex = 2;
+            this.bExportA.Text = "Export Anime";
+            this.bExportA.UseVisualStyleBackColor = true;
+            this.bExportA.Click += new System.EventHandler(this.bExportA_Click);
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.button7);
-            this.groupBox4.Controls.Add(this.button9);
-            this.groupBox4.Controls.Add(this.button11);
+            this.groupBox4.Controls.Add(this.bDownloadPicG);
+            this.groupBox4.Controls.Add(this.bDownloadPicS);
+            this.groupBox4.Controls.Add(this.bDownloadPicA);
+            this.groupBox4.Controls.Add(this.bImportG);
+            this.groupBox4.Controls.Add(this.bImportS);
+            this.groupBox4.Controls.Add(this.bImportA);
             this.groupBox4.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.groupBox4.Location = new System.Drawing.Point(426, 498);
+            this.groupBox4.Location = new System.Drawing.Point(336, 498);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(408, 100);
+            this.groupBox4.Size = new System.Drawing.Size(556, 100);
             this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Import";
             // 
-            // button7
+            // bDownloadPicG
             // 
-            this.button7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button7.Location = new System.Drawing.Point(238, 32);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(78, 33);
-            this.button7.TabIndex = 7;
-            this.button7.Text = "Down";
-            this.button7.UseVisualStyleBackColor = true;
+            this.bDownloadPicG.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDownloadPicG.Location = new System.Drawing.Point(342, 58);
+            this.bDownloadPicG.Name = "bDownloadPicG";
+            this.bDownloadPicG.Size = new System.Drawing.Size(78, 33);
+            this.bDownloadPicG.TabIndex = 10;
+            this.bDownloadPicG.Text = "S Pic Games";
+            this.bDownloadPicG.UseVisualStyleBackColor = true;
+            this.bDownloadPicG.Click += new System.EventHandler(this.bDownloadPicG_Click);
             // 
-            // button9
+            // bDownloadPicS
             // 
-            this.button9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button9.Location = new System.Drawing.Point(129, 32);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(78, 33);
-            this.button9.TabIndex = 5;
-            this.button9.Text = "Down";
-            this.button9.UseVisualStyleBackColor = true;
+            this.bDownloadPicS.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDownloadPicS.Location = new System.Drawing.Point(174, 58);
+            this.bDownloadPicS.Name = "bDownloadPicS";
+            this.bDownloadPicS.Size = new System.Drawing.Size(78, 33);
+            this.bDownloadPicS.TabIndex = 9;
+            this.bDownloadPicS.Text = "D Pic Series";
+            this.bDownloadPicS.UseVisualStyleBackColor = true;
+            this.bDownloadPicS.Click += new System.EventHandler(this.bDownloadPicS_Click);
             // 
-            // button11
+            // bDownloadPicA
             // 
-            this.button11.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button11.Location = new System.Drawing.Point(28, 32);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(78, 33);
-            this.button11.TabIndex = 3;
-            this.button11.Text = "Down";
-            this.button11.UseVisualStyleBackColor = true;
+            this.bDownloadPicA.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDownloadPicA.Location = new System.Drawing.Point(6, 58);
+            this.bDownloadPicA.Name = "bDownloadPicA";
+            this.bDownloadPicA.Size = new System.Drawing.Size(78, 33);
+            this.bDownloadPicA.TabIndex = 8;
+            this.bDownloadPicA.Text = "D Pic Anime";
+            this.bDownloadPicA.UseVisualStyleBackColor = true;
+            this.bDownloadPicA.Click += new System.EventHandler(this.bDownloadPicA_Click);
             // 
-            // bTruncateLog
+            // bImportG
             // 
-            this.bTruncateLog.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.bTruncateLog.Location = new System.Drawing.Point(964, 538);
-            this.bTruncateLog.Name = "bTruncateLog";
-            this.bTruncateLog.Size = new System.Drawing.Size(90, 33);
-            this.bTruncateLog.TabIndex = 8;
-            this.bTruncateLog.Text = "Truncate Log";
-            this.bTruncateLog.UseVisualStyleBackColor = true;
-            this.bTruncateLog.Click += new System.EventHandler(this.bTruncateLog_Click);
+            this.bImportG.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bImportG.Location = new System.Drawing.Point(342, 19);
+            this.bImportG.Name = "bImportG";
+            this.bImportG.Size = new System.Drawing.Size(83, 33);
+            this.bImportG.TabIndex = 7;
+            this.bImportG.Text = "Import Games";
+            this.bImportG.UseVisualStyleBackColor = true;
+            this.bImportG.Click += new System.EventHandler(this.bImportG_Click);
+            // 
+            // bImportS
+            // 
+            this.bImportS.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bImportS.Location = new System.Drawing.Point(174, 19);
+            this.bImportS.Name = "bImportS";
+            this.bImportS.Size = new System.Drawing.Size(78, 33);
+            this.bImportS.TabIndex = 5;
+            this.bImportS.Text = "Import Series";
+            this.bImportS.UseVisualStyleBackColor = true;
+            this.bImportS.Click += new System.EventHandler(this.bImportS_Click);
+            // 
+            // bImportA
+            // 
+            this.bImportA.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bImportA.Location = new System.Drawing.Point(6, 19);
+            this.bImportA.Name = "bImportA";
+            this.bImportA.Size = new System.Drawing.Size(78, 33);
+            this.bImportA.TabIndex = 3;
+            this.bImportA.Text = "Import Anime";
+            this.bImportA.UseVisualStyleBackColor = true;
+            this.bImportA.Click += new System.EventHandler(this.bImportA_Click);
+            // 
+            // bDeleteLog
+            // 
+            this.bDeleteLog.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDeleteLog.Location = new System.Drawing.Point(1099, 556);
+            this.bDeleteLog.Name = "bDeleteLog";
+            this.bDeleteLog.Size = new System.Drawing.Size(90, 33);
+            this.bDeleteLog.TabIndex = 8;
+            this.bDeleteLog.Text = "Delete Logs";
+            this.bDeleteLog.UseVisualStyleBackColor = true;
+            this.bDeleteLog.Click += new System.EventHandler(this.bTruncateLog_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(898, 509);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(291, 23);
+            this.progressBar1.TabIndex = 9;
             // 
             // SettingsForm
             // 
@@ -321,7 +413,8 @@ namespace ListUI.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(1237, 611);
-            this.Controls.Add(this.bTruncateLog);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.bDeleteLog);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -351,18 +444,25 @@ namespace ListUI.Forms
         private System.Windows.Forms.ColumnHeader colDate;
         private System.Windows.Forms.ColumnHeader colLog;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bExportA;
+        private System.Windows.Forms.Button bExportG;
+        private System.Windows.Forms.Button bExportS;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button bImportG;
+        private System.Windows.Forms.Button bImportS;
+        private System.Windows.Forms.Button bImportA;
         private System.Windows.Forms.TextBox txbHeaderEdit;
         private System.Windows.Forms.Button bSave;
         private System.Windows.Forms.Button bAdd;
         private System.Windows.Forms.Button bDelete;
         private System.Windows.Forms.ColumnHeader colOrder;
-        private System.Windows.Forms.Button bTruncateLog;
+        private System.Windows.Forms.Button bDeleteLog;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button bDeleteGame;
+        private System.Windows.Forms.Button bDeleteSeries;
+        private System.Windows.Forms.Button bDeleteAnime;
+        private System.Windows.Forms.Button bDownloadPicG;
+        private System.Windows.Forms.Button bDownloadPicS;
+        private System.Windows.Forms.Button bDownloadPicA;
     }
 }

@@ -63,7 +63,6 @@ namespace ListUI.Forms
             listType = activeListType;
             callingForm = libraryUI;
             currentItem = item;
-            //currentItem = SqliteDataAccess.LoadAnimeByID(id);
 
             if (listType == "Anime")
                 listHeaders = SqliteDataAccess.LoadAnimeListHeaders();
@@ -206,17 +205,17 @@ namespace ListUI.Forms
                 {
                     if (currentItem is AnimeModel)
                     {
-                        SqliteDataAccess.SaveAnime((AnimeModel)currentItem);
+                        SqliteDataAccess.SaveAnime((AnimeModel)currentItem, 1);
                         currentItem.ID = SqliteDataAccess.GetLastAnimeID();
                     }
                     else if (currentItem is SeriesModel)
                     {
-                        SqliteDataAccess.SaveSeries((SeriesModel)currentItem);
+                        SqliteDataAccess.SaveSeries((SeriesModel)currentItem, 1);
                         currentItem.ID = SqliteDataAccess.GetLastSeriesID();
                     }
                     else if (currentItem is GameModel)
                     {
-                        SqliteDataAccess.SaveGame((GameModel)currentItem);
+                        SqliteDataAccess.SaveGame((GameModel)currentItem, 1);
                         currentItem.ID = SqliteDataAccess.GetLastGameID();
                     }
                 }
@@ -308,7 +307,7 @@ namespace ListUI.Forms
             }
             else if (txbYear.Text.Length != 4)
             {
-                txbScore.BackColor = Color.LightCoral;
+                txbYear.BackColor = Color.LightCoral;
                 output = false;
             }
 
@@ -355,7 +354,7 @@ namespace ListUI.Forms
             {
                 //Series TotalEp
 
-                if (txbTotalEp.Text.Length != 0 && !txbTotalEp.Text.All(c => ((c >= '0' && c <= '9') || c.Equals(";"))))
+                if (txbTotalEp.Text.Length != 0 && !txbTotalEp.Text.All(c => ((c >= '0' && c <= '9') || c.ToString() == "/")))
                 {
                     txbTotalEp.BackColor = Color.LightCoral;
                     output = false;
@@ -428,7 +427,7 @@ namespace ListUI.Forms
             currentItem.Title = txbTitle.Text;
             currentItem.Url = txbUrl.Text;
             currentItem.ListGroup = cbListGroup.Text;
-            currentItem.Score = decimal.Round(Convert.ToDecimal(txbScore.Text));
+            currentItem.Score = decimal.Round(Convert.ToDecimal(txbScore.Text), 1);
             currentItem.Notes = txbNotes.Text;
             currentItem.Year = Convert.ToInt32(txbYear.Text);
             if (currentItem is AnimeModel)

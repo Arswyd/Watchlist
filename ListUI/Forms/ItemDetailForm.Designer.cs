@@ -144,9 +144,8 @@
             this.txbTotalEp.Font = new System.Drawing.Font("Arial", 10F);
             this.txbTotalEp.Location = new System.Drawing.Point(45, 346);
             this.txbTotalEp.MaxLength = 3;
-            this.txbTotalEp.Multiline = true;
             this.txbTotalEp.Name = "txbTotalEp";
-            this.txbTotalEp.Size = new System.Drawing.Size(50, 20);
+            this.txbTotalEp.Size = new System.Drawing.Size(50, 23);
             this.txbTotalEp.TabIndex = 4;
             this.txbTotalEp.Text = "0";
             this.txbTotalEp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;

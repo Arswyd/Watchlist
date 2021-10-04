@@ -60,21 +60,18 @@ namespace ListUI
                 CreateMenuItems();
                 InitializeListLoading();
                 pListItemPanel.Focus();
-                txbTitleSearch.Text = "";
             }
             if (activeListType == "Series")
             {
                 CreateMenuItems();
                 InitializeListLoading();
                 pListItemPanel.Focus();
-                txbTitleSearch.Text = "";
             }
             if (activeListType == "Game")
             {
                 CreateMenuItems();
                 InitializeListLoading();
                 pListItemPanel.Focus();
-                txbTitleSearch.Text = "";
             }
 
             Application.UseWaitCursor = false;
@@ -145,8 +142,6 @@ namespace ListUI
                     sWhere = sWhere + " AND " + c + ".Year =" + Convert.ToInt32(txbTitleSearch.Text);
                 if (chFavouriteSearch.CheckState == CheckState.Checked)
                     sWhere = sWhere + " AND " + c + ".Favourite = 1";
-                else if (chFavouriteSearch.CheckState == CheckState.Unchecked)
-                    sWhere = sWhere + " AND " + c + ".Favourite = 0";
                 if (activeListType == "Anime")
                 {
                     if (chDubbedSearch.CheckState == CheckState.Checked)
@@ -185,8 +180,6 @@ namespace ListUI
         {
             pListHeaderPanel.Controls.Clear();
 
-            pListHeaderPanel.SuspendLayout();
-
             if (activeListType == "Anime")
                 headerList = SqliteDataAccess.LoadAnimeListHeaders();
             else if (activeListType == "Game")
@@ -214,15 +207,12 @@ namespace ListUI
                 }
                 pListHeaderPanel.Controls.Add(menuItem);
             }
-
-            pListHeaderPanel.ResumeLayout();
         }
 
         public void InitializeListLoading()
         {
             int yscroll = pListItemPanel.AutoScrollPosition.Y;
 
-            // TODO : Dispose
             pListItemPanel.Controls.Clear();
 
             pListItemPanel.SuspendLayout();

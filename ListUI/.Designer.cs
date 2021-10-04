@@ -230,14 +230,13 @@
             this.chDubbedSearch.Size = new System.Drawing.Size(91, 24);
             this.chDubbedSearch.TabIndex = 13;
             this.chDubbedSearch.Text = "Dubbed";
+            this.chDubbedSearch.ThreeState = true;
             this.chDubbedSearch.UseVisualStyleBackColor = true;
             this.chDubbedSearch.Visible = false;
             // 
             // chFavouriteSearch
             // 
             this.chFavouriteSearch.AutoSize = true;
-            this.chFavouriteSearch.Checked = true;
-            this.chFavouriteSearch.CheckState = System.Windows.Forms.CheckState.Indeterminate;
             this.chFavouriteSearch.Enabled = false;
             this.chFavouriteSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chFavouriteSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
@@ -246,7 +245,6 @@
             this.chFavouriteSearch.Size = new System.Drawing.Size(103, 24);
             this.chFavouriteSearch.TabIndex = 12;
             this.chFavouriteSearch.Text = "Favourite";
-            this.chFavouriteSearch.ThreeState = true;
             this.chFavouriteSearch.UseVisualStyleBackColor = true;
             this.chFavouriteSearch.Visible = false;
             // 
