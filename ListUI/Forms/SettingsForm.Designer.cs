@@ -52,6 +52,7 @@ namespace ListUI.Forms
             this.button7 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
+            this.bTruncateLog = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -184,7 +185,7 @@ namespace ListUI.Forms
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.groupBox2.Location = new System.Drawing.Point(426, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(458, 480);
+            this.groupBox2.Size = new System.Drawing.Size(763, 480);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Log";
@@ -199,10 +200,10 @@ namespace ListUI.Forms
             this.lvLogs.GridLines = true;
             this.lvLogs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvLogs.HideSelection = false;
-            this.lvLogs.Location = new System.Drawing.Point(22, 31);
+            this.lvLogs.Location = new System.Drawing.Point(28, 28);
             this.lvLogs.MultiSelect = false;
             this.lvLogs.Name = "lvLogs";
-            this.lvLogs.Size = new System.Drawing.Size(414, 427);
+            this.lvLogs.Size = new System.Drawing.Size(700, 430);
             this.lvLogs.TabIndex = 0;
             this.lvLogs.UseCompatibleStateImageBehavior = false;
             this.lvLogs.View = System.Windows.Forms.View.Details;
@@ -215,7 +216,7 @@ namespace ListUI.Forms
             // colLog
             // 
             this.colLog.Text = "Log Text";
-            this.colLog.Width = 295;
+            this.colLog.Width = 579;
             // 
             // groupBox3
             // 
@@ -303,12 +304,24 @@ namespace ListUI.Forms
             this.button11.Text = "Down";
             this.button11.UseVisualStyleBackColor = true;
             // 
+            // bTruncateLog
+            // 
+            this.bTruncateLog.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bTruncateLog.Location = new System.Drawing.Point(964, 538);
+            this.bTruncateLog.Name = "bTruncateLog";
+            this.bTruncateLog.Size = new System.Drawing.Size(90, 33);
+            this.bTruncateLog.TabIndex = 8;
+            this.bTruncateLog.Text = "Truncate Log";
+            this.bTruncateLog.UseVisualStyleBackColor = true;
+            this.bTruncateLog.Click += new System.EventHandler(this.bTruncateLog_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
-            this.ClientSize = new System.Drawing.Size(906, 611);
+            this.ClientSize = new System.Drawing.Size(1237, 611);
+            this.Controls.Add(this.bTruncateLog);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -350,5 +363,6 @@ namespace ListUI.Forms
         private System.Windows.Forms.Button bAdd;
         private System.Windows.Forms.Button bDelete;
         private System.Windows.Forms.ColumnHeader colOrder;
+        private System.Windows.Forms.Button bTruncateLog;
     }
 }

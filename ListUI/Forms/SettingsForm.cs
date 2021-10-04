@@ -28,6 +28,7 @@ namespace ListUI.Forms
 
         private void LoadLogs()
         {
+            lvLogs.Items.Clear();
             logs = SqliteDataAccess.LoadLogs();
 
             foreach (var log in logs)
@@ -78,6 +79,7 @@ namespace ListUI.Forms
             SqliteDataAccess.UpdateHeader(selectedHeader);
             //txbHeaderEdit.Text = "";
             LoadHeaderListView();
+            LoadLogs();
         }
 
         private void bDown_Click(object sender, EventArgs e)
@@ -89,6 +91,7 @@ namespace ListUI.Forms
             SqliteDataAccess.UpdateHeader(selectedHeader);
             //txbHeaderEdit.Text = "";
             LoadHeaderListView();
+            LoadLogs();
         }
 
         private void bAdd_Click(object sender, EventArgs e)
@@ -107,6 +110,8 @@ namespace ListUI.Forms
             {
                 MessageBox.Show("No more headers can be added!");
             }
+
+            LoadLogs();
         }
 
         private void bSave_Click(object sender, EventArgs e)
@@ -127,6 +132,8 @@ namespace ListUI.Forms
             {
                 MessageBox.Show("There is no selected item", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
+            LoadLogs();
         }
 
         private void bDelete_Click(object sender, EventArgs e)
@@ -153,6 +160,8 @@ namespace ListUI.Forms
             {
                 MessageBox.Show("There is no selected item", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
+            LoadLogs();
         }
 
         private bool LoadList()
@@ -187,6 +196,12 @@ namespace ListUI.Forms
                 selectedHeader = null;
                 txbHeaderEdit.Text = "";
             }
+        }
+
+        private void bTruncateLog_Click(object sender, EventArgs e)
+        {
+            SqliteDataAccess.TruncateLog();
+            LoadLogs();
         }
     }
 }
