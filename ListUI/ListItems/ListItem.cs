@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ListLibrary.Model;
-using ListUI.Forms;
-using ListLibrary;
 using ListLibrary.Database;
 using System.IO;
 
@@ -70,7 +63,7 @@ namespace ListUI.ListItems
 
             if (item is AnimeModel)
             {
-                lbItemEpisodes.Text = ((AnimeModel)item).TotalEp.ToString() + "/" + ((AnimeModel)item).WatchedEp.ToString();
+                lbItemEpisodes.Text = ((AnimeModel)item).TotalEp.ToString() + " / " + ((AnimeModel)item).WatchedEp.ToString();
 
                 if (((AnimeModel)item).Dubbed == true && String.IsNullOrWhiteSpace(item.Notes))
                 {
@@ -263,12 +256,15 @@ namespace ListUI.ListItems
 
         private void pbListItem_MouseEnter(object sender, EventArgs e)
         {
-            panel1.Visible = true;
-        }
+            foreach (var c in Parent.Controls.OfType<ListItem>())
+            {
+                c.HidePanel();
+            }
 
-        private void pbListItem_MouseLeave(object sender, EventArgs e)
-        {
-
+            if (!(currentItem is GameModel))
+            {
+                panel1.Visible = true;
+            }
         }
 
         private void listItemScore_MouseEnter(object sender, EventArgs e)
@@ -286,11 +282,7 @@ namespace ListUI.ListItems
 
         private void listItemName_MouseEnter(object sender, EventArgs e)
         {
-            if (!(currentItem is GameModel))
-            {
-                panel1.Visible = false;
-            }
-
+            panel1.Visible = false;
             lbItemTitle.ForeColor = Color.LightSteelBlue;
         }
 
@@ -328,12 +320,12 @@ namespace ListUI.ListItems
             //}
         }
 
-        private void panel2_MouseEnter(object sender, EventArgs e)
+        public void HidePanel()
         {
-
+            panel1.Visible = false;
         }
 
-        private void panel2_MouseLeave(object sender, EventArgs e)
+        private void ListItem_MouseLeave(object sender, EventArgs e)
         {
             panel1.Visible = false;
         }

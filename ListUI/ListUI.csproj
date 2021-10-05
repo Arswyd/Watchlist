@@ -104,6 +104,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StartUpUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,11 +149,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -198,34 +198,40 @@
     <None Include="Resources\settings.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-search-64%282%29.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\search.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\search2.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\nocover.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-sort-up-64.png" />
+    <None Include="Resources\sort_desc.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-sort-down-64.png" />
+    <None Include="Resources\sort_asc.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-filter-64.png" />
+    <None Include="Resources\filter.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-clear-filters-64.png" />
+    <None Include="Resources\clear_filter.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-ok-64.png" />
+    <None Include="Resources\check.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-up-down-arrow-64.png" />
+    <None Include="Resources\sort.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_row.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_row.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />

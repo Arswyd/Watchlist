@@ -97,7 +97,7 @@
             this.txbTitle.Multiline = true;
             this.txbTitle.Name = "txbTitle";
             this.txbTitle.Size = new System.Drawing.Size(300, 40);
-            this.txbTitle.TabIndex = 1;
+            this.txbTitle.TabIndex = 0;
             // 
             // txbScore
             // 
@@ -108,7 +108,7 @@
             this.txbScore.Multiline = true;
             this.txbScore.Name = "txbScore";
             this.txbScore.Size = new System.Drawing.Size(80, 24);
-            this.txbScore.TabIndex = 3;
+            this.txbScore.TabIndex = 4;
             this.txbScore.Text = "0";
             this.txbScore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -120,7 +120,7 @@
             this.txbNotes.Multiline = true;
             this.txbNotes.Name = "txbNotes";
             this.txbNotes.Size = new System.Drawing.Size(300, 40);
-            this.txbNotes.TabIndex = 4;
+            this.txbNotes.TabIndex = 5;
             // 
             // txbWatchedEp
             // 
@@ -129,10 +129,9 @@
             this.txbWatchedEp.Font = new System.Drawing.Font("Arial", 10F);
             this.txbWatchedEp.Location = new System.Drawing.Point(120, 346);
             this.txbWatchedEp.MaxLength = 3;
-            this.txbWatchedEp.Multiline = true;
             this.txbWatchedEp.Name = "txbWatchedEp";
-            this.txbWatchedEp.Size = new System.Drawing.Size(50, 20);
-            this.txbWatchedEp.TabIndex = 6;
+            this.txbWatchedEp.Size = new System.Drawing.Size(50, 23);
+            this.txbWatchedEp.TabIndex = 11;
             this.txbWatchedEp.Text = "0";
             this.txbWatchedEp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbWatchedEp.Visible = false;
@@ -146,7 +145,7 @@
             this.txbTotalEp.MaxLength = 3;
             this.txbTotalEp.Name = "txbTotalEp";
             this.txbTotalEp.Size = new System.Drawing.Size(50, 23);
-            this.txbTotalEp.TabIndex = 4;
+            this.txbTotalEp.TabIndex = 10;
             this.txbTotalEp.Text = "0";
             this.txbTotalEp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbTotalEp.Visible = false;
@@ -156,7 +155,7 @@
             this.lbNotes.AutoSize = true;
             this.lbNotes.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbNotes.ForeColor = System.Drawing.SystemColors.Menu;
-            this.lbNotes.Location = new System.Drawing.Point(196, 244);
+            this.lbNotes.Location = new System.Drawing.Point(196, 243);
             this.lbNotes.Name = "lbNotes";
             this.lbNotes.Size = new System.Drawing.Size(54, 19);
             this.lbNotes.TabIndex = 4;
@@ -179,7 +178,7 @@
             this.lbTotalEp.Enabled = false;
             this.lbTotalEp.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbTotalEp.ForeColor = System.Drawing.SystemColors.Menu;
-            this.lbTotalEp.Location = new System.Drawing.Point(8, 347);
+            this.lbTotalEp.Location = new System.Drawing.Point(8, 348);
             this.lbTotalEp.Name = "lbTotalEp";
             this.lbTotalEp.Size = new System.Drawing.Size(31, 19);
             this.lbTotalEp.TabIndex = 4;
@@ -195,7 +194,7 @@
             this.chDubbed.Location = new System.Drawing.Point(200, 346);
             this.chDubbed.Name = "chDubbed";
             this.chDubbed.Size = new System.Drawing.Size(89, 23);
-            this.chDubbed.TabIndex = 7;
+            this.chDubbed.TabIndex = 13;
             this.chDubbed.Text = "Dubbed";
             this.chDubbed.UseVisualStyleBackColor = true;
             this.chDubbed.Visible = false;
@@ -211,7 +210,7 @@
             this.cbListGroup.Location = new System.Drawing.Point(200, 206);
             this.cbListGroup.Name = "cbListGroup";
             this.cbListGroup.Size = new System.Drawing.Size(205, 24);
-            this.cbListGroup.TabIndex = 2;
+            this.cbListGroup.TabIndex = 3;
             // 
             // panel1
             // 
@@ -259,7 +258,7 @@
             this.chFinished.Location = new System.Drawing.Point(200, 320);
             this.chFinished.Name = "chFinished";
             this.chFinished.Size = new System.Drawing.Size(94, 23);
-            this.chFinished.TabIndex = 25;
+            this.chFinished.TabIndex = 12;
             this.chFinished.Text = "Finished";
             this.chFinished.UseVisualStyleBackColor = true;
             this.chFinished.Visible = false;
@@ -276,7 +275,7 @@
             this.cbSeason.Location = new System.Drawing.Point(90, 266);
             this.cbSeason.Name = "cbSeason";
             this.cbSeason.Size = new System.Drawing.Size(80, 24);
-            this.cbSeason.TabIndex = 24;
+            this.cbSeason.TabIndex = 7;
             this.cbSeason.Visible = false;
             // 
             // lbCurrentSe
@@ -285,7 +284,7 @@
             this.lbCurrentSe.Enabled = false;
             this.lbCurrentSe.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbCurrentSe.ForeColor = System.Drawing.SystemColors.Menu;
-            this.lbCurrentSe.Location = new System.Drawing.Point(101, 321);
+            this.lbCurrentSe.Location = new System.Drawing.Point(101, 320);
             this.lbCurrentSe.Name = "lbCurrentSe";
             this.lbCurrentSe.Size = new System.Drawing.Size(13, 19);
             this.lbCurrentSe.TabIndex = 22;
@@ -297,12 +296,11 @@
             this.txbCurrentSe.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.txbCurrentSe.Enabled = false;
             this.txbCurrentSe.Font = new System.Drawing.Font("Arial", 10F);
-            this.txbCurrentSe.Location = new System.Drawing.Point(120, 320);
+            this.txbCurrentSe.Location = new System.Drawing.Point(120, 317);
             this.txbCurrentSe.MaxLength = 3;
-            this.txbCurrentSe.Multiline = true;
             this.txbCurrentSe.Name = "txbCurrentSe";
-            this.txbCurrentSe.Size = new System.Drawing.Size(50, 20);
-            this.txbCurrentSe.TabIndex = 23;
+            this.txbCurrentSe.Size = new System.Drawing.Size(50, 23);
+            this.txbCurrentSe.TabIndex = 9;
             this.txbCurrentSe.Text = "1";
             this.txbCurrentSe.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbCurrentSe.Visible = false;
@@ -313,7 +311,7 @@
             this.lbTotalSe.Enabled = false;
             this.lbTotalSe.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbTotalSe.ForeColor = System.Drawing.SystemColors.Menu;
-            this.lbTotalSe.Location = new System.Drawing.Point(8, 321);
+            this.lbTotalSe.Location = new System.Drawing.Point(8, 320);
             this.lbTotalSe.Name = "lbTotalSe";
             this.lbTotalSe.Size = new System.Drawing.Size(31, 19);
             this.lbTotalSe.TabIndex = 20;
@@ -325,12 +323,11 @@
             this.txbTotalSe.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.txbTotalSe.Enabled = false;
             this.txbTotalSe.Font = new System.Drawing.Font("Arial", 10F);
-            this.txbTotalSe.Location = new System.Drawing.Point(45, 320);
+            this.txbTotalSe.Location = new System.Drawing.Point(45, 317);
             this.txbTotalSe.MaxLength = 3;
-            this.txbTotalSe.Multiline = true;
             this.txbTotalSe.Name = "txbTotalSe";
-            this.txbTotalSe.Size = new System.Drawing.Size(50, 20);
-            this.txbTotalSe.TabIndex = 21;
+            this.txbTotalSe.Size = new System.Drawing.Size(50, 23);
+            this.txbTotalSe.TabIndex = 8;
             this.txbTotalSe.Text = "1";
             this.txbTotalSe.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbTotalSe.Visible = false;
@@ -367,7 +364,7 @@
             this.txbYear.Multiline = true;
             this.txbYear.Name = "txbYear";
             this.txbYear.Size = new System.Drawing.Size(63, 24);
-            this.txbYear.TabIndex = 16;
+            this.txbYear.TabIndex = 6;
             this.txbYear.Text = "2020";
             this.txbYear.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -375,10 +372,10 @@
             // 
             this.txbPictureUrl.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.txbPictureUrl.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.txbPictureUrl.Location = new System.Drawing.Point(200, 153);
+            this.txbPictureUrl.Location = new System.Drawing.Point(200, 155);
             this.txbPictureUrl.Name = "txbPictureUrl";
             this.txbPictureUrl.Size = new System.Drawing.Size(300, 23);
-            this.txbPictureUrl.TabIndex = 15;
+            this.txbPictureUrl.TabIndex = 2;
             this.txbPictureUrl.TextChanged += new System.EventHandler(this.txbPictureUrl_TextChanged);
             // 
             // label2
@@ -386,7 +383,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label2.ForeColor = System.Drawing.SystemColors.Menu;
-            this.label2.Location = new System.Drawing.Point(196, 131);
+            this.label2.Location = new System.Drawing.Point(196, 133);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(101, 19);
             this.label2.TabIndex = 14;
@@ -399,7 +396,7 @@
             this.txbUrl.Location = new System.Drawing.Point(200, 100);
             this.txbUrl.Name = "txbUrl";
             this.txbUrl.Size = new System.Drawing.Size(300, 23);
-            this.txbUrl.TabIndex = 13;
+            this.txbUrl.TabIndex = 1;
             // 
             // lbUrl
             // 
@@ -418,26 +415,30 @@
             this.pbFavourite.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbFavourite.Image = global::ListUI.Properties.Resources.empty;
             this.pbFavourite.InitialImage = null;
-            this.pbFavourite.Location = new System.Drawing.Point(354, 323);
+            this.pbFavourite.Location = new System.Drawing.Point(347, 323);
             this.pbFavourite.Name = "pbFavourite";
             this.pbFavourite.Size = new System.Drawing.Size(46, 46);
             this.pbFavourite.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbFavourite.TabIndex = 11;
             this.pbFavourite.TabStop = false;
             this.pbFavourite.Click += new System.EventHandler(this.favouritePicture_Click);
+            this.pbFavourite.MouseEnter += new System.EventHandler(this.pbFavourite_MouseEnter);
+            this.pbFavourite.MouseLeave += new System.EventHandler(this.pbFavourite_MouseLeave);
             // 
             // pbSave
             // 
             this.pbSave.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbSave.Image = global::ListUI.Properties.Resources.save;
             this.pbSave.InitialImage = null;
-            this.pbSave.Location = new System.Drawing.Point(404, 323);
+            this.pbSave.Location = new System.Drawing.Point(402, 323);
             this.pbSave.Name = "pbSave";
             this.pbSave.Size = new System.Drawing.Size(46, 46);
             this.pbSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbSave.TabIndex = 10;
             this.pbSave.TabStop = false;
             this.pbSave.Click += new System.EventHandler(this.savePicture_Click_1);
+            this.pbSave.MouseEnter += new System.EventHandler(this.pbSave_MouseEnter);
+            this.pbSave.MouseLeave += new System.EventHandler(this.pbSave_MouseLeave);
             // 
             // pbDelete
             // 
@@ -453,12 +454,14 @@
             this.pbDelete.TabStop = false;
             this.pbDelete.Visible = false;
             this.pbDelete.Click += new System.EventHandler(this.deletePicture_Click);
+            this.pbDelete.MouseEnter += new System.EventHandler(this.pbDelete_MouseEnter);
+            this.pbDelete.MouseLeave += new System.EventHandler(this.pbDelete_MouseLeave);
             // 
             // pbPicture
             // 
             this.pbPicture.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.pbPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbPicture.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbPicture.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbPicture.Location = new System.Drawing.Point(10, 10);
             this.pbPicture.Name = "pbPicture";
             this.pbPicture.Size = new System.Drawing.Size(160, 220);
@@ -472,7 +475,7 @@
             this.lbWatchedEp.Enabled = false;
             this.lbWatchedEp.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbWatchedEp.ForeColor = System.Drawing.SystemColors.Menu;
-            this.lbWatchedEp.Location = new System.Drawing.Point(101, 347);
+            this.lbWatchedEp.Location = new System.Drawing.Point(101, 348);
             this.lbWatchedEp.Name = "lbWatchedEp";
             this.lbWatchedEp.Size = new System.Drawing.Size(13, 19);
             this.lbWatchedEp.TabIndex = 4;

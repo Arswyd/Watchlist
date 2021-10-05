@@ -45,7 +45,6 @@
             this.panel1.TabIndex = 0;
             this.panel1.Click += new System.EventHandler(this.panel1_Click);
             this.panel1.MouseEnter += new System.EventHandler(this.panel1_MouseEnter);
-            this.panel1.MouseLeave += new System.EventHandler(this.panel1_MouseLeave);
             // 
             // lbListGroupCount
             // 
@@ -82,6 +81,7 @@
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "ListMenuItem";
             this.Size = new System.Drawing.Size(195, 38);
+            this.MouseLeave += new System.EventHandler(this.ListMenuItem_MouseLeave);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

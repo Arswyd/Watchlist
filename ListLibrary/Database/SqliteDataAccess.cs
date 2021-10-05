@@ -6,8 +6,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ListLibrary.Database
 {
@@ -20,6 +18,14 @@ namespace ListLibrary.Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 var output = cnn.Query<LogModel>("SELECT * FROM Log ORDER BY DATE DESC LIMIT 50");
+                return output.ToList();
+            }
+        }
+        public static List<LogModel> LoadAllLogs()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<LogModel>("SELECT * FROM Log");
                 return output.ToList();
             }
         }

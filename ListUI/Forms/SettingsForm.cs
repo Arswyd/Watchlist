@@ -2,14 +2,11 @@
 using ListLibrary.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ListUI.Forms
@@ -70,100 +67,6 @@ namespace ListUI.Forms
                 lvitem.SubItems.Add(header.ListGroup);
                 lvHeaders.Items.Add(lvitem);
             }
-        }
-
-        private void bUp_Click(object sender, EventArgs e)
-        {
-            var header = headers.Where(c => c.SortOrder == selectedHeader.SortOrder - 1).First();
-            header.SortOrder++;
-            SqliteDataAccess.UpdateHeader(header);
-            selectedHeader.SortOrder--;
-            SqliteDataAccess.UpdateHeader(selectedHeader);
-            //txbHeaderEdit.Text = "";
-            LoadHeaderListView();
-            LoadLogs();
-        }
-
-        private void bDown_Click(object sender, EventArgs e)
-        {
-            var header = headers.Where(c => c.SortOrder == selectedHeader.SortOrder + 1).First();
-            header.SortOrder--;
-            SqliteDataAccess.UpdateHeader(header);
-            selectedHeader.SortOrder++;
-            SqliteDataAccess.UpdateHeader(selectedHeader);
-            //txbHeaderEdit.Text = "";
-            LoadHeaderListView();
-            LoadLogs();
-        }
-
-        private void bAdd_Click(object sender, EventArgs e)
-        {
-            int neworder = 0;
-            if (headers != null)
-                neworder = headers.Max(c => c.SortOrder) + 1;
-
-            if (headers != null && headers.Count < 15)
-            {
-                selectedHeader = new HeaderModel() { ListType = cbListType.Text, ListGroup = "New Group", SortOrder = neworder };
-                SqliteDataAccess.SaveHeader(selectedHeader);
-                LoadHeaderListView();
-            }
-            else
-            {
-                MessageBox.Show("No more headers can be added!");
-            }
-
-            LoadLogs();
-        }
-
-        private void bSave_Click(object sender, EventArgs e)
-        {
-            if (lvHeaders.SelectedItems.Count != 0)
-            {
-                DialogResult dialogResult = MessageBox.Show("Do you want to edit list group?", "Attention!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    SqliteDataAccess.UpdateAnimeListGroup(txbHeaderEdit.Text, selectedHeader.ListGroup);
-                    selectedHeader.ListGroup = txbHeaderEdit.Text;
-                    SqliteDataAccess.UpdateHeader(selectedHeader);
-                    txbHeaderEdit.Text = "";
-                    LoadHeaderListView();
-                }
-            }
-            else
-            {
-                MessageBox.Show("There is no selected item", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-
-            LoadLogs();
-        }
-
-        private void bDelete_Click(object sender, EventArgs e)
-        {
-            if (lvHeaders.SelectedItems.Count != 0)
-            {
-                if(LoadList())
-                {
-                    MessageBox.Show("There are items in this list group!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                else
-                {
-                    SqliteDataAccess.DeleteHeader(selectedHeader);
-                    foreach (var header in headers.Where(c => c.SortOrder > selectedHeader.SortOrder))
-                    {
-                        header.SortOrder--;
-                        SqliteDataAccess.UpdateHeader(header);
-                    }
-                    txbHeaderEdit.Text = "";
-                    LoadHeaderListView();
-                }
-            }
-            else
-            {
-                MessageBox.Show("There is no selected item", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-
-            LoadLogs();
         }
 
         private bool LoadList()
@@ -432,6 +335,166 @@ namespace ListUI.Forms
 
                 progressBar1.Increment(1);
             }
+        }
+
+        private void pbMoveUp_Click(object sender, EventArgs e)
+        {
+            var header = headers.Where(c => c.SortOrder == selectedHeader.SortOrder - 1).First();
+            header.SortOrder++;
+            SqliteDataAccess.UpdateHeader(header);
+            selectedHeader.SortOrder--;
+            SqliteDataAccess.UpdateHeader(selectedHeader);
+            //txbHeaderEdit.Text = "";
+            LoadHeaderListView();
+            LoadLogs();
+        }
+
+        private void pbMoveDown_Click(object sender, EventArgs e)
+        {
+            var header = headers.Where(c => c.SortOrder == selectedHeader.SortOrder + 1).First();
+            header.SortOrder--;
+            SqliteDataAccess.UpdateHeader(header);
+            selectedHeader.SortOrder++;
+            SqliteDataAccess.UpdateHeader(selectedHeader);
+            //txbHeaderEdit.Text = "";
+            LoadHeaderListView();
+            LoadLogs();
+        }
+
+        private void pbAddRow_Click(object sender, EventArgs e)
+        {
+            int neworder = 0;
+            if (headers != null)
+                neworder = headers.Max(c => c.SortOrder) + 1;
+
+            if (headers != null && headers.Count < 15)
+            {
+                selectedHeader = new HeaderModel() { ListType = cbListType.Text, ListGroup = "New Group", SortOrder = neworder };
+                SqliteDataAccess.SaveHeader(selectedHeader);
+                LoadHeaderListView();
+            }
+            else
+            {
+                MessageBox.Show("No more headers can be added!");
+            }
+
+            LoadLogs();
+        }
+
+        private void pbDeleteRow_Click(object sender, EventArgs e)
+        {
+            if (lvHeaders.SelectedItems.Count != 0)
+            {
+                if (LoadList())
+                {
+                    MessageBox.Show("There are items in this list group!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else
+                {
+                    SqliteDataAccess.DeleteHeader(selectedHeader);
+                    foreach (var header in headers.Where(c => c.SortOrder > selectedHeader.SortOrder))
+                    {
+                        header.SortOrder--;
+                        SqliteDataAccess.UpdateHeader(header);
+                    }
+                    txbHeaderEdit.Text = "";
+                    LoadHeaderListView();
+                }
+            }
+            else
+            {
+                MessageBox.Show("There is no selected item", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            LoadLogs();
+        }
+
+        private void pbSave_Click(object sender, EventArgs e)
+        {
+            if (lvHeaders.SelectedItems.Count != 0)
+            {
+                DialogResult dialogResult = MessageBox.Show("Do you want to edit list group?", "Attention!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    SqliteDataAccess.UpdateAnimeListGroup(txbHeaderEdit.Text, selectedHeader.ListGroup);
+                    selectedHeader.ListGroup = txbHeaderEdit.Text;
+                    SqliteDataAccess.UpdateHeader(selectedHeader);
+                    txbHeaderEdit.Text = "";
+                    LoadHeaderListView();
+                }
+            }
+            else
+            {
+                MessageBox.Show("There is no selected item", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            LoadLogs();
+        }
+
+        private void bExportLogs_Click(object sender, EventArgs e)
+        {
+            DataImportExportProcessor.ExportLogs();
+            MessageBox.Show("Exported completed!");
+        }
+
+        private void pbMoveUp_MouseEnter(object sender, EventArgs e)
+        {
+            pbMoveUp.Size = new Size(42, 42);
+            pbMoveUp.Location = new Point(299, 139);
+        }
+
+        private void pbMoveUp_MouseLeave(object sender, EventArgs e)
+        {
+            pbMoveUp.Size = new Size(40, 40);
+            pbMoveUp.Location = new Point(300, 140);
+        }
+
+        private void pbAddRow_MouseEnter(object sender, EventArgs e)
+        {
+            pbAddRow.Size = new Size(42, 42);
+            pbAddRow.Location = new Point(299, 185);
+        }
+
+        private void pbAddRow_MouseLeave(object sender, EventArgs e)
+        {
+            pbAddRow.Size = new Size(40, 40);
+            pbAddRow.Location = new Point(300, 186);
+        }
+
+        private void pbDeleteRow_MouseEnter(object sender, EventArgs e)
+        {
+            pbDeleteRow.Size = new Size(42, 42);
+            pbDeleteRow.Location = new Point(299, 231);
+        }
+
+        private void pbDeleteRow_MouseLeave(object sender, EventArgs e)
+        {
+            pbDeleteRow.Size = new Size(40, 40);
+            pbDeleteRow.Location = new Point(300, 232);
+        }
+
+        private void pbMoveDown_MouseEnter(object sender, EventArgs e)
+        {
+            pbMoveDown.Size = new Size(42, 42);
+            pbMoveDown.Location = new Point(299, 277);
+        }
+
+        private void pbMoveDown_MouseLeave(object sender, EventArgs e)
+        {
+            pbMoveDown.Size = new Size(40, 40);
+            pbMoveDown.Location = new Point(300, 278);
+        }
+
+        private void pbSave_MouseEnter(object sender, EventArgs e)
+        {
+            pbSave.Size = new Size(42, 42);
+            pbSave.Location = new Point(299, 374);
+        }
+
+        private void pbSave_MouseLeave(object sender, EventArgs e)
+        {
+            pbSave.Size = new Size(40, 40);
+            pbSave.Location = new Point(300, 375);
         }
     }
 }

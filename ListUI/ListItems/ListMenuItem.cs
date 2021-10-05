@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ListUI.ListItems
@@ -43,6 +38,11 @@ namespace ListUI.ListItems
 
         private void panel1_MouseEnter(object sender, EventArgs e)
         {
+            foreach (var c in Parent.Controls.OfType<ListMenuItem>())
+            {
+                c.RevertColor();
+            }
+
             if (lbListGroupName.Text != active)
             {
                 Color myColor = Color.FromArgb(255, 40, 40, 60);
@@ -65,11 +65,19 @@ namespace ListUI.ListItems
             this.panel1_Click(sender, e);
         }
 
-        private void panel1_MouseLeave(object sender, EventArgs e)
+        public void RevertColor()
+        {
+            if (lbListGroupName.Text != active )
+            {
+                panel1.BackColor = Color.FromArgb(255, 35, 35, 50);
+            }
+        }
+
+        private void ListMenuItem_MouseLeave(object sender, EventArgs e)
         {
             if (lbListGroupName.Text != active)
             {
-                panel1.BackColor = Color.Transparent;
+                panel1.BackColor = Color.FromArgb(255, 35, 35, 50);
             }
         }
     }

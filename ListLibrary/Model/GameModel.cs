@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ListLibrary.Model
 {
@@ -21,18 +15,10 @@ namespace ListLibrary.Model
 
         public GameModel()
         {
-
-        }
-
-        public GameModel(string title, string url, string pictureURL, decimal score, bool favourite, string notes, string listGroup)
-        {
-            Title = title;
-            Url = url;
-            PictureUrl = pictureURL;
-            Score = score;
-            Favourite = favourite;
-            Notes = notes;
-            ListGroup = listGroup;
+            Score = 0;
+            Year = DateTime.Now.Year;
+            Favourite = false;
+            ListGroup = "Not Released Yet";
         }
     }
 }

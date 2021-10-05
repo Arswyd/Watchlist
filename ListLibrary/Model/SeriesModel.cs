@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ListLibrary.Model
 {
@@ -33,27 +27,13 @@ namespace ListLibrary.Model
             }
         }
 
-
-
         public SeriesModel()
         {
-
-        }
-
-        public SeriesModel(string title, string seriesURL, string pictureURL, decimal score, int totalSe, string totalEp, int watchedSe, int watchedEp, bool favourite, string notes, string listGroup)
-        {
-            Title = title;
-            Url = seriesURL;
-            PictureUrl = pictureURL;
-            Score = score;
-            TotalSe = totalSe;
-            TotalEp = totalEp;
-            CurrentSe = watchedSe;
-            WatchedEp = watchedEp;
-            Favourite = favourite;
-            Notes = notes;
-            ListGroup = listGroup;
+            Score = 0;
+            Year = DateTime.Now.Year;
+            Favourite = false;
+            FinishedRunning = false;
+            ListGroup = "Not Aired Yet";
         }
     }
-
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ListLibrary.Model
+﻿namespace ListLibrary.Model
 {
     public class ItemModel
     {
@@ -18,6 +12,5 @@ namespace ListLibrary.Model
         public string Notes { get; set; }
         public string ListGroup { get; set; }
         public virtual string PictureDir { get; set; }
-
     }
 }

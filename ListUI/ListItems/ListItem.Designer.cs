@@ -129,8 +129,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(166, 226);
             this.panel2.TabIndex = 5;
-            this.panel2.MouseEnter += new System.EventHandler(this.panel2_MouseEnter);
-            this.panel2.MouseLeave += new System.EventHandler(this.panel2_MouseLeave);
             // 
             // pbDetails
             // 
@@ -179,16 +177,18 @@
             this.pbListItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbListItem.TabIndex = 0;
             this.pbListItem.TabStop = false;
+            this.pbListItem.WaitOnLoad = true;
             this.pbListItem.MouseEnter += new System.EventHandler(this.pbListItem_MouseEnter);
-            this.pbListItem.MouseLeave += new System.EventHandler(this.pbListItem_MouseLeave);
             // 
             // ListItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel2);
+            this.DoubleBuffered = true;
             this.Name = "ListItem";
             this.Size = new System.Drawing.Size(180, 240);
+            this.MouseLeave += new System.EventHandler(this.ListItem_MouseLeave);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

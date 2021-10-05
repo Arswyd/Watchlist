@@ -1,16 +1,11 @@
-﻿using ListLibrary;
-using ListLibrary.Database;
+﻿using ListLibrary.Database;
 using ListLibrary.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ListUI.Forms
@@ -602,6 +597,42 @@ namespace ListUI.Forms
         private void txbPictureUrl_TextChanged(object sender, EventArgs e)
         {
             pbPicture.Load(txbPictureUrl.Text);
+        }
+
+        private void pbFavourite_MouseEnter(object sender, EventArgs e)
+        {
+            pbFavourite.Size = new Size(48, 48);
+            pbFavourite.Location = new Point(346, 322);
+        }
+
+        private void pbFavourite_MouseLeave(object sender, EventArgs e)
+        {
+            pbFavourite.Size = new Size(46, 46);
+            pbFavourite.Location = new Point(347, 323);
+        }
+
+        private void pbSave_MouseEnter(object sender, EventArgs e)
+        {
+            pbSave.Size = new Size(48, 48);
+            pbSave.Location = new Point(401, 322);
+        }
+
+        private void pbSave_MouseLeave(object sender, EventArgs e)
+        {
+            pbSave.Size = new Size(46, 46);
+            pbSave.Location = new Point(402, 323);
+        }
+
+        private void pbDelete_MouseEnter(object sender, EventArgs e)
+        {
+            pbDelete.Size = new Size(48, 48);
+            pbDelete.Location = new Point(453, 322);
+        }
+
+        private void pbDelete_MouseLeave(object sender, EventArgs e)
+        {
+            pbDelete.Size = new Size(46, 46);
+            pbDelete.Location = new Point(454, 323);
         }
     }
 }

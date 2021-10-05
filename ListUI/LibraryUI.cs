@@ -1,17 +1,12 @@
-﻿using ListLibrary;
-using ListLibrary.Model;
+﻿using ListLibrary.Model;
 using ListUI.Forms;
 using ListUI.ListItems;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
 using ListLibrary.Database;
 using ListUI.Properties;
 
@@ -59,19 +54,19 @@ namespace ListUI
             {
                 CreateMenuItems();
                 InitializeListLoading();
-                pListItemPanel.Focus();
+                fpListItemPanel.Focus();
             }
             if (activeListType == "Series")
             {
                 CreateMenuItems();
                 InitializeListLoading();
-                pListItemPanel.Focus();
+                fpListItemPanel.Focus();
             }
             if (activeListType == "Game")
             {
                 CreateMenuItems();
                 InitializeListLoading();
-                pListItemPanel.Focus();
+                fpListItemPanel.Focus();
             }
 
             Application.UseWaitCursor = false;
@@ -178,7 +173,7 @@ namespace ListUI
 
         public void CreateMenuItems()
         {
-            pListHeaderPanel.Controls.Clear();
+            fpListHeaderPanel.Controls.Clear();
 
             if (activeListType == "Anime")
                 headerList = SqliteDataAccess.LoadAnimeListHeaders();
@@ -194,7 +189,7 @@ namespace ListUI
             {
                 allMenuItem.ActiveColor();
             }
-            pListHeaderPanel.Controls.Add(allMenuItem);
+            fpListHeaderPanel.Controls.Add(allMenuItem);
 
             foreach (HeaderModel listsetting in headerList.OrderBy(n => n.SortOrder))
             {
@@ -205,17 +200,17 @@ namespace ListUI
                 {
                     menuItem.ActiveColor();
                 }
-                pListHeaderPanel.Controls.Add(menuItem);
+                fpListHeaderPanel.Controls.Add(menuItem);
             }
         }
 
         public void InitializeListLoading()
         {
-            int yscroll = pListItemPanel.AutoScrollPosition.Y;
+            int yscroll = fpListItemPanel.AutoScrollPosition.Y;
 
-            pListItemPanel.Controls.Clear();
+            fpListItemPanel.Controls.Clear();
 
-            pListItemPanel.SuspendLayout();
+            fpListItemPanel.SuspendLayout();
 
             if (activeGroup == "All")
             {
@@ -229,25 +224,25 @@ namespace ListUI
                 LoadListItems(activeGroup);
             }
 
-            pListItemPanel.VerticalScroll.Value = (-1) * yscroll;
+            fpListItemPanel.VerticalScroll.Value = (-1) * yscroll;
 
-            pListItemPanel.ResumeLayout();
+            fpListItemPanel.ResumeLayout();
         }
 
         private void LoadListItems(string headerText)
         {
             ListHeader listHeader = new ListHeader();
             listHeader.HeaderName(headerText);
-            pListItemPanel.Controls.Add(listHeader);
+            fpListItemPanel.Controls.Add(listHeader);
 
             foreach (ItemModel item in itemlist.Where(n => n.ListGroup == headerText))
             {
                 ListItem listItem = new ListItem(this);
                 listItem.AddItem(item);
-                pListItemPanel.Controls.Add(listItem);
+                fpListItemPanel.Controls.Add(listItem);
             }
 
-            pListItemPanel.Update();
+            fpListItemPanel.Update();
         }
 
         public void ModifyItem(ItemModel item, int index)
@@ -257,7 +252,7 @@ namespace ListUI
             overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
             ItemDetailForm frm = new ItemDetailForm(activeListType, item, index, this);
             frm.ShowDialog();
-            pListItemPanel.Focus();
+            fpListItemPanel.Focus();
             overlay.Close();
 
             WireUpLibraryForm();
@@ -265,7 +260,7 @@ namespace ListUI
 
         public void WireUpRequest(string listGroup)
         {
-            pListItemPanel.VerticalScroll.Value = 0;
+            fpListItemPanel.VerticalScroll.Value = 0;
             activeGroup = listGroup;
 
             //TODO: Elimination of reloading flowlayout panel
@@ -279,7 +274,7 @@ namespace ListUI
             overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
             ItemDetailForm frm = new ItemDetailForm(activeListType, this);
             frm.ShowDialog();
-            pListItemPanel.Focus();
+            fpListItemPanel.Focus();
             overlay.Close();
         }
 
@@ -307,7 +302,7 @@ namespace ListUI
 
         private void animeButton_Click(object sender, EventArgs e)
         {
-            pListItemPanel.VerticalScroll.Value = 0;
+            fpListItemPanel.VerticalScroll.Value = 0;
             activeListType = "Anime";
             activeGroup = "Watching";
             WireUpLibraryForm();
@@ -315,7 +310,7 @@ namespace ListUI
 
         private void seriesButton_Click(object sender, EventArgs e)
         {
-            pListItemPanel.VerticalScroll.Value = 0;
+            fpListItemPanel.VerticalScroll.Value = 0;
             activeListType = "Series";
             activeGroup = "Watching";
             WireUpLibraryForm();
@@ -323,51 +318,14 @@ namespace ListUI
 
         private void gameButton_Click(object sender, EventArgs e)
         {
-            pListItemPanel.VerticalScroll.Value = 0;
+            fpListItemPanel.VerticalScroll.Value = 0;
             activeListType = "Game";
             activeGroup = "Playing";
             WireUpLibraryForm();
         }
-
-        private void animeButton_MouseEnter(object sender, EventArgs e)
-        {
-            animeButton.Size = new Size(52, 52);
-            animeButton.Location = new Point(9,9);
-        }
-
-        private void animeButton_MouseLeave(object sender, EventArgs e)
-        {
-            animeButton.Size = new Size(50, 50);
-            animeButton.Location = new Point(10, 10);
-        }
-
-        private void seriesButton_MouseEnter(object sender, EventArgs e)
-        {
-            seriesButton.Size = new Size(52, 52);
-            seriesButton.Location = new Point(74, 9);
-        }
-
-        private void seriesButton_MouseLeave(object sender, EventArgs e)
-        {
-            seriesButton.Size = new Size(50, 50);
-            seriesButton.Location = new Point(75, 10);
-        }
-
-        private void gameButton_MouseEnter(object sender, EventArgs e)
-        {
-            gameButton.Size = new Size(52, 52);
-            gameButton.Location = new Point(139, 9);
-        }
-
-        private void gameButton_MouseLeave(object sender, EventArgs e)
-        {
-            gameButton.Size = new Size(50, 50);
-            gameButton.Location = new Point(140, 10);
-        }
-
         private void flowLayoutPanel1_Click(object sender, EventArgs e)
         {
-            pListItemPanel.Focus();
+            fpListItemPanel.Focus();
         }
 
         private void cbOrderBy_SelectionChangeCommitted(object sender, EventArgs e)
@@ -487,7 +445,7 @@ namespace ListUI
             overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
             SettingsForm frm = new SettingsForm();
             frm.ShowDialog();
-            pListItemPanel.Focus();
+            fpListItemPanel.Focus();
             overlay.Close();
 
             WireUpLibraryForm();
@@ -496,6 +454,90 @@ namespace ListUI
         private void LibraryUI_FormClosing(object sender, FormClosingEventArgs e)
         {
             SqliteDataAccess.LogLastLogin();
+        }
+
+        private void animeButton_MouseEnter(object sender, EventArgs e)
+        {
+            animeButton.Size = new Size(52, 52);
+            animeButton.Location = new Point(9, 9);
+        }
+
+        private void animeButton_MouseLeave(object sender, EventArgs e)
+        {
+            animeButton.Size = new Size(50, 50);
+            animeButton.Location = new Point(10, 10);
+        }
+
+        private void seriesButton_MouseEnter(object sender, EventArgs e)
+        {
+            seriesButton.Size = new Size(52, 52);
+            seriesButton.Location = new Point(74, 9);
+        }
+
+        private void seriesButton_MouseLeave(object sender, EventArgs e)
+        {
+            seriesButton.Size = new Size(50, 50);
+            seriesButton.Location = new Point(75, 10);
+        }
+
+        private void gameButton_MouseEnter(object sender, EventArgs e)
+        {
+            gameButton.Size = new Size(52, 52);
+            gameButton.Location = new Point(139, 9);
+        }
+
+        private void gameButton_MouseLeave(object sender, EventArgs e)
+        {
+            gameButton.Size = new Size(50, 50);
+            gameButton.Location = new Point(140, 10);
+        }
+
+        private void pbToggleFilter_MouseEnter(object sender, EventArgs e)
+        {
+            pbToggleFilter.Size = new Size(42, 42);
+            pbToggleFilter.Location = new Point(1200, 13);
+        }
+
+        private void pbToggleFilter_MouseLeave(object sender, EventArgs e)
+        {
+            pbToggleFilter.Size = new Size(40, 40);
+            pbToggleFilter.Location = new Point(1201, 14);
+        }
+
+        private void pbToggleSorting_MouseEnter(object sender, EventArgs e)
+        {
+            pbToggleSorting.Size = new Size(42, 42);
+            pbToggleSorting.Location = new Point(1247, 13);
+        }
+
+        private void pbToggleSorting_MouseLeave(object sender, EventArgs e)
+        {
+            pbToggleSorting.Size = new Size(40, 40);
+            pbToggleSorting.Location = new Point(1248, 14);
+        }
+
+        private void pbSettings_MouseEnter(object sender, EventArgs e)
+        {
+            pbSettings.Size = new Size(42, 42);
+            pbSettings.Location = new Point(1294, 13);
+        }
+
+        private void pbSettings_MouseLeave(object sender, EventArgs e)
+        {
+            pbSettings.Size = new Size(40, 40);
+            pbSettings.Location = new Point(1295, 14);
+        }
+
+        private void pbSearch_MouseEnter(object sender, EventArgs e)
+        {
+            pbSearch.Size = new Size(32, 32);
+            pbSearch.Location = new Point(1079, 24);
+        }
+
+        private void pbSearch_MouseLeave(object sender, EventArgs e)
+        {
+            pbSearch.Size = new Size(30, 30);
+            pbSearch.Location = new Point(1080, 25);
         }
     }
 }

@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ListLibrary.Database
 {
@@ -136,10 +133,24 @@ namespace ListLibrary.Database
 
             foreach (GameModel p in game)
             {
-                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup};");
+                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup}");
             }
 
             File.WriteAllLines(@"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_GameBackup.csv", lines);
+        }
+
+        public static void ExportLogs()
+        {
+            List<LogModel> logs = SqliteDataAccess.LoadAllLogs();
+
+            List<string> lines = new List<string>();
+
+            foreach (LogModel p in logs)
+            {
+                lines.Add($"{p.Date};{p.LogText}");
+            }
+
+            File.WriteAllLines(@"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_LogBackup.csv", lines);
         }
     }
 }

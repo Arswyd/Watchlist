@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ListLibrary.Model
 {
@@ -26,26 +20,12 @@ namespace ListLibrary.Model
 
         public AnimeModel()
         {
+            Score = 0;
             Year = DateTime.Now.Year;
             Favourite = false;
             Dubbed = false;
             ListGroup = "Not Aired Yet";
             Season = "Spring";
         }
-
-        //public AnimeModel(string title, string animeURL, string pictureURL, decimal score, int totalEP, int watchedEP, bool dubbed, bool favourite, string notes, string listGroup)
-        //{
-        //    Title = title;
-        //    Url = animeURL;
-        //    PictureUrl = pictureURL;
-        //    Score = score;
-        //    TotalEp = totalEP;
-        //    WatchedEp = watchedEP;
-        //    Dubbed = dubbed;
-        //    Favourite = favourite;
-        //    Notes = notes;
-        //    ListGroup = listGroup;
-          
-        //}
     }
 }
