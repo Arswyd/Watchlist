@@ -50,6 +50,7 @@
             this.seriesButton = new System.Windows.Forms.Panel();
             this.animeButton = new System.Windows.Forms.Panel();
             this.chFinishedSearch = new System.Windows.Forms.CheckBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbToggleSorting)).BeginInit();
@@ -118,6 +119,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel2.Controls.Add(this.progressBar1);
             this.panel2.Controls.Add(this.pbToggleSorting);
             this.panel2.Controls.Add(this.pbSettings);
             this.panel2.Controls.Add(this.pbOrderBy);
@@ -354,6 +356,15 @@
             this.chFinishedSearch.UseVisualStyleBackColor = true;
             this.chFinishedSearch.Visible = false;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.progressBar1.Location = new System.Drawing.Point(0, 0);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(1357, 3);
+            this.progressBar1.TabIndex = 22;
+            this.progressBar1.Visible = false;
+            // 
             // LibraryUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -404,6 +415,7 @@
         private System.Windows.Forms.PictureBox pbSearch;
         private System.Windows.Forms.PictureBox pbSettings;
         private System.Windows.Forms.PictureBox pbToggleSorting;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

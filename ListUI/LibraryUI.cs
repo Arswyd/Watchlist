@@ -45,31 +45,12 @@ namespace ListUI
 
         public void WireUpLibraryForm()
         {
-            Application.UseWaitCursor = true;
-
             LoadList();
             CheckButtons();
-
-            if (activeListType == "Anime")
-            {
-                CreateMenuItems();
-                InitializeListLoading();
-                fpListItemPanel.Focus();
-            }
-            if (activeListType == "Series")
-            {
-                CreateMenuItems();
-                InitializeListLoading();
-                fpListItemPanel.Focus();
-            }
-            if (activeListType == "Game")
-            {
-                CreateMenuItems();
-                InitializeListLoading();
-                fpListItemPanel.Focus();
-            }
-
-            Application.UseWaitCursor = false;
+            CreateMenuItems();
+            fpListHeaderPanel.Refresh();
+            InitializeListLoading();
+            fpListItemPanel.Focus();
         }
 
         public void LoadList()
@@ -209,7 +190,6 @@ namespace ListUI
             int yscroll = fpListItemPanel.AutoScrollPosition.Y;
 
             fpListItemPanel.Controls.Clear();
-
             fpListItemPanel.SuspendLayout();
 
             if (activeGroup == "All")
@@ -224,9 +204,8 @@ namespace ListUI
                 LoadListItems(activeGroup);
             }
 
-            fpListItemPanel.VerticalScroll.Value = (-1) * yscroll;
-
             fpListItemPanel.ResumeLayout();
+            fpListItemPanel.VerticalScroll.Value = (-1) * yscroll;
         }
 
         private void LoadListItems(string headerText)
@@ -235,14 +214,19 @@ namespace ListUI
             listHeader.HeaderName(headerText);
             fpListItemPanel.Controls.Add(listHeader);
 
+            progressBar1.Visible = true;
+            progressBar1.Value = 0;
+            progressBar1.Maximum = itemlist.Where(n => n.ListGroup == headerText).Count();
+
             foreach (ItemModel item in itemlist.Where(n => n.ListGroup == headerText))
             {
                 ListItem listItem = new ListItem(this);
                 listItem.AddItem(item);
                 fpListItemPanel.Controls.Add(listItem);
+                progressBar1.PerformStep();
             }
 
-            fpListItemPanel.Update();
+            progressBar1.Visible = false;
         }
 
         public void ModifyItem(ItemModel item, int index)
