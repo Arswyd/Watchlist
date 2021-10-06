@@ -145,7 +145,10 @@ namespace ListUI.Forms
             }
             else
             {
-                pbPicture.ImageLocation = item.PictureDir;
+                using (FileStream stream = new FileStream(item.PictureDir, FileMode.Open, FileAccess.Read))
+                {
+                    pbPicture.Image = Image.FromStream(stream);
+                }
             }
             txbScore.Text = item.Score.ToString();
             if (item.Favourite == false)
@@ -182,6 +185,8 @@ namespace ListUI.Forms
 
         private void favouritePicture_Click(object sender, EventArgs e)
         {
+            callingForm.Controls.Find("fpListItemPanel", true).First().Controls[itemIndex].Controls.OfType<Panel>().First().Controls.OfType<PictureBox>().First().Image.Dispose();
+
             if (currentItem.Favourite == false)
             {
                 currentItem.Favourite = true;

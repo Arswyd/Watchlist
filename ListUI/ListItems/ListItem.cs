@@ -45,7 +45,10 @@ namespace ListUI.ListItems
             }
             else
             {
-                pbListItem.LoadAsync(item.PictureDir);
+                using (FileStream stream = new FileStream(item.PictureDir, FileMode.Open, FileAccess.Read))
+                {
+                    pbListItem.Image = Image.FromStream(stream);
+                }
             }
             lbItemTitle.Text = item.Title; 
             if (item.Score == 0)
