@@ -111,6 +111,11 @@ namespace ListUI.Forms
                 chFinished.Enabled = true;
                 chFinished.Visible = true;
             }
+            else if (listType == "Game")
+            {
+                chOwned.Enabled = true;
+                chOwned.Visible = true;
+            }
 
             foreach (HeaderModel listsetting in listHeaders)
             {
@@ -168,6 +173,10 @@ namespace ListUI.Forms
                 txbTotalEp.Text = ((SeriesModel)item).TotalEp;
                 txbWatchedEp.Text = ((SeriesModel)item).WatchedEp.ToString();
                 chFinished.Checked = ((SeriesModel)item).FinishedRunning;
+            }
+            if (item is GameModel)
+            {
+                chOwned.Checked = ((GameModel)item).Owned;
             }
         }
 
@@ -440,6 +449,10 @@ namespace ListUI.Forms
                 ((SeriesModel)currentItem).WatchedEp = Convert.ToInt32(txbWatchedEp.Text);
                 ((SeriesModel)currentItem).FinishedRunning = chFinished.Checked;
             }
+            else if (currentItem is GameModel)
+            {
+                ((GameModel)currentItem).Owned = chOwned.Checked;
+            }
         }
 
         private bool UpdateCurrentItemPicture()
@@ -590,6 +603,13 @@ namespace ListUI.Forms
                     output = true;
                 }
             }
+            else if (currentItem is SeriesModel)
+            {
+                if (((GameModel)currentItem).Owned != chOwned.Checked)
+                {
+                    output = true;
+                }
+            }
 
             return output;
         }
@@ -601,38 +621,44 @@ namespace ListUI.Forms
 
         private void pbFavourite_MouseEnter(object sender, EventArgs e)
         {
-            pbFavourite.Size = new Size(48, 48);
-            pbFavourite.Location = new Point(346, 322);
+            IncreasePic(pbFavourite);
         }
 
         private void pbFavourite_MouseLeave(object sender, EventArgs e)
         {
-            pbFavourite.Size = new Size(46, 46);
-            pbFavourite.Location = new Point(347, 323);
+            DecreasePic(pbFavourite);
         }
 
         private void pbSave_MouseEnter(object sender, EventArgs e)
         {
-            pbSave.Size = new Size(48, 48);
-            pbSave.Location = new Point(401, 322);
+            IncreasePic(pbSave);
         }
 
         private void pbSave_MouseLeave(object sender, EventArgs e)
         {
-            pbSave.Size = new Size(46, 46);
-            pbSave.Location = new Point(402, 323);
+            DecreasePic(pbSave);
         }
 
         private void pbDelete_MouseEnter(object sender, EventArgs e)
         {
-            pbDelete.Size = new Size(48, 48);
-            pbDelete.Location = new Point(453, 322);
+            IncreasePic(pbDelete);
         }
 
         private void pbDelete_MouseLeave(object sender, EventArgs e)
         {
-            pbDelete.Size = new Size(46, 46);
-            pbDelete.Location = new Point(454, 323);
+            DecreasePic(pbDelete);
+        }
+
+        private void DecreasePic(PictureBox pb)
+        {
+            pb.Size = new Size(pb.Width - 2, pb.Height - 2);
+            pb.Location = new Point(pb.Location.X + 1, pb.Location.Y + 1);
+        }
+
+        private void IncreasePic(PictureBox pb)
+        {
+            pb.Size = new Size(pb.Width + 2, pb.Height + 2);
+            pb.Location = new Point(pb.Location.X - 1, pb.Location.Y - 1);
         }
     }
 }

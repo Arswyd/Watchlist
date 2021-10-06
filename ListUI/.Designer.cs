@@ -35,6 +35,11 @@
             this.addButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pbSelectGame = new System.Windows.Forms.PictureBox();
+            this.pbSelectSeries = new System.Windows.Forms.PictureBox();
+            this.pbSelectAnime = new System.Windows.Forms.PictureBox();
+            this.chOwnedSearch = new System.Windows.Forms.CheckBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.pbToggleSorting = new System.Windows.Forms.PictureBox();
             this.pbSettings = new System.Windows.Forms.PictureBox();
             this.pbOrderBy = new System.Windows.Forms.PictureBox();
@@ -46,13 +51,12 @@
             this.lbYearSearch = new System.Windows.Forms.Label();
             this.lbTitleSearch = new System.Windows.Forms.Label();
             this.txbYearSearch = new System.Windows.Forms.TextBox();
-            this.gameButton = new System.Windows.Forms.Panel();
-            this.seriesButton = new System.Windows.Forms.Panel();
-            this.animeButton = new System.Windows.Forms.Panel();
             this.chFinishedSearch = new System.Windows.Forms.CheckBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSelectGame)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSelectSeries)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSelectAnime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbToggleSorting)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOrderBy)).BeginInit();
@@ -119,6 +123,10 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel2.Controls.Add(this.pbSelectGame);
+            this.panel2.Controls.Add(this.pbSelectSeries);
+            this.panel2.Controls.Add(this.pbSelectAnime);
+            this.panel2.Controls.Add(this.chOwnedSearch);
             this.panel2.Controls.Add(this.progressBar1);
             this.panel2.Controls.Add(this.pbToggleSorting);
             this.panel2.Controls.Add(this.pbSettings);
@@ -131,16 +139,81 @@
             this.panel2.Controls.Add(this.lbYearSearch);
             this.panel2.Controls.Add(this.lbTitleSearch);
             this.panel2.Controls.Add(this.txbYearSearch);
-            this.panel2.Controls.Add(this.gameButton);
             this.panel2.Controls.Add(this.txbTitleSearch);
-            this.panel2.Controls.Add(this.seriesButton);
-            this.panel2.Controls.Add(this.animeButton);
             this.panel2.Controls.Add(this.chFinishedSearch);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1354, 70);
             this.panel2.TabIndex = 6;
+            // 
+            // pbSelectGame
+            // 
+            this.pbSelectGame.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbSelectGame.Image = global::ListUI.Properties.Resources.game;
+            this.pbSelectGame.Location = new System.Drawing.Point(140, 10);
+            this.pbSelectGame.Name = "pbSelectGame";
+            this.pbSelectGame.Size = new System.Drawing.Size(50, 50);
+            this.pbSelectGame.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSelectGame.TabIndex = 26;
+            this.pbSelectGame.TabStop = false;
+            this.pbSelectGame.Click += new System.EventHandler(this.pbSelectGame_Click);
+            this.pbSelectGame.MouseEnter += new System.EventHandler(this.pbSelectGame_MouseEnter);
+            this.pbSelectGame.MouseLeave += new System.EventHandler(this.pbSelectGame_MouseLeave);
+            // 
+            // pbSelectSeries
+            // 
+            this.pbSelectSeries.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbSelectSeries.Image = global::ListUI.Properties.Resources.series;
+            this.pbSelectSeries.Location = new System.Drawing.Point(75, 10);
+            this.pbSelectSeries.Name = "pbSelectSeries";
+            this.pbSelectSeries.Size = new System.Drawing.Size(50, 50);
+            this.pbSelectSeries.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSelectSeries.TabIndex = 25;
+            this.pbSelectSeries.TabStop = false;
+            this.pbSelectSeries.Click += new System.EventHandler(this.pbSelectSeries_Click);
+            this.pbSelectSeries.MouseEnter += new System.EventHandler(this.pbSelectSeries_MouseEnter);
+            this.pbSelectSeries.MouseLeave += new System.EventHandler(this.pbSelectSeries_MouseLeave);
+            // 
+            // pbSelectAnime
+            // 
+            this.pbSelectAnime.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbSelectAnime.Image = global::ListUI.Properties.Resources.anime;
+            this.pbSelectAnime.Location = new System.Drawing.Point(10, 10);
+            this.pbSelectAnime.Name = "pbSelectAnime";
+            this.pbSelectAnime.Size = new System.Drawing.Size(50, 50);
+            this.pbSelectAnime.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbSelectAnime.TabIndex = 24;
+            this.pbSelectAnime.TabStop = false;
+            this.pbSelectAnime.Click += new System.EventHandler(this.pbSelectAnime_Click);
+            this.pbSelectAnime.MouseEnter += new System.EventHandler(this.pbSelectAnime_MouseEnter);
+            this.pbSelectAnime.MouseLeave += new System.EventHandler(this.pbSelectAnime_MouseLeave);
+            // 
+            // chOwnedSearch
+            // 
+            this.chOwnedSearch.AutoSize = true;
+            this.chOwnedSearch.Checked = true;
+            this.chOwnedSearch.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this.chOwnedSearch.Enabled = false;
+            this.chOwnedSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.chOwnedSearch.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.chOwnedSearch.Location = new System.Drawing.Point(980, 30);
+            this.chOwnedSearch.Name = "chOwnedSearch";
+            this.chOwnedSearch.Size = new System.Drawing.Size(83, 24);
+            this.chOwnedSearch.TabIndex = 23;
+            this.chOwnedSearch.Text = "Owned";
+            this.chOwnedSearch.ThreeState = true;
+            this.chOwnedSearch.UseVisualStyleBackColor = true;
+            this.chOwnedSearch.Visible = false;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.progressBar1.Location = new System.Drawing.Point(0, 0);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(1357, 3);
+            this.progressBar1.TabIndex = 22;
+            this.progressBar1.Visible = false;
             // 
             // pbToggleSorting
             // 
@@ -300,46 +373,6 @@
             this.txbYearSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbYearSearch.Visible = false;
             // 
-            // gameButton
-            // 
-            this.gameButton.BackgroundImage = global::ListUI.Properties.Resources.game;
-            this.gameButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.gameButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.gameButton.Location = new System.Drawing.Point(140, 10);
-            this.gameButton.Name = "gameButton";
-            this.gameButton.Size = new System.Drawing.Size(50, 50);
-            this.gameButton.TabIndex = 2;
-            this.gameButton.Click += new System.EventHandler(this.gameButton_Click);
-            this.gameButton.MouseEnter += new System.EventHandler(this.gameButton_MouseEnter);
-            this.gameButton.MouseLeave += new System.EventHandler(this.gameButton_MouseLeave);
-            // 
-            // seriesButton
-            // 
-            this.seriesButton.BackgroundImage = global::ListUI.Properties.Resources.series;
-            this.seriesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.seriesButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.seriesButton.Location = new System.Drawing.Point(75, 10);
-            this.seriesButton.Name = "seriesButton";
-            this.seriesButton.Size = new System.Drawing.Size(50, 50);
-            this.seriesButton.TabIndex = 1;
-            this.seriesButton.Click += new System.EventHandler(this.seriesButton_Click);
-            this.seriesButton.MouseEnter += new System.EventHandler(this.seriesButton_MouseEnter);
-            this.seriesButton.MouseLeave += new System.EventHandler(this.seriesButton_MouseLeave);
-            // 
-            // animeButton
-            // 
-            this.animeButton.BackgroundImage = global::ListUI.Properties.Resources.anime;
-            this.animeButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.animeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.animeButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.animeButton.Location = new System.Drawing.Point(10, 10);
-            this.animeButton.Name = "animeButton";
-            this.animeButton.Size = new System.Drawing.Size(50, 50);
-            this.animeButton.TabIndex = 0;
-            this.animeButton.Click += new System.EventHandler(this.animeButton_Click);
-            this.animeButton.MouseEnter += new System.EventHandler(this.animeButton_MouseEnter);
-            this.animeButton.MouseLeave += new System.EventHandler(this.animeButton_MouseLeave);
-            // 
             // chFinishedSearch
             // 
             this.chFinishedSearch.AutoSize = true;
@@ -355,15 +388,6 @@
             this.chFinishedSearch.Text = "Finished";
             this.chFinishedSearch.UseVisualStyleBackColor = true;
             this.chFinishedSearch.Visible = false;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.progressBar1.Location = new System.Drawing.Point(0, 0);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(1357, 3);
-            this.progressBar1.TabIndex = 22;
-            this.progressBar1.Visible = false;
             // 
             // LibraryUI
             // 
@@ -384,6 +408,9 @@
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSelectGame)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSelectSeries)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbSelectAnime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbToggleSorting)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOrderBy)).EndInit();
@@ -397,9 +424,6 @@
         private System.Windows.Forms.FlowLayoutPanel fpListItemPanel;
         private System.Windows.Forms.TextBox txbTitleSearch;
         private System.Windows.Forms.FlowLayoutPanel fpListHeaderPanel;
-        private System.Windows.Forms.Panel animeButton;
-        private System.Windows.Forms.Panel seriesButton;
-        private System.Windows.Forms.Panel gameButton;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
@@ -416,6 +440,10 @@
         private System.Windows.Forms.PictureBox pbSettings;
         private System.Windows.Forms.PictureBox pbToggleSorting;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.CheckBox chOwnedSearch;
+        private System.Windows.Forms.PictureBox pbSelectGame;
+        private System.Windows.Forms.PictureBox pbSelectSeries;
+        private System.Windows.Forms.PictureBox pbSelectAnime;
     }
 }
 

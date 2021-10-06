@@ -60,6 +60,7 @@
             this.pbDelete = new System.Windows.Forms.PictureBox();
             this.pbPicture = new System.Windows.Forms.PictureBox();
             this.lbWatchedEp = new System.Windows.Forms.Label();
+            this.chOwned = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbFavourite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSave)).BeginInit();
@@ -191,7 +192,7 @@
             this.chDubbed.Enabled = false;
             this.chDubbed.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chDubbed.ForeColor = System.Drawing.SystemColors.Menu;
-            this.chDubbed.Location = new System.Drawing.Point(200, 346);
+            this.chDubbed.Location = new System.Drawing.Point(205, 346);
             this.chDubbed.Name = "chDubbed";
             this.chDubbed.Size = new System.Drawing.Size(89, 23);
             this.chDubbed.TabIndex = 13;
@@ -214,6 +215,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chOwned);
             this.panel1.Controls.Add(this.chFinished);
             this.panel1.Controls.Add(this.cbSeason);
             this.panel1.Controls.Add(this.lbCurrentSe);
@@ -255,7 +257,7 @@
             this.chFinished.Enabled = false;
             this.chFinished.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chFinished.ForeColor = System.Drawing.SystemColors.Menu;
-            this.chFinished.Location = new System.Drawing.Point(200, 320);
+            this.chFinished.Location = new System.Drawing.Point(205, 346);
             this.chFinished.Name = "chFinished";
             this.chFinished.Size = new System.Drawing.Size(94, 23);
             this.chFinished.TabIndex = 12;
@@ -482,6 +484,20 @@
             this.lbWatchedEp.Text = "/";
             this.lbWatchedEp.Visible = false;
             // 
+            // chOwned
+            // 
+            this.chOwned.AutoSize = true;
+            this.chOwned.Enabled = false;
+            this.chOwned.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.chOwned.ForeColor = System.Drawing.SystemColors.Menu;
+            this.chOwned.Location = new System.Drawing.Point(205, 346);
+            this.chOwned.Name = "chOwned";
+            this.chOwned.Size = new System.Drawing.Size(82, 23);
+            this.chOwned.TabIndex = 23;
+            this.chOwned.Text = "Owned";
+            this.chOwned.UseVisualStyleBackColor = true;
+            this.chOwned.Visible = false;
+            // 
             // ItemDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -538,5 +554,6 @@
         private System.Windows.Forms.TextBox txbYear;
         private System.Windows.Forms.ComboBox cbSeason;
         private System.Windows.Forms.CheckBox chFinished;
+        private System.Windows.Forms.CheckBox chOwned;
     }
 }

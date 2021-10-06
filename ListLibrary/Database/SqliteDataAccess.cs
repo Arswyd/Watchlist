@@ -232,8 +232,8 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("INSERT INTO Games (Title, Url, PictureUrl, Score, Year, Favourite, Notes, ListGroup) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @Score, @Year, @Favourite, @Notes, @ListGroup)", game);
+                cnn.Execute("INSERT INTO Games (Title, Url, PictureUrl, Score, Year, Favourite, Notes, ListGroup, Owned) " +
+                    "VALUES (@Title, @Url, @PictureUrl, @Score, @Year, @Favourite, @Notes, @ListGroup, @Owned)", game);
                 if (isSingleSave != 0)
                 {
                     cnn.Execute("INSERT INTO Log (Date, LogText) VALUES (@date, @logText)", new { date = DateTime.Now.ToString(), logText = "Game added: Title=\"" + game.Title + "\"" });
@@ -245,8 +245,8 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("INSERT OR IGNORE INTO Games (Title, Url, PictureUrl, Score, Year, Favourite, Notes, ListGroup) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @Score, @Year, @Favourite, @Notes, @ListGroup)", game);
+                cnn.Execute("INSERT OR IGNORE INTO Games (Title, Url, PictureUrl, Score, Year, Favourite, Notes, ListGroup, Owned) " +
+                    "VALUES (@Title, @Url, @PictureUrl, @Score, @Year, @Favourite, @Notes, @ListGroup, @Owned)", game);
             }
         }
 
@@ -255,7 +255,7 @@ namespace ListLibrary.Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("UPDATE Games SET Title=@Title, Url=@Url, PictureUrl=@PictureUrl, Score=@Score, Year=@Year, Favourite=@Favourite, " +
-                    "Notes=@Notes, ListGroup=@ListGroup WHERE ID=@ID", game);
+                    "Notes=@Notes, ListGroup=@ListGroup, Owned=@Owned WHERE ID=@ID", game);
             }
         }
 

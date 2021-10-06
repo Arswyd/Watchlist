@@ -37,14 +37,14 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.pbDetails = new System.Windows.Forms.PictureBox();
             this.pbNotes = new System.Windows.Forms.PictureBox();
-            this.pbDubbed = new System.Windows.Forms.PictureBox();
+            this.pbCheck = new System.Windows.Forms.PictureBox();
             this.pbListItem = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDetails)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDubbed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCheck)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbListItem)).BeginInit();
             this.SuspendLayout();
             // 
@@ -121,7 +121,7 @@
             this.panel2.Controls.Add(this.pbDetails);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Controls.Add(this.pbNotes);
-            this.panel2.Controls.Add(this.pbDubbed);
+            this.panel2.Controls.Add(this.pbCheck);
             this.panel2.Controls.Add(this.lbItemTitle);
             this.panel2.Controls.Add(this.lbItemScore);
             this.panel2.Controls.Add(this.pbListItem);
@@ -159,15 +159,15 @@
             // 
             // pbDubbed
             // 
-            this.pbDubbed.BackColor = System.Drawing.Color.Transparent;
-            this.pbDubbed.Image = global::ListUI.Properties.Resources.check;
-            this.pbDubbed.Location = new System.Drawing.Point(2, 2);
-            this.pbDubbed.Name = "pbDubbed";
-            this.pbDubbed.Size = new System.Drawing.Size(20, 20);
-            this.pbDubbed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbDubbed.TabIndex = 3;
-            this.pbDubbed.TabStop = false;
-            this.pbDubbed.Visible = false;
+            this.pbCheck.BackColor = System.Drawing.Color.Transparent;
+            this.pbCheck.Image = global::ListUI.Properties.Resources.check;
+            this.pbCheck.Location = new System.Drawing.Point(2, 2);
+            this.pbCheck.Name = "pbDubbed";
+            this.pbCheck.Size = new System.Drawing.Size(20, 20);
+            this.pbCheck.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbCheck.TabIndex = 3;
+            this.pbCheck.TabStop = false;
+            this.pbCheck.Visible = false;
             // 
             // pbListItem
             // 
@@ -194,7 +194,7 @@
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbDetails)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNotes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbDubbed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbCheck)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbListItem)).EndInit();
             this.ResumeLayout(false);
 
@@ -205,7 +205,7 @@
         private System.Windows.Forms.PictureBox pbListItem;
         private System.Windows.Forms.Label lbItemTitle;
         private System.Windows.Forms.Label lbItemScore;
-        private System.Windows.Forms.PictureBox pbDubbed;
+        private System.Windows.Forms.PictureBox pbCheck;
         private System.Windows.Forms.PictureBox pbNotes;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lbItemEpisodes;

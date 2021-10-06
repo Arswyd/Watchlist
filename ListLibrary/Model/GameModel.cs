@@ -4,6 +4,7 @@ namespace ListLibrary.Model
 {
     public class GameModel : ItemModel
     {
+        public bool Owned { get; set; }
         public override string PictureDir
         {
             get
@@ -19,6 +20,7 @@ namespace ListLibrary.Model
             Year = DateTime.Now.Year;
             Favourite = false;
             ListGroup = "Not Released Yet";
+            Owned = false;
         }
     }
 }

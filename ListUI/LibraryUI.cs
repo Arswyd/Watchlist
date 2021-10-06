@@ -80,7 +80,7 @@ namespace ListUI
             }
             if (activeListType == "Game")
             {
-                return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup " +
+                return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup, G.Owned " +
                        "FROM Games AS G" + CreateWhereString();
             }
             if (activeListType == "Series")
@@ -131,6 +131,13 @@ namespace ListUI
                         sWhere = sWhere + " AND " + c + ".FinishedRunning = 1";
                     else if (chFinishedSearch.CheckState == CheckState.Unchecked)
                         sWhere = sWhere + " AND " + c + ".FinishedRunning = 0";
+                }
+                if (activeListType == "Game")
+                {
+                    if (chOwnedSearch.CheckState == CheckState.Checked)
+                        sWhere = sWhere + " AND " + c + ".Owned = 1";
+                    else if (chOwnedSearch.CheckState == CheckState.Unchecked)
+                        sWhere = sWhere + " AND " + c + ".Owned = 0";
                 }
             }
 
@@ -266,47 +273,49 @@ namespace ListUI
         {
             if (activeListType == "Anime")
             {
-                animeButton.Enabled = false;
-                seriesButton.Enabled = true;
-                gameButton.Enabled = true;
+                pbSelectAnime.Enabled = false;
+                pbSelectSeries.Enabled = true;
+                pbSelectGame.Enabled = true;
             }
             if (activeListType == "Series")
             {
-                animeButton.Enabled = true;
-                seriesButton.Enabled = false;
-                gameButton.Enabled = true;
+                pbSelectAnime.Enabled = true;
+                pbSelectSeries.Enabled = false;
+                pbSelectGame.Enabled = true;
             }
             if (activeListType == "Game")
             {
-                animeButton.Enabled = true;
-                seriesButton.Enabled = true;
-                gameButton.Enabled = false;
+                pbSelectAnime.Enabled = true;
+                pbSelectSeries.Enabled = true;
+                pbSelectGame.Enabled = false;
             }
         }
+        private void pbSelectAnime_Click(object sender, EventArgs e)
+        {
+            SwitchListType("Anime", "Watching");
+        }
 
-        private void animeButton_Click(object sender, EventArgs e)
+        private void pbSelectSeries_Click(object sender, EventArgs e)
+        {
+            SwitchListType("Series", "Watching");
+        }
+
+
+        private void pbSelectGame_Click(object sender, EventArgs e)
+        {
+            SwitchListType("Game", "Playing");
+        }
+
+        private void SwitchListType(string type, string group)
         {
             fpListItemPanel.VerticalScroll.Value = 0;
-            activeListType = "Anime";
-            activeGroup = "Watching";
+            activeListType = type;
+            activeGroup = group;
+            if (isFiltered) isFiltered = !isFiltered;
+            CheckFilters();
             WireUpLibraryForm();
         }
 
-        private void seriesButton_Click(object sender, EventArgs e)
-        {
-            fpListItemPanel.VerticalScroll.Value = 0;
-            activeListType = "Series";
-            activeGroup = "Watching";
-            WireUpLibraryForm();
-        }
-
-        private void gameButton_Click(object sender, EventArgs e)
-        {
-            fpListItemPanel.VerticalScroll.Value = 0;
-            activeListType = "Game";
-            activeGroup = "Playing";
-            WireUpLibraryForm();
-        }
         private void flowLayoutPanel1_Click(object sender, EventArgs e)
         {
             fpListItemPanel.Focus();
@@ -332,65 +341,85 @@ namespace ListUI
         {
             isFiltered = !isFiltered;
 
+            CheckFilters();
+
+            if (!isFiltered)
+            {
+                WireUpLibraryForm();
+            }
+        }
+
+        private void CheckFilters()
+        {
             if (isFiltered)
             {
-                pbToggleFilter.Image = Resources.clear_filter;
-                lbTitleSearch.Enabled = true;
-                lbTitleSearch.Visible = true;
-                txbTitleSearch.Enabled = true;
-                txbTitleSearch.Visible = true;
-                lbYearSearch.Enabled = true;
-                lbYearSearch.Visible = true;
-                txbYearSearch.Enabled = true;
-                txbYearSearch.Visible = true;
-                chFavouriteSearch.Enabled = true;
-                chFavouriteSearch.Visible = true;
-                if (activeListType == "Anime")
-                {
-                    chDubbedSearch.Enabled = true;
-                    chDubbedSearch.Visible = true;
-                }
-                if (activeListType == "Series")
-                {
-                    chFinishedSearch.Enabled = true;
-                    chFinishedSearch.Visible = true;
-                }
-                pbSearch.Enabled = true;
-                pbSearch.Visible = true;
+                ShowFilterControls();
             }
             else
             {
-                pbToggleFilter.Image = Resources.filter;
-                lbTitleSearch.Enabled = false;
-                lbTitleSearch.Visible = false;
-                txbTitleSearch.Enabled = false;
-                txbTitleSearch.Visible = false;
-                txbTitleSearch.Text = "";
-                lbYearSearch.Enabled = false;
-                lbYearSearch.Visible = false;
-                txbYearSearch.Enabled = false;
-                txbYearSearch.Visible = false;
-                txbYearSearch.Text = "";
-                chFavouriteSearch.Enabled = false;
-                chFavouriteSearch.Visible = false;
-                chFavouriteSearch.Checked = false;
-                if (activeListType == "Anime")
-                {
-                    chDubbedSearch.Enabled = false;
-                    chDubbedSearch.Visible = false;
-                    chDubbedSearch.Checked = false;
-                }
-                if (activeListType == "Series")
-                {
-                    chFinishedSearch.Enabled = false;
-                    chFinishedSearch.Visible = false;
-                    chFinishedSearch.Checked = false;
-                }
-                pbSearch.Enabled = false;
-                pbSearch.Visible = false;
-
-                WireUpLibraryForm();
+                HideFilterControls();
             }
+        }
+
+        private void ShowFilterControls()
+        {
+            pbToggleFilter.Image = Resources.clear_filter;
+            lbTitleSearch.Enabled = true;
+            lbTitleSearch.Visible = true;
+            txbTitleSearch.Enabled = true;
+            txbTitleSearch.Visible = true;
+            lbYearSearch.Enabled = true;
+            lbYearSearch.Visible = true;
+            txbYearSearch.Enabled = true;
+            txbYearSearch.Visible = true;
+            chFavouriteSearch.Enabled = true;
+            chFavouriteSearch.Visible = true;
+            if (activeListType == "Anime")
+            {
+                chDubbedSearch.Enabled = true;
+                chDubbedSearch.Visible = true;
+            }
+            else if (activeListType == "Series")
+            {
+                chFinishedSearch.Enabled = true;
+                chFinishedSearch.Visible = true;
+            }
+            else if (activeListType == "Game")
+            {
+                chOwnedSearch.Enabled = true;
+                chOwnedSearch.Visible = true;
+            }
+            pbSearch.Enabled = true;
+            pbSearch.Visible = true;
+        }
+
+        private void HideFilterControls()
+        {
+            pbToggleFilter.Image = Resources.filter;
+            lbTitleSearch.Enabled = false;
+            lbTitleSearch.Visible = false;
+            txbTitleSearch.Enabled = false;
+            txbTitleSearch.Visible = false;
+            txbTitleSearch.Text = "";
+            lbYearSearch.Enabled = false;
+            lbYearSearch.Visible = false;
+            txbYearSearch.Enabled = false;
+            txbYearSearch.Visible = false;
+            txbYearSearch.Text = "";
+            chFavouriteSearch.Enabled = false;
+            chFavouriteSearch.Visible = false;
+            chFavouriteSearch.Checked = false;
+            chDubbedSearch.Enabled = false;
+            chDubbedSearch.Visible = false;
+            chDubbedSearch.CheckState = CheckState.Indeterminate;
+            chFinishedSearch.Enabled = false;
+            chFinishedSearch.Visible = false;
+            chFinishedSearch.CheckState = CheckState.Indeterminate;
+            chOwnedSearch.Enabled = false;
+            chOwnedSearch.Visible = false;
+            chOwnedSearch.CheckState = CheckState.Indeterminate;
+            pbSearch.Enabled = false;
+            pbSearch.Visible = false;
         }
 
         private void pbSorting_Click(object sender, EventArgs e)
@@ -440,40 +469,34 @@ namespace ListUI
             SqliteDataAccess.LogLastLogin();
         }
 
-        private void animeButton_MouseEnter(object sender, EventArgs e)
+        private void pbSelectAnime_MouseEnter(object sender, EventArgs e)
         {
-            animeButton.Size = new Size(52, 52);
-            animeButton.Location = new Point(9, 9);
+            IncreasePic(pbSelectAnime);
         }
 
-        private void animeButton_MouseLeave(object sender, EventArgs e)
+        private void pbSelectAnime_MouseLeave(object sender, EventArgs e)
         {
-            animeButton.Size = new Size(50, 50);
-            animeButton.Location = new Point(10, 10);
+            DecreasePic(pbSelectAnime);
         }
 
-        private void seriesButton_MouseEnter(object sender, EventArgs e)
+        private void pbSelectSeries_MouseEnter(object sender, EventArgs e)
         {
-            seriesButton.Size = new Size(52, 52);
-            seriesButton.Location = new Point(74, 9);
+            IncreasePic(pbSelectSeries);
         }
 
-        private void seriesButton_MouseLeave(object sender, EventArgs e)
+        private void pbSelectSeries_MouseLeave(object sender, EventArgs e)
         {
-            seriesButton.Size = new Size(50, 50);
-            seriesButton.Location = new Point(75, 10);
+            DecreasePic(pbSelectSeries);
         }
 
-        private void gameButton_MouseEnter(object sender, EventArgs e)
+        private void pbSelectGame_MouseEnter(object sender, EventArgs e)
         {
-            gameButton.Size = new Size(52, 52);
-            gameButton.Location = new Point(139, 9);
+            IncreasePic(pbSelectGame);
         }
 
-        private void gameButton_MouseLeave(object sender, EventArgs e)
+        private void pbSelectGame_MouseLeave(object sender, EventArgs e)
         {
-            gameButton.Size = new Size(50, 50);
-            gameButton.Location = new Point(140, 10);
+            DecreasePic(pbSelectGame);
         }
 
         private void pbToggleFilter_MouseEnter(object sender, EventArgs e)
@@ -484,8 +507,7 @@ namespace ListUI
 
         private void pbToggleFilter_MouseLeave(object sender, EventArgs e)
         {
-            pbToggleFilter.Size = new Size(40, 40);
-            pbToggleFilter.Location = new Point(1201, 14);
+            DecreasePic(pbToggleFilter);
         }
 
         private void pbToggleSorting_MouseEnter(object sender, EventArgs e)
@@ -496,8 +518,7 @@ namespace ListUI
 
         private void pbToggleSorting_MouseLeave(object sender, EventArgs e)
         {
-            pbToggleSorting.Size = new Size(40, 40);
-            pbToggleSorting.Location = new Point(1248, 14);
+            DecreasePic(pbToggleSorting);
         }
 
         private void pbSettings_MouseEnter(object sender, EventArgs e)
@@ -508,20 +529,29 @@ namespace ListUI
 
         private void pbSettings_MouseLeave(object sender, EventArgs e)
         {
-            pbSettings.Size = new Size(40, 40);
-            pbSettings.Location = new Point(1295, 14);
+            DecreasePic(pbSettings);
         }
 
         private void pbSearch_MouseEnter(object sender, EventArgs e)
         {
-            pbSearch.Size = new Size(32, 32);
-            pbSearch.Location = new Point(1079, 24);
+            IncreasePic(pbSearch);
         }
 
         private void pbSearch_MouseLeave(object sender, EventArgs e)
         {
-            pbSearch.Size = new Size(30, 30);
-            pbSearch.Location = new Point(1080, 25);
+            DecreasePic(pbSearch);
+        }
+
+        private void DecreasePic(PictureBox pb)
+        {
+            pb.Size = new Size(pb.Width - 2, pb.Height - 2);
+            pb.Location = new Point(pb.Location.X + 1, pb.Location.Y + 1);
+        }
+
+        private void IncreasePic(PictureBox pb)
+        {
+            pb.Size = new Size(pb.Width + 2, pb.Height + 2);
+            pb.Location = new Point(pb.Location.X - 1, pb.Location.Y - 1);
         }
     }
 }

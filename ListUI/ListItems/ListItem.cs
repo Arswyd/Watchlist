@@ -19,7 +19,7 @@ namespace ListUI.ListItems
             InitializeComponent();
 
             Color myColor = Color.FromArgb(180, 0,0,0);
-            pbDubbed.Parent = pbListItem;
+            pbCheck.Parent = pbListItem;
             pbNotes.Parent = pbListItem;
             lbItemTitle.Parent = pbListItem;
             lbItemTitle.BackColor = myColor;
@@ -65,52 +65,21 @@ namespace ListUI.ListItems
             {
                 lbItemEpisodes.Text = ((AnimeModel)item).TotalEp.ToString() + " / " + ((AnimeModel)item).WatchedEp.ToString();
 
-                if (((AnimeModel)item).Dubbed == true && String.IsNullOrWhiteSpace(item.Notes))
-                {
-                    pbDubbed.Show();
-                }
-                else if (!String.IsNullOrWhiteSpace(item.Notes) && ((AnimeModel)item).Dubbed == false)
-                {
-                    pbNotes.Show();
-                    toolTip1.SetToolTip(pbNotes, item.Notes);
-                    pbNotes.Location = new Point(2, 2);
-                }
-                else if (!String.IsNullOrWhiteSpace(item.Notes) && ((AnimeModel)item).Dubbed == true)
-                {
-                    pbDubbed.Show();
-                    pbNotes.Show();
-                    toolTip1.SetToolTip(pbNotes, item.Notes);
-                }
+                SetCheckAndNoteIcon(((AnimeModel)item).Dubbed, String.IsNullOrWhiteSpace(item.Notes));
             }
             else if (item is SeriesModel)
             {
                 lbItemEpisodes.Text = "S" + ((SeriesModel)item).CurrentSe.ToString() + " E" + ((SeriesModel)item).WatchedEp.ToString();
 
-                if (((SeriesModel)item).FinishedRunning == true && String.IsNullOrWhiteSpace(item.Notes))
-                {
-                    pbDubbed.Show();
-                }
-                else if (!String.IsNullOrWhiteSpace(item.Notes) && ((SeriesModel)item).FinishedRunning == false)
-                {
-                    pbNotes.Show();
-                    toolTip1.SetToolTip(pbNotes, item.Notes);
-                    pbNotes.Location = new Point(2, 2);
-                }
-                else if (!String.IsNullOrWhiteSpace(item.Notes) && ((SeriesModel)item).FinishedRunning == true)
-                {
-                    pbDubbed.Show();
-                    pbNotes.Show();
-                    toolTip1.SetToolTip(pbNotes, item.Notes);
-                }
+                SetCheckAndNoteIcon(((SeriesModel)item).FinishedRunning, String.IsNullOrWhiteSpace(item.Notes));
             }
             else
             {
-                if (item.Notes != "")
-                {
-                    pbNotes.Show();
-                    toolTip1.SetToolTip(pbNotes, item.Notes);
-                    pbNotes.Location = new Point(2, 2);
-                }
+                SetCheckAndNoteIcon(((GameModel)item).Owned, String.IsNullOrWhiteSpace(item.Notes));
+            }
+            if (!String.IsNullOrWhiteSpace(item.Notes))
+            {
+                toolTip1.SetToolTip(pbNotes, item.Notes);
             }
             if (item.Favourite == true)
             {
@@ -124,35 +93,36 @@ namespace ListUI.ListItems
             }
         }
 
+        private void SetCheckAndNoteIcon(bool isChecked, bool hasNotes)
+        {
+            if (isChecked == true && hasNotes)
+            {
+                pbCheck.Show();
+            }
+            else if (hasNotes && isChecked == false)
+            {
+                pbNotes.Show();
+                pbNotes.Location = new Point(2, 2);
+            }
+            else if (hasNotes && isChecked == true)
+            {
+                pbCheck.Show();
+                pbNotes.Show();
+            }
+        }
+
         private void listItemName_Click(object sender, EventArgs e)
         {
-            //TODO: Kell ez?
-
-            //if (lbItemScore.Text == "N/A")
-            //{
-            //    lbItemScore.Text = "0";
-            //}
-
             if (currentItem.Url.StartsWith("https://"))
             {
                 System.Diagnostics.Process.Start(currentItem.Url);
             }
-
-            //if (lbItemScore.Text == "0")
-            //{
-            //    lbItemScore.Text = "N/A";
-            //}
         }
 
         private void plusWatched_Click(object sender, EventArgs e)
         {
             lbPlusEp.Enabled = false;
             Application.UseWaitCursor = true;
-
-            //if (lbItemScore.Text == "N/A")
-            //{
-            //    lbItemScore.Text = "0";
-            //}
 
             if (currentItem is AnimeModel)
             {
@@ -181,8 +151,6 @@ namespace ListUI.ListItems
                     MessageBox.Show("Anime Completed!");
 
                     callerForm.WireUpRequest(listGroup);
-
-                    //this.Dispose();
                 }
                 else
                 {
@@ -303,21 +271,7 @@ namespace ListUI.ListItems
 
         private void menuPicture_Click(object sender, EventArgs e)
         {
-            //TODO: Kell ez?
-
-            //if (lbItemScore.Text == "N/A")
-            //{
-            //    lbItemScore.Text = "0";
-            //}
-
             callerForm.ModifyItem(currentItem, this.Parent.Controls.GetChildIndex(this));
-
-            //AddItem(currentItem);
-
-            //if (lbItemScore.Text == "0")
-            //{
-            //    lbItemScore.Text = "N/A";
-            //}
         }
 
         public void HidePanel()

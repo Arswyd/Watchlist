@@ -439,62 +439,64 @@ namespace ListUI.Forms
 
         private void pbMoveUp_MouseEnter(object sender, EventArgs e)
         {
-            pbMoveUp.Size = new Size(42, 42);
-            pbMoveUp.Location = new Point(299, 139);
+            IncreasePic(pbMoveUp);
         }
 
         private void pbMoveUp_MouseLeave(object sender, EventArgs e)
         {
-            pbMoveUp.Size = new Size(40, 40);
-            pbMoveUp.Location = new Point(300, 140);
+             DecreasePic(pbMoveUp);
         }
 
         private void pbAddRow_MouseEnter(object sender, EventArgs e)
         {
-            pbAddRow.Size = new Size(42, 42);
-            pbAddRow.Location = new Point(299, 185);
+            IncreasePic(pbAddRow);
         }
 
         private void pbAddRow_MouseLeave(object sender, EventArgs e)
         {
-            pbAddRow.Size = new Size(40, 40);
-            pbAddRow.Location = new Point(300, 186);
+            DecreasePic(pbAddRow);
         }
 
         private void pbDeleteRow_MouseEnter(object sender, EventArgs e)
         {
-            pbDeleteRow.Size = new Size(42, 42);
-            pbDeleteRow.Location = new Point(299, 231);
+            IncreasePic(pbDeleteRow);
         }
 
         private void pbDeleteRow_MouseLeave(object sender, EventArgs e)
         {
-            pbDeleteRow.Size = new Size(40, 40);
-            pbDeleteRow.Location = new Point(300, 232);
+            DecreasePic(pbDeleteRow);
         }
 
         private void pbMoveDown_MouseEnter(object sender, EventArgs e)
         {
-            pbMoveDown.Size = new Size(42, 42);
-            pbMoveDown.Location = new Point(299, 277);
+            IncreasePic(pbMoveDown);
         }
 
         private void pbMoveDown_MouseLeave(object sender, EventArgs e)
-        {
-            pbMoveDown.Size = new Size(40, 40);
-            pbMoveDown.Location = new Point(300, 278);
+        { 
+            DecreasePic(pbMoveDown);
         }
 
         private void pbSave_MouseEnter(object sender, EventArgs e)
         {
-            pbSave.Size = new Size(42, 42);
-            pbSave.Location = new Point(299, 374);
+            IncreasePic(pbSave);
         }
 
         private void pbSave_MouseLeave(object sender, EventArgs e)
         {
-            pbSave.Size = new Size(40, 40);
-            pbSave.Location = new Point(300, 375);
+            DecreasePic(pbSave);
+        }
+
+        private void DecreasePic(PictureBox pb)
+        {
+            pb.Size = new Size(pb.Width - 2, pb.Height - 2);
+            pb.Location = new Point(pb.Location.X + 1, pb.Location.Y + 1);
+        }
+
+        private void IncreasePic(PictureBox pb)
+        {
+            pb.Size = new Size(pb.Width + 2, pb.Height + 2);
+            pb.Location = new Point(pb.Location.X - 1, pb.Location.Y - 1);
         }
     }
 }

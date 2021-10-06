@@ -87,6 +87,7 @@ namespace ListLibrary.Database
                 p.Favourite = bool.Parse(cols[5]);
                 p.Notes = cols[6];
                 p.ListGroup = cols[7];
+                p.Owned = bool.Parse(cols[8]);
 
                 output.Add(p);
             }
@@ -127,13 +128,13 @@ namespace ListLibrary.Database
         public static void ExportGame()
         {
             List<GameModel> game = SqliteDataAccess.LoadGameGroup("SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.Score, G.Year, G.Favourite, G.Notes, " +
-                "G.ListGroup FROM Games AS G");
+                "G.ListGroup, G.Owned FROM Games AS G");
 
             List<string> lines = new List<string>();
 
             foreach (GameModel p in game)
             {
-                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup}");
+                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup};{p.Owned}");
             }
 
             File.WriteAllLines(@"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_GameBackup.csv", lines);
