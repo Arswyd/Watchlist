@@ -271,6 +271,24 @@ namespace ListUI.Forms
                 txbTitle.BackColor = Color.LightCoral;
                 output = false;
             }
+            else
+            {
+                if(listType == "Anime" && SqliteDataAccess.LoadAnimeGroup("SELECT 1 FROM Anime WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
+                {
+                    txbTitle.BackColor = Color.LightCoral;
+                    return false;
+                }
+                else if (listType == "Series" && SqliteDataAccess.LoadSeriesGroup("SELECT 1 FROM Series WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
+                {
+                    txbTitle.BackColor = Color.LightCoral;
+                    return false;
+                }
+                else if (listType == "Game" && SqliteDataAccess.LoadGameGroup("SELECT 1 FROM Games WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
+                {
+                    txbTitle.BackColor = Color.LightCoral;
+                    return false;
+                }
+            }
 
             //Url
 

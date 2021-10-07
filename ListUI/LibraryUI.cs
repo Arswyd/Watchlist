@@ -201,7 +201,7 @@ namespace ListUI
 
             if (activeGroup == "All")
             {
-                foreach (HeaderModel listsetting in headerList.Where(n => n.ListType == activeListType))
+                foreach (HeaderModel listsetting in headerList.Where(n => n.ListType == activeListType && n.ListGroup != "Completed"))
                 {
                     LoadListItems(listsetting.ListGroup);
                 }
