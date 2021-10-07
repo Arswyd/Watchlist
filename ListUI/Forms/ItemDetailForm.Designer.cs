@@ -42,6 +42,7 @@
             this.chDubbed = new System.Windows.Forms.CheckBox();
             this.cbListGroup = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chOwned = new System.Windows.Forms.CheckBox();
             this.chFinished = new System.Windows.Forms.CheckBox();
             this.cbSeason = new System.Windows.Forms.ComboBox();
             this.lbCurrentSe = new System.Windows.Forms.Label();
@@ -60,7 +61,6 @@
             this.pbDelete = new System.Windows.Forms.PictureBox();
             this.pbPicture = new System.Windows.Forms.PictureBox();
             this.lbWatchedEp = new System.Windows.Forms.Label();
-            this.chOwned = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbFavourite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSave)).BeginInit();
@@ -251,6 +251,20 @@
             this.panel1.Size = new System.Drawing.Size(520, 380);
             this.panel1.TabIndex = 10;
             // 
+            // chOwned
+            // 
+            this.chOwned.AutoSize = true;
+            this.chOwned.Enabled = false;
+            this.chOwned.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.chOwned.ForeColor = System.Drawing.SystemColors.Menu;
+            this.chOwned.Location = new System.Drawing.Point(205, 346);
+            this.chOwned.Name = "chOwned";
+            this.chOwned.Size = new System.Drawing.Size(82, 23);
+            this.chOwned.TabIndex = 23;
+            this.chOwned.Text = "Owned";
+            this.chOwned.UseVisualStyleBackColor = true;
+            this.chOwned.Visible = false;
+            // 
             // chFinished
             // 
             this.chFinished.AutoSize = true;
@@ -378,7 +392,7 @@
             this.txbPictureUrl.Name = "txbPictureUrl";
             this.txbPictureUrl.Size = new System.Drawing.Size(300, 23);
             this.txbPictureUrl.TabIndex = 2;
-            this.txbPictureUrl.TextChanged += new System.EventHandler(this.txbPictureUrl_TextChanged);
+            this.txbPictureUrl.Leave += new System.EventHandler(this.txbPictureUrl_Leave);
             // 
             // label2
             // 
@@ -483,20 +497,6 @@
             this.lbWatchedEp.TabIndex = 4;
             this.lbWatchedEp.Text = "/";
             this.lbWatchedEp.Visible = false;
-            // 
-            // chOwned
-            // 
-            this.chOwned.AutoSize = true;
-            this.chOwned.Enabled = false;
-            this.chOwned.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.chOwned.ForeColor = System.Drawing.SystemColors.Menu;
-            this.chOwned.Location = new System.Drawing.Point(205, 346);
-            this.chOwned.Name = "chOwned";
-            this.chOwned.Size = new System.Drawing.Size(82, 23);
-            this.chOwned.TabIndex = 23;
-            this.chOwned.Text = "Owned";
-            this.chOwned.UseVisualStyleBackColor = true;
-            this.chOwned.Visible = false;
             // 
             // ItemDetailForm
             // 

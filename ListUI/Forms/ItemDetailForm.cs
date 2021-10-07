@@ -646,9 +646,16 @@ namespace ListUI.Forms
             return output;
         }
 
-        private void txbPictureUrl_TextChanged(object sender, EventArgs e)
+        private void txbPictureUrl_Leave(object sender, EventArgs e)
         {
-            pbPicture.Load(txbPictureUrl.Text);
+            try
+            {
+                pbPicture.Load(txbPictureUrl.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Picture Url not valid!");
+            }
         }
 
         private void pbFavourite_MouseEnter(object sender, EventArgs e)
