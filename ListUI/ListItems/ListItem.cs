@@ -131,7 +131,7 @@ namespace ListUI.ListItems
             {
                 if (((AnimeModel)currentItem).TotalEp == 0)
                 {
-                    MessageBox.Show("Total Episodes were not set!");
+                    MessageBox.Show("Total Episodes were not set!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 else if (((AnimeModel)currentItem).WatchedEp < (((AnimeModel)currentItem).TotalEp - 1))
                 {
@@ -151,20 +151,20 @@ namespace ListUI.ListItems
 
                     SqliteDataAccess.UpdateAnime((AnimeModel)currentItem);
 
-                    MessageBox.Show("Anime Completed!");
+                    MessageBox.Show("Anime Completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     callerForm.WireUpRequest(listGroup);
                 }
                 else
                 {
-                    MessageBox.Show("NOT");
+                    //MessageBox.Show("NOT");
                 }
             }
             else if (currentItem is SeriesModel)
             {
                 if (String.IsNullOrWhiteSpace(((SeriesModel)currentItem).TotalEp))
                 {
-                    MessageBox.Show("Total Episodes were not set!");
+                    MessageBox.Show("Total Episodes were not set!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 if (((SeriesModel)currentItem).FinishedRunning && ((SeriesModel)currentItem).CurrentSe == ((SeriesModel)currentItem).TotalSe && ((SeriesModel)currentItem).WatchedEp == (((SeriesModel)currentItem).CurrentSeasonTotalEp - 1))
                 {
@@ -176,7 +176,7 @@ namespace ListUI.ListItems
 
                     SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
 
-                    MessageBox.Show("Series Completed!");
+                    MessageBox.Show("Series Completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     callerForm.WireUpRequest(listGroup);
                 }
@@ -190,7 +190,7 @@ namespace ListUI.ListItems
 
                     SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
 
-                    MessageBox.Show("Season Completed!");
+                    MessageBox.Show("Season Completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
                     callerForm.WireUpRequest(listGroup);
                 }
@@ -216,7 +216,7 @@ namespace ListUI.ListItems
                     }
                     else
                     {
-                        MessageBox.Show("NOT");
+                        //MessageBox.Show("NOT");
                     }
                 }
             }

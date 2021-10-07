@@ -16,7 +16,7 @@ namespace ListUI.Forms
         List<HeaderModel> headers;
         List<LogModel> logs;
         HeaderModel selectedHeader;
-
+ 
         public SettingsForm()
         {
             InitializeComponent();
@@ -206,30 +206,30 @@ namespace ListUI.Forms
                 }
             }
 
-            MessageBox.Show("Import completed!");
+            MessageBox.Show("Import completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void bExportA_Click(object sender, EventArgs e)
         {
             DataImportExportProcessor.ExportAnime();
-            MessageBox.Show("Export completed!");
+            MessageBox.Show("Export completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void bExportS_Click(object sender, EventArgs e)
         {
             DataImportExportProcessor.ExportSeries();
-            MessageBox.Show("Export completed!");
+            MessageBox.Show("Export completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void bExportG_Click(object sender, EventArgs e)
         {
             DataImportExportProcessor.ExportGame();
-            MessageBox.Show("Exported completed!");
+            MessageBox.Show("Export completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void bDeleteAnime_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to DELETE all Anime?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Do you want to DELETE ALL Anime?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 SqliteDataAccess.DeleteAllAnime();
 
@@ -239,13 +239,13 @@ namespace ListUI.Forms
                     file.Delete();
                 }
 
-                MessageBox.Show("All Anime Deleted!");
+                MessageBox.Show("All Anime Deleted!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
         private void bDeleteSeries_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to DELETE all Series?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Do you want to DELETE ALL Series?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 SqliteDataAccess.DeleteAllSeries();
 
@@ -255,13 +255,13 @@ namespace ListUI.Forms
                     file.Delete();
                 }
 
-                MessageBox.Show("All Series Deleted!");
+                MessageBox.Show("All Series Deleted!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
         private void bDeleteGame_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to DELETE all Games?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Do you want to DELETE ALL Games?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 SqliteDataAccess.DeleteAllGame();
 
@@ -271,7 +271,7 @@ namespace ListUI.Forms
                     file.Delete();
                 }
 
-                MessageBox.Show("All Game Deleted!");
+                MessageBox.Show("All Game Deleted!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -284,7 +284,7 @@ namespace ListUI.Forms
 
             DownloadPics(items);
 
-            MessageBox.Show("Download completed!");
+            MessageBox.Show("Download completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void bDownloadPicA_Click(object sender, EventArgs e)
@@ -296,7 +296,7 @@ namespace ListUI.Forms
 
             DownloadPics(items);
 
-            MessageBox.Show("Download completed!");
+            MessageBox.Show("Download completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void bDownloadPicG_Click(object sender, EventArgs e)
@@ -308,7 +308,7 @@ namespace ListUI.Forms
 
             DownloadPics(items);
 
-            MessageBox.Show("Download completed!");
+            MessageBox.Show("Download completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void DownloadPics(List<ItemModel> items)
@@ -329,7 +329,7 @@ namespace ListUI.Forms
                     }
                     catch (Exception)
                     {
-                        MessageBox.Show("Error: " + p.Title);
+                        MessageBox.Show("Download failed: " + p.Title, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 
@@ -339,25 +339,38 @@ namespace ListUI.Forms
 
         private void pbMoveUp_Click(object sender, EventArgs e)
         {
+            if (lvHeaders.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("There is no selected item!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             var header = headers.Where(c => c.SortOrder == selectedHeader.SortOrder - 1).First();
             header.SortOrder++;
             SqliteDataAccess.UpdateHeader(header);
             selectedHeader.SortOrder--;
             SqliteDataAccess.UpdateHeader(selectedHeader);
-            //txbHeaderEdit.Text = "";
+            txbHeaderEdit.Text = selectedHeader.ListGroup;
             LoadHeaderListView();
+            lvHeaders.Items[selectedHeader.SortOrder].Selected = true;
             LoadLogs();
         }
 
         private void pbMoveDown_Click(object sender, EventArgs e)
         {
+            if (lvHeaders.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("There is no selected item!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             var header = headers.Where(c => c.SortOrder == selectedHeader.SortOrder + 1).First();
             header.SortOrder--;
             SqliteDataAccess.UpdateHeader(header);
             selectedHeader.SortOrder++;
             SqliteDataAccess.UpdateHeader(selectedHeader);
-            //txbHeaderEdit.Text = "";
             LoadHeaderListView();
+            lvHeaders.Items[selectedHeader.SortOrder].Selected = true;
             LoadLogs();
         }
 
@@ -372,10 +385,12 @@ namespace ListUI.Forms
                 selectedHeader = new HeaderModel() { ListType = cbListType.Text, ListGroup = "New Group", SortOrder = neworder };
                 SqliteDataAccess.SaveHeader(selectedHeader);
                 LoadHeaderListView();
+                lvHeaders.Focus();
+                lvHeaders.Items[lvHeaders.Items.Count-1].Selected = true;
             }
             else
             {
-                MessageBox.Show("No more headers can be added!");
+                MessageBox.Show("No more headers can be added!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             LoadLogs();
@@ -383,27 +398,25 @@ namespace ListUI.Forms
 
         private void pbDeleteRow_Click(object sender, EventArgs e)
         {
-            if (lvHeaders.SelectedItems.Count != 0)
+            if (lvHeaders.SelectedItems.Count == 0)
             {
-                if (LoadList())
-                {
-                    MessageBox.Show("There are items in this list group!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                else
-                {
-                    SqliteDataAccess.DeleteHeader(selectedHeader);
-                    foreach (var header in headers.Where(c => c.SortOrder > selectedHeader.SortOrder))
-                    {
-                        header.SortOrder--;
-                        SqliteDataAccess.UpdateHeader(header);
-                    }
-                    txbHeaderEdit.Text = "";
-                    LoadHeaderListView();
-                }
+                MessageBox.Show("There is no selected item!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if (LoadList())
+            {
+                MessageBox.Show("There are items in this list group!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
-                MessageBox.Show("There is no selected item", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                SqliteDataAccess.DeleteHeader(selectedHeader);
+                foreach (var header in headers.Where(c => c.SortOrder > selectedHeader.SortOrder))
+                {
+                    header.SortOrder--;
+                    SqliteDataAccess.UpdateHeader(header);
+                }
+                txbHeaderEdit.Text = "";
+                LoadHeaderListView();
             }
 
             LoadLogs();
@@ -411,21 +424,18 @@ namespace ListUI.Forms
 
         private void pbSave_Click(object sender, EventArgs e)
         {
-            if (lvHeaders.SelectedItems.Count != 0)
+            if (lvHeaders.SelectedItems.Count == 0)
             {
-                DialogResult dialogResult = MessageBox.Show("Do you want to edit list group?", "Attention!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    SqliteDataAccess.UpdateAnimeListGroup(txbHeaderEdit.Text, selectedHeader.ListGroup);
-                    selectedHeader.ListGroup = txbHeaderEdit.Text;
-                    SqliteDataAccess.UpdateHeader(selectedHeader);
-                    txbHeaderEdit.Text = "";
-                    LoadHeaderListView();
-                }
+                MessageBox.Show("There is no selected item!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
-            else
-            {
-                MessageBox.Show("There is no selected item", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if(MessageBox.Show("Do you want to edit list group?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {  
+                SqliteDataAccess.UpdateAnimeListGroup(txbHeaderEdit.Text, selectedHeader.ListGroup);
+                selectedHeader.ListGroup = txbHeaderEdit.Text;
+                SqliteDataAccess.UpdateHeader(selectedHeader);
+                txbHeaderEdit.Text = "";
+                LoadHeaderListView();
             }
 
             LoadLogs();
@@ -434,7 +444,7 @@ namespace ListUI.Forms
         private void bExportLogs_Click(object sender, EventArgs e)
         {
             DataImportExportProcessor.ExportLogs();
-            MessageBox.Show("Exported completed!");
+            MessageBox.Show("Exported completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void pbMoveUp_MouseEnter(object sender, EventArgs e)

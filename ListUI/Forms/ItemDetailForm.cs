@@ -59,6 +59,9 @@ namespace ListUI.Forms
             callingForm = libraryUI;
             currentItem = item;
 
+            pbDelete.Enabled = true;
+            pbDelete.Visible = true;
+
             if (listType == "Anime")
                 listHeaders = SqliteDataAccess.LoadAnimeListHeaders();
             else if (listType == "Game")
@@ -124,6 +127,7 @@ namespace ListUI.Forms
 
             if (listType == "Anime")
             {
+                cbSeason.Items.Add("");
                 cbSeason.Items.Add("Spring");
                 cbSeason.Items.Add("Summer");
                 cbSeason.Items.Add("Fall");
@@ -133,9 +137,6 @@ namespace ListUI.Forms
 
         private void LoadForm(ItemModel item)
         {
-            pbDelete.Enabled = true;
-            pbDelete.Visible = true;
-
             txbTitle.Text = item.Title;
             txbUrl.Text = item.Url;
             txbPictureUrl.Text = item.PictureUrl;
@@ -185,8 +186,6 @@ namespace ListUI.Forms
 
         private void favouritePicture_Click(object sender, EventArgs e)
         {
-            callingForm.Controls.Find("fpListItemPanel", true).First().Controls[itemIndex].Controls.OfType<Panel>().First().Controls.OfType<PictureBox>().First().Image.Dispose();
-
             if (currentItem.Favourite == false)
             {
                 currentItem.Favourite = true;
@@ -214,10 +213,10 @@ namespace ListUI.Forms
                 {
                     if (currentItem is AnimeModel)
                     {
-                        if (SqliteDataAccess.LoadAnimeGroup("SELECT 1 FROM Anime WHERE Title='" + currentItem.Title + "' LIMIT 1").Count == 1)
+                        if (SqliteDataAccess.LoadAnimeGroup("SELECT 1 FROM Anime WHERE Title='" + currentItem.Title.Replace("'","'+CHAR(39)+'") + "' LIMIT 1").Count == 1)
                         {
                             txbTitle.BackColor = Color.LightCoral;
-                            MessageBox.Show("Title already Exists!");
+                            MessageBox.Show("Title already Exists", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
                         else
@@ -228,10 +227,10 @@ namespace ListUI.Forms
                     }
                     else if (currentItem is SeriesModel)
                     {
-                        if (SqliteDataAccess.LoadSeriesGroup("SELECT 1 FROM Series WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
+                        if (SqliteDataAccess.LoadSeriesGroup("SELECT 1 FROM Series WHERE Title='" + txbTitle.Text.Replace("'", "'+CHAR(39)+'") + "' LIMIT 1").Count == 1)
                         {
                             txbTitle.BackColor = Color.LightCoral;
-                            MessageBox.Show("Title already Exists!");
+                            MessageBox.Show("Title already Exists", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
                         else
@@ -242,10 +241,10 @@ namespace ListUI.Forms
                     }
                     else if (currentItem is GameModel)
                     {
-                        if (SqliteDataAccess.LoadGameGroup("SELECT 1 FROM Games WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
+                        if (SqliteDataAccess.LoadGameGroup("SELECT 1 FROM Games WHERE Title='" + txbTitle.Text.Replace("'", "'+CHAR(39)+'") + "' LIMIT 1").Count == 1)
                         {
                             txbTitle.BackColor = Color.LightCoral;
-                            MessageBox.Show("Title already Exists!");
+                            MessageBox.Show("Title already Exists", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
                         else
@@ -278,7 +277,7 @@ namespace ListUI.Forms
             }
             else
             {
-                MessageBox.Show("Invalid inputs!");
+                MessageBox.Show("Inputs are invalid!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -390,7 +389,7 @@ namespace ListUI.Forms
             {
                 //Series TotalEp
 
-                if (txbTotalEp.Text.Length != 0 && !txbTotalEp.Text.All(c => ((c >= '0' && c <= '9') || c.ToString() == "/")))
+                if (txbTotalEp.Text.Length != 0 && !txbTotalEp.Text.All(c => (c >= '0' && c <= '9') || c.ToString() == "/"))
                 {
                     txbTotalEp.BackColor = Color.LightCoral;
                     output = false;
@@ -511,7 +510,7 @@ namespace ListUI.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Not proper picture format!");
+                MessageBox.Show("Picture Url does not exist!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -549,11 +548,15 @@ namespace ListUI.Forms
             {
                 if (CheckIfChanged())
                 {
-                    if (MessageBox.Show("There are unsaved records! Do you want to Quit?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                    if (MessageBox.Show("There are unsaved records! Do you want to Quit?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     {
                         e.Cancel = true;
                     }
                 }
+            }
+            else if (userclosing == false)
+            {
+                callingForm.WireUpLibraryForm();
             }
         }
 
@@ -654,7 +657,7 @@ namespace ListUI.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Picture Url not valid!");
+                MessageBox.Show("Picture Url does not exist!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 

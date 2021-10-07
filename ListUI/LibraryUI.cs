@@ -14,7 +14,7 @@ namespace ListUI
 {
     public partial class LibraryUI : Form
     {
-        public List<HeaderModel> headerList; // = SqliteDataAccess.LoadListHeaders();
+        public List<HeaderModel> headerList;
         public List<ItemModel> itemlist = new List<ItemModel>();
         private string activeGroup;
         private string activeListType;
@@ -113,9 +113,9 @@ namespace ListUI
             if (isFiltered)
             {
                 if (txbTitleSearch.Text != "")
-                    sWhere = sWhere + " AND " + c +".Title LIKE '%" + txbTitleSearch.Text + "%'";
+                    sWhere = sWhere + " AND " + c +".Title LIKE '%" + txbTitleSearch.Text.Replace("'", "'+CHAR(39)+'") + "%'";
                 if (txbYearSearch.Text != "")
-                    sWhere = sWhere + " AND " + c + ".Year =" + Convert.ToInt32(txbTitleSearch.Text);
+                    sWhere = sWhere + " AND " + c + ".Year =" + Convert.ToInt32(txbYearSearch.Text);
                 if (chFavouriteSearch.CheckState == CheckState.Checked)
                     sWhere = sWhere + " AND " + c + ".Favourite = 1";
                 if (activeListType == "Anime")
@@ -245,8 +245,6 @@ namespace ListUI
             frm.ShowDialog();
             fpListItemPanel.Focus();
             overlay.Close();
-
-            WireUpLibraryForm();
         }
 
         public void WireUpRequest(string listGroup)
@@ -347,6 +345,8 @@ namespace ListUI
             {
                 WireUpLibraryForm();
             }
+
+            txbTitleSearch.Focus();
         }
 
         private void CheckFilters()
@@ -440,7 +440,20 @@ namespace ListUI
 
         private void pbSearch_Click(object sender, EventArgs e)
         {
-            WireUpLibraryForm();
+            InitializeFiltering();
+        }
+
+        private void InitializeFiltering()
+        {
+            if (txbYearSearch.Text.All(c => c >= '0' && c <= '9'))
+            {
+                WireUpLibraryForm();
+            }
+            else
+            {
+                MessageBox.Show("Inputs are invalid!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
         private void pbToggleSorting_Click_1(object sender, EventArgs e)
@@ -552,6 +565,26 @@ namespace ListUI
         {
             pb.Size = new Size(pb.Width + 2, pb.Height + 2);
             pb.Location = new Point(pb.Location.X - 1, pb.Location.Y - 1);
+        }
+
+        private void txbTitleSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                InitializeFiltering();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void txbYearSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                InitializeFiltering();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
         }
     }
 }

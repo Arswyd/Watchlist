@@ -81,11 +81,11 @@
             this.txbTitleSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbTitleSearch.ForeColor = System.Drawing.SystemColors.Control;
             this.txbTitleSearch.Location = new System.Drawing.Point(520, 30);
-            this.txbTitleSearch.Multiline = true;
             this.txbTitleSearch.Name = "txbTitleSearch";
-            this.txbTitleSearch.Size = new System.Drawing.Size(200, 28);
+            this.txbTitleSearch.Size = new System.Drawing.Size(200, 26);
             this.txbTitleSearch.TabIndex = 5;
             this.txbTitleSearch.Visible = false;
+            this.txbTitleSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbTitleSearch_KeyDown);
             // 
             // fpListHeaderPanel
             // 
@@ -366,12 +366,12 @@
             this.txbYearSearch.ForeColor = System.Drawing.SystemColors.Control;
             this.txbYearSearch.Location = new System.Drawing.Point(800, 30);
             this.txbYearSearch.MaxLength = 4;
-            this.txbYearSearch.Multiline = true;
             this.txbYearSearch.Name = "txbYearSearch";
-            this.txbYearSearch.Size = new System.Drawing.Size(60, 28);
+            this.txbYearSearch.Size = new System.Drawing.Size(60, 26);
             this.txbYearSearch.TabIndex = 6;
             this.txbYearSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbYearSearch.Visible = false;
+            this.txbYearSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbYearSearch_KeyDown);
             // 
             // chFinishedSearch
             // 
