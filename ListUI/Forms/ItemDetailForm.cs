@@ -214,18 +214,45 @@ namespace ListUI.Forms
                 {
                     if (currentItem is AnimeModel)
                     {
-                        SqliteDataAccess.SaveAnime((AnimeModel)currentItem, 1);
-                        currentItem.ID = SqliteDataAccess.GetLastAnimeID();
+                        if (SqliteDataAccess.LoadAnimeGroup("SELECT 1 FROM Anime WHERE Title='" + currentItem.Title + "' LIMIT 1").Count == 1)
+                        {
+                            txbTitle.BackColor = Color.LightCoral;
+                            MessageBox.Show("Title already Exists!");
+                            return;
+                        }
+                        else
+                        {
+                            SqliteDataAccess.SaveAnime((AnimeModel)currentItem, 1);
+                            currentItem.ID = SqliteDataAccess.GetLastAnimeID();
+                        }
                     }
                     else if (currentItem is SeriesModel)
                     {
-                        SqliteDataAccess.SaveSeries((SeriesModel)currentItem, 1);
-                        currentItem.ID = SqliteDataAccess.GetLastSeriesID();
+                        if (SqliteDataAccess.LoadSeriesGroup("SELECT 1 FROM Series WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
+                        {
+                            txbTitle.BackColor = Color.LightCoral;
+                            MessageBox.Show("Title already Exists!");
+                            return;
+                        }
+                        else
+                        {
+                            SqliteDataAccess.SaveSeries((SeriesModel)currentItem, 1);
+                            currentItem.ID = SqliteDataAccess.GetLastSeriesID();
+                        }
                     }
                     else if (currentItem is GameModel)
                     {
-                        SqliteDataAccess.SaveGame((GameModel)currentItem, 1);
-                        currentItem.ID = SqliteDataAccess.GetLastGameID();
+                        if (SqliteDataAccess.LoadGameGroup("SELECT 1 FROM Games WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
+                        {
+                            txbTitle.BackColor = Color.LightCoral;
+                            MessageBox.Show("Title already Exists!");
+                            return;
+                        }
+                        else
+                        {
+                            SqliteDataAccess.SaveGame((GameModel)currentItem, 1);
+                            currentItem.ID = SqliteDataAccess.GetLastGameID();
+                        }
                     }
                 }
                 else
@@ -270,24 +297,6 @@ namespace ListUI.Forms
             {
                 txbTitle.BackColor = Color.LightCoral;
                 output = false;
-            }
-            else
-            {
-                if(listType == "Anime" && SqliteDataAccess.LoadAnimeGroup("SELECT 1 FROM Anime WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
-                {
-                    txbTitle.BackColor = Color.LightCoral;
-                    return false;
-                }
-                else if (listType == "Series" && SqliteDataAccess.LoadSeriesGroup("SELECT 1 FROM Series WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
-                {
-                    txbTitle.BackColor = Color.LightCoral;
-                    return false;
-                }
-                else if (listType == "Game" && SqliteDataAccess.LoadGameGroup("SELECT 1 FROM Games WHERE Title='" + txbTitle.Text + "' LIMIT 1").Count == 1)
-                {
-                    txbTitle.BackColor = Color.LightCoral;
-                    return false;
-                }
             }
 
             //Url

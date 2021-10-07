@@ -68,17 +68,17 @@ namespace ListUI.ListItems
             {
                 lbItemEpisodes.Text = ((AnimeModel)item).TotalEp.ToString() + " / " + ((AnimeModel)item).WatchedEp.ToString();
 
-                SetCheckAndNoteIcon(((AnimeModel)item).Dubbed, String.IsNullOrWhiteSpace(item.Notes));
+                SetCheckAndNoteIcon(((AnimeModel)item).Dubbed, !String.IsNullOrWhiteSpace(item.Notes));
             }
             else if (item is SeriesModel)
             {
                 lbItemEpisodes.Text = "S" + ((SeriesModel)item).CurrentSe.ToString() + " E" + ((SeriesModel)item).WatchedEp.ToString();
 
-                SetCheckAndNoteIcon(((SeriesModel)item).FinishedRunning, String.IsNullOrWhiteSpace(item.Notes));
+                SetCheckAndNoteIcon(((SeriesModel)item).FinishedRunning, !String.IsNullOrWhiteSpace(item.Notes));
             }
             else
             {
-                SetCheckAndNoteIcon(((GameModel)item).Owned, String.IsNullOrWhiteSpace(item.Notes));
+                SetCheckAndNoteIcon(((GameModel)item).Owned, !String.IsNullOrWhiteSpace(item.Notes));
             }
             if (!String.IsNullOrWhiteSpace(item.Notes))
             {
