@@ -127,11 +127,11 @@ namespace ListUI.Forms
 
             if (listType == "Anime")
             {
-                cbSeason.Items.Add("");
                 cbSeason.Items.Add("Spring");
                 cbSeason.Items.Add("Summer");
                 cbSeason.Items.Add("Fall");
                 cbSeason.Items.Add("Winter");
+                cbSeason.Items.Add("");
             }
         }
 
@@ -152,14 +152,7 @@ namespace ListUI.Forms
                 }
             }
             txbScore.Text = item.Score.ToString();
-            if (item.Favourite == false)
-            {
-                pbFavourite.Image = Properties.Resources.empty;
-            }
-            else
-            {
-                pbFavourite.Image = Properties.Resources.heart;
-            }
+            pbFavourite.Image = (item.Favourite) ? Properties.Resources.heart : Properties.Resources.empty;
             cbListGroup.Text = item.ListGroup;
             txbNotes.Text = item.Notes;
             txbYear.Text = item.Year.ToString();
@@ -297,6 +290,10 @@ namespace ListUI.Forms
                 txbTitle.BackColor = Color.LightCoral;
                 output = false;
             }
+            else
+            {
+                txbTitle.Text = txbTitle.Text.Trim();
+            }
 
             //Url
 
@@ -340,7 +337,7 @@ namespace ListUI.Forms
                 txbYear.BackColor = Color.LightCoral;
                 output = false;
             }
-            else if (txbYear.Text.Length != 4)
+            else if (!(txbYear.Text.Length == 4 || Convert.ToInt32(txbYear.Text) == 0))
             {
                 txbYear.BackColor = Color.LightCoral;
                 output = false;

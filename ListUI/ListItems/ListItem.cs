@@ -98,16 +98,16 @@ namespace ListUI.ListItems
 
         private void SetCheckAndNoteIcon(bool isChecked, bool hasNotes)
         {
-            if (isChecked == true && hasNotes)
+            if (isChecked && !hasNotes)
             {
                 pbCheck.Show();
             }
-            else if (hasNotes && isChecked == false)
+            else if (hasNotes && !isChecked)
             {
                 pbNotes.Show();
                 pbNotes.Location = new Point(2, 2);
             }
-            else if (hasNotes && isChecked == true)
+            else if (hasNotes && isChecked)
             {
                 pbCheck.Show();
                 pbNotes.Show();

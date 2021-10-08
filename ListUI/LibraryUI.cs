@@ -27,14 +27,7 @@ namespace ListUI
 
             activeListType = startuplist;
 
-            if (activeListType == "Game")
-            {
-                activeGroup = "Playing";
-            }
-            else
-            {
-                activeGroup = "Watching";
-            }
+            activeGroup = (activeListType == "Game") ? "Playing" : "Watching";
 
             cbOrderBy.Items.Add("Score");
             cbOrderBy.Items.Add("Title");
@@ -269,24 +262,9 @@ namespace ListUI
 
         private void CheckButtons()
         {
-            if (activeListType == "Anime")
-            {
-                pbSelectAnime.Enabled = false;
-                pbSelectSeries.Enabled = true;
-                pbSelectGame.Enabled = true;
-            }
-            if (activeListType == "Series")
-            {
-                pbSelectAnime.Enabled = true;
-                pbSelectSeries.Enabled = false;
-                pbSelectGame.Enabled = true;
-            }
-            if (activeListType == "Game")
-            {
-                pbSelectAnime.Enabled = true;
-                pbSelectSeries.Enabled = true;
-                pbSelectGame.Enabled = false;
-            }
+            pbSelectAnime.Enabled = (activeListType == "Anime") ? true : false;
+            pbSelectSeries.Enabled = (activeListType == "Series") ? true : false;
+            pbSelectGame.Enabled = (activeListType == "Game") ? true : false;
         }
         private void pbSelectAnime_Click(object sender, EventArgs e)
         {
@@ -343,6 +321,8 @@ namespace ListUI
 
             if (!isFiltered)
             {
+                if (activeGroup == "All")
+                    activeGroup = (activeListType == "Game") ? "Playing" : "Watching";
                 WireUpLibraryForm();
             }
 
@@ -425,15 +405,7 @@ namespace ListUI
         private void pbSorting_Click(object sender, EventArgs e)
         {
             isAscending = !isAscending;
-
-            if(isAscending)
-            {
-                pbToggleSorting.Image = Resources.sort_asc;
-            }
-            else
-            {
-                pbToggleSorting.Image = Resources.sort_desc;
-            }
+            pbToggleSorting.Image = isAscending ? Resources.sort_asc : Resources.sort_desc;
 
             WireUpLibraryForm();
         }
@@ -514,8 +486,7 @@ namespace ListUI
 
         private void pbToggleFilter_MouseEnter(object sender, EventArgs e)
         {
-            pbToggleFilter.Size = new Size(42, 42);
-            pbToggleFilter.Location = new Point(1200, 13);
+            IncreasePic(pbToggleFilter);
         }
 
         private void pbToggleFilter_MouseLeave(object sender, EventArgs e)
@@ -525,8 +496,7 @@ namespace ListUI
 
         private void pbToggleSorting_MouseEnter(object sender, EventArgs e)
         {
-            pbToggleSorting.Size = new Size(42, 42);
-            pbToggleSorting.Location = new Point(1247, 13);
+            IncreasePic(pbToggleSorting);
         }
 
         private void pbToggleSorting_MouseLeave(object sender, EventArgs e)
@@ -536,8 +506,7 @@ namespace ListUI
 
         private void pbSettings_MouseEnter(object sender, EventArgs e)
         {
-            pbSettings.Size = new Size(42, 42);
-            pbSettings.Location = new Point(1294, 13);
+            IncreasePic(pbSettings);
         }
 
         private void pbSettings_MouseLeave(object sender, EventArgs e)
