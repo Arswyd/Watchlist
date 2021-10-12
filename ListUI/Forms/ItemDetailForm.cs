@@ -293,11 +293,17 @@ namespace ListUI.Forms
             else
             {
                 txbTitle.Text = txbTitle.Text.Trim();
+                txbTitle.Text = txbTitle.Text.Replace("&", "'+CHAR(39)+'");
             }
 
             //Url
 
             if (txbUrl.Text.Length == 0 || !txbUrl.Text.Contains("https"))
+            {
+                txbUrl.BackColor = Color.LightCoral;
+                output = false;
+            }
+            else if (txbUrl.Text.Contains("?q="))
             {
                 txbUrl.BackColor = Color.LightCoral;
                 output = false;
@@ -319,7 +325,7 @@ namespace ListUI.Forms
             if (scoreValid == false)
             {
                 txbScore.BackColor = Color.LightCoral;
-                output = false;
+                return false;
             }
             else if (score > 10 || score < 0)
             {
@@ -335,7 +341,7 @@ namespace ListUI.Forms
             if (yearValid == false)
             {
                 txbYear.BackColor = Color.LightCoral;
-                output = false;
+                return false;
             }
             else if (!(txbYear.Text.Length == 4 || Convert.ToInt32(txbYear.Text) == 0))
             {
@@ -353,7 +359,7 @@ namespace ListUI.Forms
                 if (totalEpValid == false)
                 {
                     txbTotalEp.BackColor = Color.LightCoral;
-                    output = false;
+                    return false;
                 }
                 else if (totalEp < 0)
                 {
@@ -369,7 +375,7 @@ namespace ListUI.Forms
                 if (watchedEpValid == false)
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
-                    output = false;
+                    return false;
                 }
                 else if (watchedEp < 0)
                 {
@@ -384,9 +390,51 @@ namespace ListUI.Forms
             }
             else if (listType == "Series")
             {
+                //Series TotalSe
+
+                int totalSe = 0;
+                bool totalSeValid = int.TryParse(txbTotalSe.Text, out totalSe);
+
+                if (totalSeValid == false)
+                {
+                    txbTotalSe.BackColor = Color.LightCoral;
+                    return false;
+                }
+                else if (totalSe < 0)
+                {
+                    txbTotalSe.BackColor = Color.LightCoral;
+                    output = false;
+                }
+      
+                //Series CurrentSe
+
+                int currentSe = 0;
+                bool currentSeValid = int.TryParse(txbCurrentSe.Text, out currentSe);
+
+                if (currentSeValid == false)
+                {
+                    txbCurrentSe.BackColor = Color.LightCoral;
+                    return false;
+                }
+                else if (currentSe < 0)
+                {
+                    txbCurrentSe.BackColor = Color.LightCoral;
+                    output = false;
+                }
+                else if (currentSe > totalSe)
+                {
+                    txbCurrentSe.BackColor = Color.LightCoral;
+                    output = false;
+                }
+
                 //Series TotalEp
 
                 if (txbTotalEp.Text.Length != 0 && !txbTotalEp.Text.All(c => (c >= '0' && c <= '9') || c.ToString() == "/"))
+                {
+                    txbTotalEp.BackColor = Color.LightCoral;
+                    output = false;
+                }
+                else if (txbTotalEp.Text.Split('/').Length > totalSe)
                 {
                     txbTotalEp.BackColor = Color.LightCoral;
                     output = false;
@@ -400,53 +448,16 @@ namespace ListUI.Forms
                 if (watchedEpValid == false)
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
-                    output = false;
+                    return false;
                 }
                 else if (watchedEp < 0)
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
                     output = false;
                 }
-                else if (watchedEp > ((SeriesModel)currentItem).CurrentSeasonTotalEp)
+                else if (watchedEp > Convert.ToInt32(txbTotalEp.Text.Split('/')[currentSe - 1]))
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
-                    output = false;
-                }
-
-                //Series TotalSe
-
-                int totalSe = 0;
-                bool totalSeValid = int.TryParse(txbTotalSe.Text, out totalSe);
-
-                if (totalSeValid == false)
-                {
-                    txbTotalSe.BackColor = Color.LightCoral;
-                    output = false;
-                }
-                else if (totalSe < 0)
-                {
-                    txbTotalSe.BackColor = Color.LightCoral;
-                    output = false;
-                }
-
-                //Series CurrentSe
-
-                int currentSe = 0;
-                bool currentSeValid = int.TryParse(txbCurrentSe.Text, out currentSe);
-
-                if (currentSeValid == false)
-                {
-                    txbCurrentSe.BackColor = Color.LightCoral;
-                    output = false;
-                }
-                else if (currentSe < 0)
-                {
-                    txbCurrentSe.BackColor = Color.LightCoral;
-                    output = false;
-                }
-                else if (currentSe > totalSe)
-                {
-                    txbCurrentSe.BackColor = Color.LightCoral;
                     output = false;
                 }
             }
@@ -698,6 +709,26 @@ namespace ListUI.Forms
         {
             pb.Size = new Size(pb.Width + 2, pb.Height + 2);
             pb.Location = new Point(pb.Location.X - 1, pb.Location.Y - 1);
+        }
+
+        private void txbTotalEp_Enter(object sender, EventArgs e)
+        {
+            if (currentItem is SeriesModel)
+            {
+                txbTotalEp.Width = 125;
+                lbWatchedEp.Visible = false;
+                txbWatchedEp.Visible = false;
+            }
+        }
+
+        private void txbTotalEp_Leave(object sender, EventArgs e)
+        {
+            if (currentItem is SeriesModel)
+            {
+                txbTotalEp.Width = 50;
+                lbWatchedEp.Visible = true;
+                txbWatchedEp.Visible = true;
+            }
         }
     }
 }

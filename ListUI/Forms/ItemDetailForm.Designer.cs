@@ -106,9 +106,8 @@
             this.txbScore.Font = new System.Drawing.Font("Arial", 10F);
             this.txbScore.Location = new System.Drawing.Point(420, 206);
             this.txbScore.MaxLength = 4;
-            this.txbScore.Multiline = true;
             this.txbScore.Name = "txbScore";
-            this.txbScore.Size = new System.Drawing.Size(80, 24);
+            this.txbScore.Size = new System.Drawing.Size(80, 23);
             this.txbScore.TabIndex = 4;
             this.txbScore.Text = "0";
             this.txbScore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -150,6 +149,8 @@
             this.txbTotalEp.Text = "0";
             this.txbTotalEp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbTotalEp.Visible = false;
+            this.txbTotalEp.Enter += new System.EventHandler(this.txbTotalEp_Enter);
+            this.txbTotalEp.Leave += new System.EventHandler(this.txbTotalEp_Leave);
             // 
             // lbNotes
             // 
@@ -377,9 +378,8 @@
             this.txbYear.Font = new System.Drawing.Font("Arial", 10F);
             this.txbYear.Location = new System.Drawing.Point(10, 266);
             this.txbYear.MaxLength = 4;
-            this.txbYear.Multiline = true;
             this.txbYear.Name = "txbYear";
-            this.txbYear.Size = new System.Drawing.Size(63, 24);
+            this.txbYear.Size = new System.Drawing.Size(63, 23);
             this.txbYear.TabIndex = 6;
             this.txbYear.Text = "2020";
             this.txbYear.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;

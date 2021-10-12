@@ -262,9 +262,9 @@ namespace ListUI
 
         private void CheckButtons()
         {
-            pbSelectAnime.Enabled = (activeListType == "Anime") ? true : false;
-            pbSelectSeries.Enabled = (activeListType == "Series") ? true : false;
-            pbSelectGame.Enabled = (activeListType == "Game") ? true : false;
+            pbSelectAnime.Enabled = (activeListType == "Anime") ? false : true;
+            pbSelectSeries.Enabled = (activeListType == "Series") ? false : true;
+            pbSelectGame.Enabled = (activeListType == "Game") ? false : true;
         }
         private void pbSelectAnime_Click(object sender, EventArgs e)
         {
