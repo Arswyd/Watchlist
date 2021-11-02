@@ -466,6 +466,7 @@
             // 
             this.pbFavourite.BackColor = System.Drawing.Color.Transparent;
             this.pbFavourite.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbFavourite.Image = global::ListUI.Properties.Resources.empty;
             this.pbFavourite.InitialImage = null;
             this.pbFavourite.Location = new System.Drawing.Point(347, 323);
             this.pbFavourite.Name = "pbFavourite";
@@ -480,6 +481,7 @@
             // pbSave
             // 
             this.pbSave.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbSave.Image = global::ListUI.Properties.Resources.save;
             this.pbSave.InitialImage = null;
             this.pbSave.Location = new System.Drawing.Point(402, 323);
             this.pbSave.Name = "pbSave";
@@ -495,6 +497,7 @@
             // 
             this.pbDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbDelete.Enabled = false;
+            this.pbDelete.Image = global::ListUI.Properties.Resources.delete;
             this.pbDelete.InitialImage = null;
             this.pbDelete.Location = new System.Drawing.Point(454, 323);
             this.pbDelete.Name = "pbDelete";
