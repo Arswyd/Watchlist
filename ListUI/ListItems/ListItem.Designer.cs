@@ -60,6 +60,7 @@
             this.lbItemTitle.TabIndex = 1;
             this.lbItemTitle.Text = "dsadsa";
             this.lbItemTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbItemTitle.UseMnemonic = false;
             this.lbItemTitle.Click += new System.EventHandler(this.listItemName_Click);
             this.lbItemTitle.MouseEnter += new System.EventHandler(this.listItemName_MouseEnter);
             this.lbItemTitle.MouseLeave += new System.EventHandler(this.listItemName_MouseLeave);
@@ -157,12 +158,12 @@
             this.pbNotes.TabStop = false;
             this.pbNotes.Visible = false;
             // 
-            // pbDubbed
+            // pbCheck
             // 
             this.pbCheck.BackColor = System.Drawing.Color.Transparent;
             this.pbCheck.Image = global::ListUI.Properties.Resources.check;
             this.pbCheck.Location = new System.Drawing.Point(2, 2);
-            this.pbCheck.Name = "pbDubbed";
+            this.pbCheck.Name = "pbCheck";
             this.pbCheck.Size = new System.Drawing.Size(20, 20);
             this.pbCheck.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbCheck.TabIndex = 3;

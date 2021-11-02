@@ -9,7 +9,15 @@ namespace ListLibrary.Model
         {
             get
             {
-                var dir = @"..\..\..\ListLibrary\Pictures\Game\" + ID.ToString("D6") + ".jpg";
+                var dir = String.Empty;
+                if (PicFormat == 0)
+                {
+                    dir = @"..\..\..\ListLibrary\Pictures\Game\" + ID.ToString("D6") + ".jpg";
+                }
+                else
+                {
+                    dir = @"..\..\..\ListLibrary\Pictures\Game\" + ID.ToString("D6") + ".png";
+                }
                 return dir;
             }
         }

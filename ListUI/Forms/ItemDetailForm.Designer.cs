@@ -42,6 +42,8 @@
             this.chDubbed = new System.Windows.Forms.CheckBox();
             this.cbListGroup = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pbDeletePic = new System.Windows.Forms.PictureBox();
+            this.pbReloadPic = new System.Windows.Forms.PictureBox();
             this.chOwned = new System.Windows.Forms.CheckBox();
             this.chFinished = new System.Windows.Forms.CheckBox();
             this.cbSeason = new System.Windows.Forms.ComboBox();
@@ -62,6 +64,8 @@
             this.pbPicture = new System.Windows.Forms.PictureBox();
             this.lbWatchedEp = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDeletePic)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbReloadPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFavourite)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSave)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDelete)).BeginInit();
@@ -99,6 +103,7 @@
             this.txbTitle.Name = "txbTitle";
             this.txbTitle.Size = new System.Drawing.Size(300, 40);
             this.txbTitle.TabIndex = 0;
+            this.txbTitle.DoubleClick += new System.EventHandler(this.txbTitle_DoubleClick);
             // 
             // txbScore
             // 
@@ -216,6 +221,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.pbDeletePic);
+            this.panel1.Controls.Add(this.pbReloadPic);
             this.panel1.Controls.Add(this.chOwned);
             this.panel1.Controls.Add(this.chFinished);
             this.panel1.Controls.Add(this.cbSeason);
@@ -252,6 +259,34 @@
             this.panel1.Size = new System.Drawing.Size(520, 380);
             this.panel1.TabIndex = 10;
             // 
+            // pbDeletePic
+            // 
+            this.pbDeletePic.BackColor = System.Drawing.Color.Transparent;
+            this.pbDeletePic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbDeletePic.Image = global::ListUI.Properties.Resources.delete;
+            this.pbDeletePic.InitialImage = null;
+            this.pbDeletePic.Location = new System.Drawing.Point(476, 154);
+            this.pbDeletePic.Name = "pbDeletePic";
+            this.pbDeletePic.Size = new System.Drawing.Size(24, 24);
+            this.pbDeletePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbDeletePic.TabIndex = 25;
+            this.pbDeletePic.TabStop = false;
+            this.pbDeletePic.Click += new System.EventHandler(this.pbDeletePic_Click);
+            // 
+            // pbReloadPic
+            // 
+            this.pbReloadPic.BackColor = System.Drawing.Color.Transparent;
+            this.pbReloadPic.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbReloadPic.Image = global::ListUI.Properties.Resources.check;
+            this.pbReloadPic.InitialImage = null;
+            this.pbReloadPic.Location = new System.Drawing.Point(450, 154);
+            this.pbReloadPic.Name = "pbReloadPic";
+            this.pbReloadPic.Size = new System.Drawing.Size(24, 24);
+            this.pbReloadPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbReloadPic.TabIndex = 24;
+            this.pbReloadPic.TabStop = false;
+            this.pbReloadPic.Click += new System.EventHandler(this.pbReloadPic_Click);
+            // 
             // chOwned
             // 
             this.chOwned.AutoSize = true;
@@ -279,6 +314,7 @@
             this.chFinished.Text = "Finished";
             this.chFinished.UseVisualStyleBackColor = true;
             this.chFinished.Visible = false;
+            this.chFinished.Enter += new System.EventHandler(this.chFinished_Enter);
             // 
             // cbSeason
             // 
@@ -390,9 +426,9 @@
             this.txbPictureUrl.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbPictureUrl.Location = new System.Drawing.Point(200, 155);
             this.txbPictureUrl.Name = "txbPictureUrl";
-            this.txbPictureUrl.Size = new System.Drawing.Size(300, 23);
+            this.txbPictureUrl.Size = new System.Drawing.Size(248, 23);
             this.txbPictureUrl.TabIndex = 2;
-            this.txbPictureUrl.Leave += new System.EventHandler(this.txbPictureUrl_Leave);
+            this.txbPictureUrl.DoubleClick += new System.EventHandler(this.txbPictureUrl_DoubleClick);
             // 
             // label2
             // 
@@ -413,6 +449,7 @@
             this.txbUrl.Name = "txbUrl";
             this.txbUrl.Size = new System.Drawing.Size(300, 23);
             this.txbUrl.TabIndex = 1;
+            this.txbUrl.DoubleClick += new System.EventHandler(this.txbUrl_DoubleClick);
             // 
             // lbUrl
             // 
@@ -429,7 +466,6 @@
             // 
             this.pbFavourite.BackColor = System.Drawing.Color.Transparent;
             this.pbFavourite.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbFavourite.Image = global::ListUI.Properties.Resources.empty;
             this.pbFavourite.InitialImage = null;
             this.pbFavourite.Location = new System.Drawing.Point(347, 323);
             this.pbFavourite.Name = "pbFavourite";
@@ -444,7 +480,6 @@
             // pbSave
             // 
             this.pbSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSave.Image = global::ListUI.Properties.Resources.save;
             this.pbSave.InitialImage = null;
             this.pbSave.Location = new System.Drawing.Point(402, 323);
             this.pbSave.Name = "pbSave";
@@ -460,7 +495,6 @@
             // 
             this.pbDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbDelete.Enabled = false;
-            this.pbDelete.Image = global::ListUI.Properties.Resources.delete;
             this.pbDelete.InitialImage = null;
             this.pbDelete.Location = new System.Drawing.Point(454, 323);
             this.pbDelete.Name = "pbDelete";
@@ -475,8 +509,7 @@
             // 
             // pbPicture
             // 
-            this.pbPicture.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pbPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbPicture.BackColor = System.Drawing.Color.Black;
             this.pbPicture.Cursor = System.Windows.Forms.Cursors.Default;
             this.pbPicture.Location = new System.Drawing.Point(10, 10);
             this.pbPicture.Name = "pbPicture";
@@ -484,6 +517,7 @@
             this.pbPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbPicture.TabIndex = 5;
             this.pbPicture.TabStop = false;
+            this.pbPicture.Click += new System.EventHandler(this.pbPicture_Click);
             // 
             // lbWatchedEp
             // 
@@ -505,16 +539,21 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(538, 399);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ItemDetailForm";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add Item";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ItemDetailForm_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbDeletePic)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbReloadPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbFavourite)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSave)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDelete)).EndInit();
@@ -556,5 +595,7 @@
         private System.Windows.Forms.ComboBox cbSeason;
         private System.Windows.Forms.CheckBox chFinished;
         private System.Windows.Forms.CheckBox chOwned;
+        private System.Windows.Forms.PictureBox pbReloadPic;
+        private System.Windows.Forms.PictureBox pbDeletePic;
     }
 }

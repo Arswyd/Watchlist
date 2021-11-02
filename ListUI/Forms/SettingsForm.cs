@@ -279,7 +279,7 @@ namespace ListUI.Forms
         {
             List<ItemModel> items = new List<ItemModel>();
 
-            items.AddRange(SqliteDataAccess.LoadSeriesGroup("SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.Score, S.Year, S.Favourite, S.Notes, " +
+            items.AddRange(SqliteDataAccess.LoadSeriesGroup("SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, " +
                     "S.ListGroup, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning FROM Series AS S"));
 
             DownloadPics(items);
@@ -291,7 +291,7 @@ namespace ListUI.Forms
         {
             List<ItemModel> items = new List<ItemModel>();
 
-            items.AddRange(SqliteDataAccess.LoadAnimeGroup("SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.Score, A.Year, A.Favourite, A.Notes, " +
+            items.AddRange(SqliteDataAccess.LoadAnimeGroup("SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.PicFormat, A.Score, A.Year, A.Favourite, A.Notes, " +
                 "A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed FROM Anime AS A"));
 
             DownloadPics(items);
@@ -303,7 +303,7 @@ namespace ListUI.Forms
         {
             List<ItemModel> items = new List<ItemModel>();
 
-            items.AddRange(SqliteDataAccess.LoadGameGroup("SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.Score, G.Year, G.Favourite, G.Notes, " +
+            items.AddRange(SqliteDataAccess.LoadGameGroup("SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, " +
                 "G.ListGroup FROM Games AS G"));
 
             DownloadPics(items);
@@ -316,7 +316,7 @@ namespace ListUI.Forms
             progressBar1.Value = 0;
             progressBar1.Maximum = items.Count;
 
-            foreach (ItemModel p in items)
+            foreach (ItemModel p in items.Where(n => n.PicFormat == 0))
             {
                 if (!File.Exists(p.PictureDir))
                 {

@@ -68,17 +68,17 @@ namespace ListUI
         {
             if (activeListType == "Anime")
             {
-                return "SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.Score, A.Year, A.Favourite, A.Notes, A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed " +
+                return "SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.PicFormat, A.Score, A.Year, A.Favourite, A.Notes, A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed " +
                        "FROM Anime AS A" + CreateWhereString();
             }
             if (activeListType == "Game")
             {
-                return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup, G.Owned " +
+                return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup, G.Owned " +
                        "FROM Games AS G" + CreateWhereString();
             }
             if (activeListType == "Series")
             {
-                return "SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.Score, S.Year, S.Favourite, S.Notes, S.ListGroup, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning " +
+                return "SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, S.ListGroup, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning " +
                        "FROM Series AS S" + CreateWhereString();
             }
             else
@@ -235,7 +235,7 @@ namespace ListUI
             overlay.Show(this);
             overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
             ItemDetailForm frm = new ItemDetailForm(activeListType, item, index, this);
-            frm.ShowDialog();
+            frm.ShowDialog(this);
             fpListItemPanel.Focus();
             overlay.Close();
         }
@@ -255,7 +255,7 @@ namespace ListUI
             overlay.Show(this);
             overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
             ItemDetailForm frm = new ItemDetailForm(activeListType, this);
-            frm.ShowDialog();
+            frm.ShowDialog(this);
             fpListItemPanel.Focus();
             overlay.Close();
         }
@@ -442,7 +442,7 @@ namespace ListUI
             overlay.Show(this);
             overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
             SettingsForm frm = new SettingsForm();
-            frm.ShowDialog();
+            frm.ShowDialog(this);
             fpListItemPanel.Focus();
             overlay.Close();
 

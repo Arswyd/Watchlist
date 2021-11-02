@@ -103,16 +103,6 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap checkmark {
-            get {
-                object obj = ResourceManager.GetObject("checkmark", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap clear_filter {
             get {
                 object obj = ResourceManager.GetObject("clear_filter", resourceCulture);

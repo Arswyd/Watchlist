@@ -6,6 +6,7 @@
         public string Title { get; set; }
         public string Url { get; set; }
         public string PictureUrl { get; set; }
+        public int PicFormat { get; set; }
         public decimal Score { get; set; }
         public int Year { get; set; }
         public bool Favourite { get; set; }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Net;
 
 namespace ListLibrary.Model
 {
@@ -13,7 +15,15 @@ namespace ListLibrary.Model
         { 
             get
             {
-                var dir = @"..\..\..\ListLibrary\Pictures\Anime\" + ID.ToString("D6") + ".jpg";
+                var dir = String.Empty;
+                if (PicFormat == 0)
+                {
+                    dir = @"..\..\..\ListLibrary\Pictures\Anime\" + ID.ToString("D6") + ".jpg";
+                }
+                else
+                {
+                    dir = @"..\..\..\ListLibrary\Pictures\Anime\" + ID.ToString("D6") + ".png";
+                }                
                 return dir;
             } 
         }

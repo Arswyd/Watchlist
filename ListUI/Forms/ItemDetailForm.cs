@@ -3,6 +3,7 @@ using ListLibrary.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,7 +18,10 @@ namespace ListUI.Forms
         bool userclosing = true;
         bool favouriteChanged = false;
         string listType;
+        string lastActiveControl;
         int itemIndex;
+        enum ChangeType { nochange, update, delete}
+        ChangeType pictureChange = ChangeType.nochange;
 
         ItemModel currentItem;
         LibraryUI callingForm;
@@ -200,7 +204,6 @@ namespace ListUI.Forms
             if (ValidateForm())
             {
                 UpdateCurrentItem();
-                bool pictureUrlChanged = UpdateCurrentItemPicture();
 
                 if (newitem == true)
                 {
@@ -263,9 +266,13 @@ namespace ListUI.Forms
                     }
                 }
 
-                if (pictureUrlChanged)
+                if (pictureChange == ChangeType.update)
                 {
                     SaveItemPicture();
+                }
+                else if (pictureChange == ChangeType.delete)
+                {
+                    DeleteItemPicture();
                 }
             }
             else
@@ -293,12 +300,11 @@ namespace ListUI.Forms
             else
             {
                 txbTitle.Text = txbTitle.Text.Trim();
-                txbTitle.Text = txbTitle.Text.Replace("&", "'+CHAR(39)+'");
             }
 
             //Url
 
-            if (txbUrl.Text.Length == 0 || !txbUrl.Text.Contains("https"))
+            if (txbUrl.Text.Length == 0 || !(txbUrl.Text.Contains("https") || txbUrl.Text.Contains("http") || txbUrl.Text.Contains("www") || txbUrl.Text.Contains(".com")))
             {
                 txbUrl.BackColor = Color.LightCoral;
                 output = false;
@@ -455,7 +461,7 @@ namespace ListUI.Forms
                     txbWatchedEp.BackColor = Color.LightCoral;
                     output = false;
                 }
-                else if (watchedEp > Convert.ToInt32(txbTotalEp.Text.Split('/')[currentSe - 1]))
+                else if (watchedEp != Convert.ToInt32(txbTotalEp.Text.Split('/')[currentSe - 1]))
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
                     output = false;
@@ -469,6 +475,8 @@ namespace ListUI.Forms
         {
             currentItem.Title = txbTitle.Text;
             currentItem.Url = txbUrl.Text;
+            currentItem.PictureUrl = txbPictureUrl.Text;
+            currentItem.PicFormat = (pictureChange == ChangeType.update && pbPicture.SizeMode == PictureBoxSizeMode.Zoom) ? 1 : 0;
             currentItem.ListGroup = cbListGroup.Text;
             currentItem.Score = decimal.Round(Convert.ToDecimal(txbScore.Text), 1);
             currentItem.Notes = txbNotes.Text;
@@ -494,31 +502,42 @@ namespace ListUI.Forms
             }
         }
 
-        private bool UpdateCurrentItemPicture()
-        {
-            if (currentItem.PictureUrl != txbPictureUrl.Text)
-            {
-                currentItem.PictureUrl = txbPictureUrl.Text;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         private void SaveItemPicture()
         {
             try
             {
-                using (WebClient client = new WebClient())
+                if (currentItem.PicFormat == 0)
                 {
-                    client.DownloadFile(currentItem.PictureUrl, currentItem.PictureDir);
+                    using (WebClient client = new WebClient())
+                    {
+                        client.DownloadFile(currentItem.PictureUrl, currentItem.PictureDir);
+                    }
+
+                    currentItem.PicFormat = 1;
+                    DeleteItemPicture();
+                }
+                else
+                {
+                    using (Bitmap bitmap = new Bitmap(pbPicture.Width, pbPicture.Height, PixelFormat.Format32bppRgb))
+                    {
+                        pbPicture.DrawToBitmap(bitmap, new Rectangle(0, 0, 160, 220));
+                        bitmap.Save(currentItem.PictureDir, ImageFormat.Png);
+                    }
+
+                    currentItem.PicFormat = 0;
+                    DeleteItemPicture();
                 }
             }
             catch (Exception)
             {
                 MessageBox.Show("Picture Url does not exist!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+        private void DeleteItemPicture()
+        {
+            if (File.Exists(currentItem.PictureDir))
+            {
+                File.Delete(currentItem.PictureDir);
             }
         }
 
@@ -541,14 +560,12 @@ namespace ListUI.Forms
                     SqliteDataAccess.DeleteGame((GameModel)currentItem);
                 }
 
-                if (File.Exists(currentItem.PictureDir))
-                {
-                    File.Delete(currentItem.PictureDir);
-                }
+                DeleteItemPicture();
 
                 this.Close();
             }
         }
+
 
         private void ItemDetailForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -581,6 +598,10 @@ namespace ListUI.Forms
                 output = true;
             }
             else if (currentItem.PictureUrl != txbPictureUrl.Text)
+            {
+                output = true;
+            }
+            else if (pictureChange != ChangeType.nochange)
             {
                 output = true;
             }
@@ -657,18 +678,6 @@ namespace ListUI.Forms
             return output;
         }
 
-        private void txbPictureUrl_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                pbPicture.Load(txbPictureUrl.Text);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Picture Url does not exist!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-        }
-
         private void pbFavourite_MouseEnter(object sender, EventArgs e)
         {
             IncreasePic(pbFavourite);
@@ -728,7 +737,65 @@ namespace ListUI.Forms
                 txbTotalEp.Width = 50;
                 lbWatchedEp.Visible = true;
                 txbWatchedEp.Visible = true;
+                lastActiveControl = ActiveControl.Name;
             }
+        }
+
+        private void txbTitle_DoubleClick(object sender, EventArgs e)
+        {
+            txbTitle.SelectAll();
+        }
+
+        private void txbUrl_DoubleClick(object sender, EventArgs e)
+        {
+            txbUrl.SelectAll();
+        }
+
+        private void txbPictureUrl_DoubleClick(object sender, EventArgs e)
+        {
+            txbPictureUrl.SelectAll();
+        }
+
+        private void pbReloadPic_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                pbPicture.Load(txbPictureUrl.Text);
+                pictureChange = ChangeType.update;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Picture Url does not exist!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void pbPicture_Click(object sender, EventArgs e)
+        {
+            if (pictureChange == ChangeType.update)
+            {
+                switch (pbPicture.SizeMode)
+                {
+                    case PictureBoxSizeMode.StretchImage:
+                        pbPicture.SizeMode = PictureBoxSizeMode.Zoom;
+                        break;
+                    case PictureBoxSizeMode.Zoom:
+                        pbPicture.SizeMode = PictureBoxSizeMode.StretchImage;
+                        break;
+                }
+            }
+        }
+
+        private void pbDeletePic_Click(object sender, EventArgs e)
+        {
+            pbPicture.Image = Properties.Resources.nocover;
+            pictureChange = ChangeType.delete;
+        }
+
+        private void chFinished_Enter(object sender, EventArgs e)
+        {
+            if (lastActiveControl == ActiveControl.Name)
+                txbWatchedEp.Focus();
+            lastActiveControl = string.Empty;
         }
     }
 }

@@ -22,7 +22,15 @@ namespace ListLibrary.Model
         {
             get
             {
-                var dir = @"..\..\..\ListLibrary\Pictures\Series\" + ID.ToString("D6") + ".jpg";
+                var dir = String.Empty;
+                if (PicFormat == 0)
+                {
+                    dir = @"..\..\..\ListLibrary\Pictures\Series\" + ID.ToString("D6") + ".jpg";
+                }
+                else
+                {
+                    dir = @"..\..\..\ListLibrary\Pictures\Series\" + ID.ToString("D6") + ".png";
+                }
                 return dir;
             }
         }
@@ -34,6 +42,10 @@ namespace ListLibrary.Model
             Favourite = false;
             FinishedRunning = false;
             ListGroup = "Not Aired Yet";
+            TotalEp = "0";
+            TotalSe = 1;
+            CurrentSe = 1;
+            WatchedEp = 0;
         }
     }
 }
