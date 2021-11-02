@@ -461,7 +461,7 @@ namespace ListUI.Forms
                     txbWatchedEp.BackColor = Color.LightCoral;
                     output = false;
                 }
-                else if (watchedEp != Convert.ToInt32(txbTotalEp.Text.Split('/')[currentSe - 1]))
+                else if (watchedEp > Convert.ToInt32(txbTotalEp.Text.Split('/')[currentSe - 1]))
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
                     output = false;
