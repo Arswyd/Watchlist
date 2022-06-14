@@ -142,20 +142,6 @@ namespace ListLibrary.Database
 
             File.WriteAllLines(@"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_GameBackup.csv", lines);
         }
-
-        public static void ExportLogs()
-        {
-            List<LogModel> logs = SqliteDataAccess.LoadAllLogs();
-
-            List<string> lines = new List<string>();
-
-            foreach (LogModel p in logs)
-            {
-                lines.Add($"{p.Date};{p.LogText}");
-            }
-
-            File.WriteAllLines(@"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_LogBackup.csv", lines);
-        }
     }
 }
 

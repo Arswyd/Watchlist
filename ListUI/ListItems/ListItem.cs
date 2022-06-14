@@ -78,6 +78,8 @@ namespace ListUI.ListItems
             }
             else
             {
+                lbItemEpisodes.Text = ((GameModel)item).Lenght.ToString() + " h";
+
                 SetCheckAndNoteIcon(((GameModel)item).Owned, !String.IsNullOrWhiteSpace(item.Notes));
             }
             if (!String.IsNullOrWhiteSpace(item.Notes))
@@ -137,7 +139,7 @@ namespace ListUI.ListItems
                 {
                     ((AnimeModel)currentItem).WatchedEp += 1;
 
-                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + " / " + ((AnimeModel)currentItem).WatchedEp.ToString();
+                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + "/" + ((AnimeModel)currentItem).WatchedEp.ToString();
 
                     SqliteDataAccess.UpdateAnime((AnimeModel)currentItem);
                 }
@@ -145,7 +147,7 @@ namespace ListUI.ListItems
                 {
                     ((AnimeModel)currentItem).WatchedEp += 1;
 
-                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + " / " + ((AnimeModel)currentItem).WatchedEp.ToString();
+                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + "/" + ((AnimeModel)currentItem).WatchedEp.ToString();
 
                     currentItem.ListGroup = "Completed";
 
@@ -232,10 +234,7 @@ namespace ListUI.ListItems
                 c.HidePanel();
             }
 
-            if (!(currentItem is GameModel))
-            {
-                panel1.Visible = true;
-            }
+            panel1.Visible = true;
         }
 
         private void listItemScore_MouseEnter(object sender, EventArgs e)

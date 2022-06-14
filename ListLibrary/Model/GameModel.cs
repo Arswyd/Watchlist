@@ -5,6 +5,9 @@ namespace ListLibrary.Model
     public class GameModel : ItemModel
     {
         public bool Owned { get; set; }
+
+        public decimal Lenght { get; set; }
+
         public override string PictureDir
         {
             get
@@ -29,6 +32,7 @@ namespace ListLibrary.Model
             Favourite = false;
             ListGroup = "Not Released Yet";
             Owned = false;
+            Lenght = 0;
         }
     }
 }

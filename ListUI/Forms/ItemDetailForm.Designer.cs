@@ -63,6 +63,7 @@
             this.pbDelete = new System.Windows.Forms.PictureBox();
             this.pbPicture = new System.Windows.Forms.PictureBox();
             this.lbWatchedEp = new System.Windows.Forms.Label();
+            this.txbLenght = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeletePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReloadPic)).BeginInit();
@@ -221,6 +222,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.txbLenght);
             this.panel1.Controls.Add(this.pbDeletePic);
             this.panel1.Controls.Add(this.pbReloadPic);
             this.panel1.Controls.Add(this.chOwned);
@@ -535,6 +537,20 @@
             this.lbWatchedEp.Text = "/";
             this.lbWatchedEp.Visible = false;
             // 
+            // txbLenght
+            // 
+            this.txbLenght.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbLenght.Enabled = false;
+            this.txbLenght.Font = new System.Drawing.Font("Arial", 10F);
+            this.txbLenght.Location = new System.Drawing.Point(90, 266);
+            this.txbLenght.MaxLength = 6;
+            this.txbLenght.Name = "txbLenght";
+            this.txbLenght.Size = new System.Drawing.Size(63, 23);
+            this.txbLenght.TabIndex = 26;
+            this.txbLenght.Text = "1";
+            this.txbLenght.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbLenght.Visible = false;
+            // 
             // ItemDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -600,5 +616,6 @@
         private System.Windows.Forms.CheckBox chOwned;
         private System.Windows.Forms.PictureBox pbReloadPic;
         private System.Windows.Forms.PictureBox pbDeletePic;
+        private System.Windows.Forms.TextBox txbLenght;
     }
 }

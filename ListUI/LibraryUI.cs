@@ -73,7 +73,7 @@ namespace ListUI
             }
             if (activeListType == "Game")
             {
-                return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup, G.Owned " +
+                return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup, G.Owned, G.Lenght " +
                        "FROM Games AS G" + CreateWhereString();
             }
             if (activeListType == "Series")
@@ -165,7 +165,7 @@ namespace ListUI
 
             ListMenuItem allMenuItem = new ListMenuItem(activeGroup, this);
             allMenuItem.MenuItemName("All");
-            allMenuItem.MenuItemCount(headerList.Sum(n => n.Count).ToString());
+            allMenuItem.MenuItemCount(headerList.Where(n => n.ListGroup != "Completed").Sum(n => n.Count).ToString());
             if (activeGroup == "All")
             {
                 allMenuItem.ActiveColor();
@@ -447,11 +447,6 @@ namespace ListUI
             overlay.Close();
 
             WireUpLibraryForm();
-        }
-
-        private void LibraryUI_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            SqliteDataAccess.LogLastLogin();
         }
 
         private void pbSelectAnime_MouseEnter(object sender, EventArgs e)

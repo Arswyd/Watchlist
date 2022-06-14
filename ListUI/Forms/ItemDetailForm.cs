@@ -122,6 +122,11 @@ namespace ListUI.Forms
             {
                 chOwned.Enabled = true;
                 chOwned.Visible = true;
+                lbSeason.Enabled = true;
+                lbSeason.Visible = true;
+                lbSeason.Text = "Lenght";
+                txbLenght.Enabled = true;
+                txbLenght.Visible = true;
             }
 
             foreach (HeaderModel listsetting in listHeaders)
@@ -178,6 +183,7 @@ namespace ListUI.Forms
             if (item is GameModel)
             {
                 chOwned.Checked = ((GameModel)item).Owned;
+                txbLenght.Text = ((GameModel)item).Lenght.ToString();
             }
         }
 
@@ -461,9 +467,27 @@ namespace ListUI.Forms
                     txbWatchedEp.BackColor = Color.LightCoral;
                     output = false;
                 }
-                else if (watchedEp > Convert.ToInt32(txbTotalEp.Text.Split('/')[currentSe - 1]))
+                else if (watchedEp != Convert.ToInt32(txbTotalEp.Text.Split('/')[currentSe - 1]))
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
+                    output = false;
+                }
+            }
+            else
+            {
+                //Lenght
+
+                decimal lenght = 0;
+                bool lenghtValid = decimal.TryParse(txbLenght.Text, out lenght);
+
+                if (lenghtValid == false)
+                {
+                    txbLenght.BackColor = Color.LightCoral;
+                    return false;
+                }
+                else if (lenght > 1000 || lenght < 0)
+                {
+                    txbLenght.BackColor = Color.LightCoral;
                     output = false;
                 }
             }
@@ -499,6 +523,7 @@ namespace ListUI.Forms
             else if (currentItem is GameModel)
             {
                 ((GameModel)currentItem).Owned = chOwned.Checked;
+                ((GameModel)currentItem).Lenght = decimal.Round(Convert.ToDecimal(txbLenght.Text), 1);
             }
         }
 
@@ -670,6 +695,10 @@ namespace ListUI.Forms
             else if (currentItem is SeriesModel)
             {
                 if (((GameModel)currentItem).Owned != chOwned.Checked)
+                {
+                    output = true;
+                }
+                if (((GameModel)currentItem).Lenght.ToString() != txbLenght.Text)
                 {
                     output = true;
                 }

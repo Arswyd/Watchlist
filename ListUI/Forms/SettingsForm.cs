@@ -14,7 +14,6 @@ namespace ListUI.Forms
     public partial class SettingsForm : Form
     {
         List<HeaderModel> headers;
-        List<LogModel> logs;
         HeaderModel selectedHeader;
  
         public SettingsForm()
@@ -22,20 +21,6 @@ namespace ListUI.Forms
             InitializeComponent();
 
             WireUpDropDown();
-            LoadLogs();
-        }
-
-        private void LoadLogs()
-        {
-            lvLogs.Items.Clear();
-            logs = SqliteDataAccess.LoadLogs();
-
-            foreach (var log in logs)
-            {
-                var lvitem = new ListViewItem(log.Date.ToString("yyyy.MM.dd. HH:mm"));
-                lvitem.SubItems.Add(log.LogText);
-                lvLogs.Items.Add(lvitem);
-            }
         }
 
         private void WireUpDropDown()
@@ -100,15 +85,6 @@ namespace ListUI.Forms
             {
                 selectedHeader = null;
                 txbHeaderEdit.Text = "";
-            }
-        }
-
-        private void bTruncateLog_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Do you want to delete all logs?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-            {
-                SqliteDataAccess.DeleteLogs();
-                LoadLogs();
             }
         }
 
@@ -353,7 +329,6 @@ namespace ListUI.Forms
             txbHeaderEdit.Text = selectedHeader.ListGroup;
             LoadHeaderListView();
             lvHeaders.Items[selectedHeader.SortOrder].Selected = true;
-            LoadLogs();
         }
 
         private void pbMoveDown_Click(object sender, EventArgs e)
@@ -371,7 +346,6 @@ namespace ListUI.Forms
             SqliteDataAccess.UpdateHeader(selectedHeader);
             LoadHeaderListView();
             lvHeaders.Items[selectedHeader.SortOrder].Selected = true;
-            LoadLogs();
         }
 
         private void pbAddRow_Click(object sender, EventArgs e)
@@ -392,8 +366,6 @@ namespace ListUI.Forms
             {
                 MessageBox.Show("No more headers can be added!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
-            LoadLogs();
         }
 
         private void pbDeleteRow_Click(object sender, EventArgs e)
@@ -418,8 +390,6 @@ namespace ListUI.Forms
                 txbHeaderEdit.Text = "";
                 LoadHeaderListView();
             }
-
-            LoadLogs();
         }
 
         private void pbSave_Click(object sender, EventArgs e)
@@ -437,14 +407,6 @@ namespace ListUI.Forms
                 txbHeaderEdit.Text = "";
                 LoadHeaderListView();
             }
-
-            LoadLogs();
-        }
-
-        private void bExportLogs_Click(object sender, EventArgs e)
-        {
-            DataImportExportProcessor.ExportLogs();
-            MessageBox.Show("Exported completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void pbMoveUp_MouseEnter(object sender, EventArgs e)

@@ -404,7 +404,6 @@
             this.Name = "LibraryUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "My Little Library";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LibraryUI_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
