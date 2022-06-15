@@ -34,6 +34,8 @@ namespace ListUI.ListItems
         {
             Color myColor = Color.FromArgb(255, 40, 40, 60);
             panel1.BackColor = myColor;
+            lbListGroupName.ForeColor = Color.White;
+            lbListGroupCount.ForeColor = Color.White;
         }
 
         private void panel1_MouseEnter(object sender, EventArgs e)

@@ -20,6 +20,8 @@ namespace ListUI
         private string activeListType;
         bool isFiltered = false;
         bool isAscending = false;
+        int currentPage = 1;
+        int pageCount = 1;
 
         public LibraryUI(string startuplist)
         {
@@ -41,9 +43,11 @@ namespace ListUI
             LoadList();
             CheckButtons();
             CreateMenuItems();
+            ShowFilterControls();
             fpListHeaderPanel.Refresh();
             InitializeListLoading();
             fpListItemPanel.Focus();
+            lbPages.Text = currentPage.ToString() + " / " + pageCount.ToString();
         }
 
         public void LoadList()
@@ -103,6 +107,11 @@ namespace ListUI
             {
                 sWhere = sWhere + " AND ListGroup = '" + activeGroup + "'";
             }
+            else
+            {
+                sWhere = sWhere + " AND NOT ListGroup = 'Completed'";
+            }
+
             if (isFiltered)
             {
                 if (txbTitleSearch.Text != "")
@@ -149,6 +158,8 @@ namespace ListUI
                     sWhere = sWhere + " ORDER BY " + c + ".Title DESC";
             }
 
+            sWhere = sWhere + " LIMIT 60 OFFSET " + (currentPage - 1) * 60;
+
             return sWhere;
         }
 
@@ -169,6 +180,7 @@ namespace ListUI
             if (activeGroup == "All")
             {
                 allMenuItem.ActiveColor();
+                pageCount = (int)Math.Ceiling(headerList.Where(n => n.ListGroup != "Completed").Sum(n => n.Count) / 60.0);
             }
             fpListHeaderPanel.Controls.Add(allMenuItem);
 
@@ -180,6 +192,7 @@ namespace ListUI
                 if (listsetting.ListGroup == activeGroup)
                 {
                     menuItem.ActiveColor();
+                    pageCount = (int)Math.Ceiling(listsetting.Count / 60.0);
                 }
                 fpListHeaderPanel.Controls.Add(menuItem);
             }
@@ -192,33 +205,19 @@ namespace ListUI
             fpListItemPanel.Controls.Clear();
             fpListItemPanel.SuspendLayout();
 
-            if (activeGroup == "All")
-            {
-                foreach (HeaderModel listsetting in headerList.Where(n => n.ListType == activeListType && n.ListGroup != "Completed"))
-                {
-                    LoadListItems(listsetting.ListGroup);
-                }
-            }
-            else
-            {
-                LoadListItems(activeGroup);
-            }
+            LoadListItems();
 
             fpListItemPanel.ResumeLayout();
             fpListItemPanel.VerticalScroll.Value = (-1) * yscroll;
         }
 
-        private void LoadListItems(string headerText)
+        private void LoadListItems()
         {
-            ListHeader listHeader = new ListHeader();
-            listHeader.HeaderName(headerText);
-            fpListItemPanel.Controls.Add(listHeader);
-
             progressBar1.Visible = true;
             progressBar1.Value = 0;
-            progressBar1.Maximum = itemlist.Where(n => n.ListGroup == headerText).Count();
+            progressBar1.Maximum = itemlist.Count();
 
-            foreach (ItemModel item in itemlist.Where(n => n.ListGroup == headerText))
+            foreach (ItemModel item in itemlist)
             {
                 ListItem listItem = new ListItem(this);
                 listItem.AddItem(item);
@@ -243,6 +242,10 @@ namespace ListUI
         public void WireUpRequest(string listGroup)
         {
             fpListItemPanel.VerticalScroll.Value = 0;
+            if(activeGroup != listGroup)
+            {
+                currentPage = 1;
+            }
             activeGroup = listGroup;
 
             //TODO: Elimination of reloading flowlayout panel
@@ -288,7 +291,7 @@ namespace ListUI
             activeListType = type;
             activeGroup = group;
             if (isFiltered) isFiltered = !isFiltered;
-            CheckFilters();
+            ClearFilters();
             WireUpLibraryForm();
         }
 
@@ -302,12 +305,12 @@ namespace ListUI
             if(cbOrderBy.SelectedItem.ToString() == "Score")
             {
                 isAscending = false;
-                pbToggleSorting.Image = Resources.sort_desc;
+                pbOrderBy.Image = Resources.sort_desc;
             }
             else if (cbOrderBy.SelectedItem.ToString() == "Title")
             {
                 isAscending = true;
-                pbToggleSorting.Image = Resources.sort_asc;
+                pbOrderBy.Image = Resources.sort_asc;
             }
 
             WireUpLibraryForm();
@@ -315,9 +318,9 @@ namespace ListUI
 
         private void pbFilter_Click(object sender, EventArgs e)
         {
-            isFiltered = !isFiltered;
+            isFiltered = false;
 
-            CheckFilters();
+            ClearFilters();
 
             if (!isFiltered)
             {
@@ -329,83 +332,31 @@ namespace ListUI
             txbTitleSearch.Focus();
         }
 
-        private void CheckFilters()
-        {
-            if (isFiltered)
-            {
-                ShowFilterControls();
-            }
-            else
-            {
-                HideFilterControls();
-            }
-        }
-
         private void ShowFilterControls()
         {
-            pbToggleFilter.Image = Resources.clear_filter;
-            lbTitleSearch.Enabled = true;
-            lbTitleSearch.Visible = true;
-            txbTitleSearch.Enabled = true;
-            txbTitleSearch.Visible = true;
-            lbYearSearch.Enabled = true;
-            lbYearSearch.Visible = true;
-            txbYearSearch.Enabled = true;
-            txbYearSearch.Visible = true;
-            chFavouriteSearch.Enabled = true;
-            chFavouriteSearch.Visible = true;
-            if (activeListType == "Anime")
-            {
-                chDubbedSearch.Enabled = true;
-                chDubbedSearch.Visible = true;
-            }
-            else if (activeListType == "Series")
-            {
-                chFinishedSearch.Enabled = true;
-                chFinishedSearch.Visible = true;
-            }
-            else if (activeListType == "Game")
-            {
-                chOwnedSearch.Enabled = true;
-                chOwnedSearch.Visible = true;
-            }
-            pbSearch.Enabled = true;
-            pbSearch.Visible = true;
+            chDubbedSearch.Enabled = (activeListType == "Anime");
+            chDubbedSearch.Visible = (activeListType == "Anime");
+            chFinishedSearch.Enabled = (activeListType == "Series");
+            chFinishedSearch.Visible = (activeListType == "Series");
+            chOwnedSearch.Enabled = (activeListType == "Game");
+            chOwnedSearch.Visible = (activeListType == "Game");
         }
 
-        private void HideFilterControls()
+        private void ClearFilters()
         {
-            pbToggleFilter.Image = Resources.filter;
-            lbTitleSearch.Enabled = false;
-            lbTitleSearch.Visible = false;
-            txbTitleSearch.Enabled = false;
-            txbTitleSearch.Visible = false;
+            pbToggleFilter.Visible = false;
             txbTitleSearch.Text = "";
-            lbYearSearch.Enabled = false;
-            lbYearSearch.Visible = false;
-            txbYearSearch.Enabled = false;
-            txbYearSearch.Visible = false;
             txbYearSearch.Text = "";
-            chFavouriteSearch.Enabled = false;
-            chFavouriteSearch.Visible = false;
             chFavouriteSearch.Checked = false;
-            chDubbedSearch.Enabled = false;
-            chDubbedSearch.Visible = false;
             chDubbedSearch.CheckState = CheckState.Indeterminate;
-            chFinishedSearch.Enabled = false;
-            chFinishedSearch.Visible = false;
             chFinishedSearch.CheckState = CheckState.Indeterminate;
-            chOwnedSearch.Enabled = false;
-            chOwnedSearch.Visible = false;
             chOwnedSearch.CheckState = CheckState.Indeterminate;
-            pbSearch.Enabled = false;
-            pbSearch.Visible = false;
         }
 
         private void pbSorting_Click(object sender, EventArgs e)
         {
             isAscending = !isAscending;
-            pbToggleSorting.Image = isAscending ? Resources.sort_asc : Resources.sort_desc;
+            pbOrderBy.Image = isAscending ? Resources.sort_asc : Resources.sort_desc;
 
             WireUpLibraryForm();
         }
@@ -419,6 +370,8 @@ namespace ListUI
         {
             if (txbYearSearch.Text.All(c => c >= '0' && c <= '9'))
             {
+                isFiltered = true;
+                pbToggleFilter.Visible = true;
                 WireUpLibraryForm();
             }
             else
@@ -489,16 +442,6 @@ namespace ListUI
             DecreasePic(pbToggleFilter);
         }
 
-        private void pbToggleSorting_MouseEnter(object sender, EventArgs e)
-        {
-            IncreasePic(pbToggleSorting);
-        }
-
-        private void pbToggleSorting_MouseLeave(object sender, EventArgs e)
-        {
-            DecreasePic(pbToggleSorting);
-        }
-
         private void pbSettings_MouseEnter(object sender, EventArgs e)
         {
             IncreasePic(pbSettings);
@@ -549,6 +492,58 @@ namespace ListUI
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+        }
+
+        private void pbFirstPage_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage = 1;
+                WireUpLibraryForm();
+            }
+        }
+
+        private void pbPreviousPage_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                WireUpLibraryForm();
+            }
+        }
+
+        private void pbNextPage_Click(object sender, EventArgs e)
+        {
+            if (currentPage < pageCount)
+            {
+                currentPage++;
+                WireUpLibraryForm();
+            }
+        }
+
+        private void pbLastPage_Click(object sender, EventArgs e)
+        {
+            if (currentPage < pageCount)
+            {
+                currentPage = pageCount;
+                WireUpLibraryForm();
+            }
+        }
+
+        private void pbClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void pbAddItem_Click(object sender, EventArgs e)
+        {
+            OverlayForm overlay = new OverlayForm();
+            overlay.Show(this);
+            overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
+            ItemDetailForm frm = new ItemDetailForm(activeListType, this);
+            frm.ShowDialog(this);
+            fpListItemPanel.Focus();
+            overlay.Close();
         }
     }
 }

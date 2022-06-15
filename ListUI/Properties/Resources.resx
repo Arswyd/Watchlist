@@ -187,4 +187,22 @@
   <data name="Bookmark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Bookmark.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="add_item" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_item.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="first_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\first page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="last_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\last page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="next_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\next page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="prev_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\prev page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

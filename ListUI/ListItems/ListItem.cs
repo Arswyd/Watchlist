@@ -139,7 +139,7 @@ namespace ListUI.ListItems
                 {
                     ((AnimeModel)currentItem).WatchedEp += 1;
 
-                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + "/" + ((AnimeModel)currentItem).WatchedEp.ToString();
+                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + " / " + ((AnimeModel)currentItem).WatchedEp.ToString();
 
                     SqliteDataAccess.UpdateAnime((AnimeModel)currentItem);
                 }
@@ -147,7 +147,7 @@ namespace ListUI.ListItems
                 {
                     ((AnimeModel)currentItem).WatchedEp += 1;
 
-                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + "/" + ((AnimeModel)currentItem).WatchedEp.ToString();
+                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + " / " + ((AnimeModel)currentItem).WatchedEp.ToString();
 
                     currentItem.ListGroup = "Completed";
 

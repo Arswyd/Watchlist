@@ -45,7 +45,7 @@ namespace ListUI
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                Application.Exit();
             }
         }
     }
