@@ -31,26 +31,65 @@ namespace ListUI
 
             activeGroup = (activeListType == "Game") ? "Playing" : "Watching";
 
-            cbOrderBy.Items.Add("Score");
-            cbOrderBy.Items.Add("Title");
-            cbOrderBy.Text = "Score";
+            rbScore.Checked = true;
 
             WireUpLibraryForm();
         }
 
+        /* Wire up form */
+
         public void WireUpLibraryForm()
         {
-            LoadList();
-            CheckButtons();
             CreateMenuItems();
-            ShowFilterControls();
+            LoadItemList();
             fpListHeaderPanel.Refresh();
-            InitializeListLoading();
+            InitializeMainFlowlayoutPopulation();
             fpListItemPanel.Focus();
+            CheckButtons();
+            ShowFilterControls();
             lbPages.Text = currentPage.ToString() + " / " + pageCount.ToString();
         }
 
-        public void LoadList()
+        /* Populating the menu flowlayout with the menu */
+
+        public void CreateMenuItems()
+        {
+            fpListHeaderPanel.Controls.Clear();
+
+            if (activeListType == "Anime")
+                headerList = SqliteDataAccess.LoadAnimeListHeaders();
+            else if (activeListType == "Game")
+                headerList = SqliteDataAccess.LoadGameListHeaders();
+            else if (activeListType == "Series")
+                headerList = SqliteDataAccess.LoadSeriesListHeaders();
+
+            ListMenuItem allMenuItem = new ListMenuItem(activeGroup, this);
+            allMenuItem.MenuItemName("All");
+            allMenuItem.MenuItemCount(headerList.Where(n => n.ListGroup != "Completed").Sum(n => n.Count).ToString());
+            if (activeGroup == "All")
+            {
+                allMenuItem.ActiveColor();
+                pageCount = (int)Math.Ceiling(headerList.Where(n => n.ListGroup != "Completed").Sum(n => n.Count) / 60.0);
+            }
+            fpListHeaderPanel.Controls.Add(allMenuItem);
+
+            foreach (HeaderModel listsetting in headerList.OrderBy(n => n.SortOrder))
+            {
+                ListMenuItem menuItem = new ListMenuItem(activeGroup, this);
+                menuItem.MenuItemName(listsetting.ListGroup);
+                menuItem.MenuItemCount(listsetting.Count.ToString());
+                if (listsetting.ListGroup == activeGroup)
+                {
+                    menuItem.ActiveColor();
+                    pageCount = (int)Math.Ceiling(listsetting.Count / 60.0);
+                }
+                fpListHeaderPanel.Controls.Add(menuItem);
+            }
+        }
+
+        /* List loading */
+
+        public void LoadItemList()
         {
             itemlist.Clear();
 
@@ -143,14 +182,14 @@ namespace ListUI
                 }
             }
 
-            if (cbOrderBy.SelectedItem.ToString() == "Score")
+            if (rbScore.Checked)
             {
                 if (isAscending)
                     sWhere = sWhere + " ORDER BY " + c + ".Score ASC, " + c + ".Title ASC";
                 else
                     sWhere = sWhere + " ORDER BY " + c + ".Score DESC, " + c + ".Title ASC";
             }
-            else if (cbOrderBy.SelectedItem.ToString() == "Title")
+            else if (rbTitle.Checked)
             {
                 if (isAscending)
                     sWhere = sWhere + " ORDER BY " + c + ".Title ASC";
@@ -163,55 +202,23 @@ namespace ListUI
             return sWhere;
         }
 
-        public void CreateMenuItems()
-        {
-            fpListHeaderPanel.Controls.Clear();
 
-            if (activeListType == "Anime")
-                headerList = SqliteDataAccess.LoadAnimeListHeaders();
-            else if (activeListType == "Game")
-                headerList = SqliteDataAccess.LoadGameListHeaders();
-            else if (activeListType == "Series")
-                headerList = SqliteDataAccess.LoadSeriesListHeaders();
+        /* Populating the main flowlayout with the items */
 
-            ListMenuItem allMenuItem = new ListMenuItem(activeGroup, this);
-            allMenuItem.MenuItemName("All");
-            allMenuItem.MenuItemCount(headerList.Where(n => n.ListGroup != "Completed").Sum(n => n.Count).ToString());
-            if (activeGroup == "All")
-            {
-                allMenuItem.ActiveColor();
-                pageCount = (int)Math.Ceiling(headerList.Where(n => n.ListGroup != "Completed").Sum(n => n.Count) / 60.0);
-            }
-            fpListHeaderPanel.Controls.Add(allMenuItem);
-
-            foreach (HeaderModel listsetting in headerList.OrderBy(n => n.SortOrder))
-            {
-                ListMenuItem menuItem = new ListMenuItem(activeGroup, this);
-                menuItem.MenuItemName(listsetting.ListGroup);
-                menuItem.MenuItemCount(listsetting.Count.ToString());
-                if (listsetting.ListGroup == activeGroup)
-                {
-                    menuItem.ActiveColor();
-                    pageCount = (int)Math.Ceiling(listsetting.Count / 60.0);
-                }
-                fpListHeaderPanel.Controls.Add(menuItem);
-            }
-        }
-
-        public void InitializeListLoading()
+        public void InitializeMainFlowlayoutPopulation()
         {
             int yscroll = fpListItemPanel.AutoScrollPosition.Y;
 
             fpListItemPanel.Controls.Clear();
             fpListItemPanel.SuspendLayout();
 
-            LoadListItems();
+            PopulateMainFlowlayout();
 
             fpListItemPanel.ResumeLayout();
             fpListItemPanel.VerticalScroll.Value = (-1) * yscroll;
         }
 
-        private void LoadListItems()
+        private void PopulateMainFlowlayout()
         {
             progressBar1.Visible = true;
             progressBar1.Value = 0;
@@ -228,109 +235,74 @@ namespace ListUI
             progressBar1.Visible = false;
         }
 
+        /* Modify item and add new item */
+
         public void ModifyItem(ItemModel item, int index)
         {
-            OverlayForm overlay = new OverlayForm();
-            overlay.Show(this);
-            overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
-            ItemDetailForm frm = new ItemDetailForm(activeListType, item, index, this);
-            frm.ShowDialog(this);
-            fpListItemPanel.Focus();
-            overlay.Close();
+            ShowItemDetailForm(activeListType, item, index, this);
         }
 
-        public void WireUpRequest(string listGroup)
+        private void pbAddItem_Click(object sender, EventArgs e)
         {
-            fpListItemPanel.VerticalScroll.Value = 0;
-            if(activeGroup != listGroup)
+            ShowItemDetailForm(activeListType, null, -1, this);
+        }
+
+        private void ShowItemDetailForm(string activeListType, ItemModel item, int index, LibraryUI libraryUI)
+        {
+            OverlayForm overlay = ShowOverlay();
+            ItemDetailForm frm;
+            if (item == null)
             {
-                currentPage = 1;
+                frm = new ItemDetailForm(activeListType, libraryUI);
             }
-            activeGroup = listGroup;
-
-            //TODO: Elimination of reloading flowlayout panel
-            WireUpLibraryForm();
-        }
-
-        private void addButton_Click(object sender, EventArgs e)
-        {
-            OverlayForm overlay = new OverlayForm();
-            overlay.Show(this);
-            overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
-            ItemDetailForm frm = new ItemDetailForm(activeListType, this);
+            else
+            {
+                frm = new ItemDetailForm(activeListType, item, index, libraryUI);
+            }
             frm.ShowDialog(this);
             fpListItemPanel.Focus();
             overlay.Close();
         }
+
+        private OverlayForm ShowOverlay()
+        {
+            OverlayForm overlay = new OverlayForm();
+            overlay.Show(this);
+            overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
+            return overlay;
+        }
+
+        /*Check buttons*/
 
         private void CheckButtons()
         {
             pbSelectAnime.Enabled = (activeListType == "Anime") ? false : true;
+            pAnime.BackColor = (activeListType == "Anime") ? Color.LightSteelBlue : SystemColors.ActiveCaption;
+            pbIndicatorA.BackColor = (activeListType == "Anime") ? Color.White : SystemColors.ActiveCaption;
+
             pbSelectSeries.Enabled = (activeListType == "Series") ? false : true;
+            pSeries.BackColor = (activeListType == "Series") ? Color.LightSteelBlue : SystemColors.ActiveCaption;
+            pbIndicatorS.BackColor = (activeListType == "Series") ? Color.White : SystemColors.ActiveCaption;
+
             pbSelectGame.Enabled = (activeListType == "Game") ? false : true;
-        }
-        private void pbSelectAnime_Click(object sender, EventArgs e)
-        {
-            SwitchListType("Anime", "Watching");
-        }
+            pGames.BackColor = (activeListType == "Game") ? Color.LightSteelBlue : SystemColors.ActiveCaption;
+            pbIndicatorG.BackColor = (activeListType == "Game") ? Color.White : SystemColors.ActiveCaption;
 
-        private void pbSelectSeries_Click(object sender, EventArgs e)
-        {
-            SwitchListType("Series", "Watching");
-        }
+            pbFirstPage.Enabled = (currentPage == 1) ? false : true;
+            pbFirstPage.Image = (currentPage == 1) ? Resources.first_page_inactive : Resources.first_page;
 
+            pbPreviousPage.Enabled = (currentPage == 1) ? false : true;
+            pbPreviousPage.Image = (currentPage == 1) ? Resources.prev_page_inactive : Resources.prev_page;
 
-        private void pbSelectGame_Click(object sender, EventArgs e)
-        {
-            SwitchListType("Game", "Playing");
-        }
+            pbNextPage.Enabled = (currentPage == pageCount) ? false : true;
+            pbNextPage.Image = (currentPage == pageCount) ? Resources.next_page_inactive : Resources.next_page;
 
-        private void SwitchListType(string type, string group)
-        {
-            fpListItemPanel.VerticalScroll.Value = 0;
-            activeListType = type;
-            activeGroup = group;
-            if (isFiltered) isFiltered = !isFiltered;
-            ClearFilters();
-            WireUpLibraryForm();
+            pbLastPage.Enabled = (currentPage == pageCount) ? false : true;
+            pbLastPage.Image = (currentPage == pageCount) ? Resources.last_page_inactive : Resources.last_page;
+
         }
 
-        private void flowLayoutPanel1_Click(object sender, EventArgs e)
-        {
-            fpListItemPanel.Focus();
-        }
-
-        private void cbOrderBy_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            if(cbOrderBy.SelectedItem.ToString() == "Score")
-            {
-                isAscending = false;
-                pbOrderBy.Image = Resources.sort_desc;
-            }
-            else if (cbOrderBy.SelectedItem.ToString() == "Title")
-            {
-                isAscending = true;
-                pbOrderBy.Image = Resources.sort_asc;
-            }
-
-            WireUpLibraryForm();
-        }
-
-        private void pbFilter_Click(object sender, EventArgs e)
-        {
-            isFiltered = false;
-
-            ClearFilters();
-
-            if (!isFiltered)
-            {
-                if (activeGroup == "All")
-                    activeGroup = (activeListType == "Game") ? "Playing" : "Watching";
-                WireUpLibraryForm();
-            }
-
-            txbTitleSearch.Focus();
-        }
+        /* Showing filter controls according to list type */
 
         private void ShowFilterControls()
         {
@@ -342,24 +314,80 @@ namespace ListUI
             chOwnedSearch.Visible = (activeListType == "Game");
         }
 
+        /* Wireup request*/
+
+        public void WireUpRequest(string listGroup)
+        {
+            fpListItemPanel.VerticalScroll.Value = 0;
+            if (activeGroup != listGroup)
+            {
+                currentPage = 1;
+            }
+            activeGroup = listGroup;
+
+            //TODO: Elimination of reloading flowlayout panel
+            WireUpLibraryForm();
+        }
+
+        /* Switch list type */
+
+        private void pbSelectAnime_Click(object sender, EventArgs e)
+        {
+            SwitchListType("Anime", "Watching");
+        }
+
+        private void pbSelectSeries_Click(object sender, EventArgs e)
+        {
+            SwitchListType("Series", "Watching");
+        }
+
+        private void pbSelectGame_Click(object sender, EventArgs e)
+        {
+            SwitchListType("Game", "Playing");
+        }
+
+        private void SwitchListType(string type, string group)
+        {
+            fpListItemPanel.VerticalScroll.Value = 0;
+            currentPage = 1;
+            activeListType = type;
+            activeGroup = group;
+            isFiltered = false;
+
+            ClearFilters();
+            WireUpLibraryForm();
+        }
+
+        /* Clear filters */
+
+        private void pbFilter_Click(object sender, EventArgs e)
+        {
+            isFiltered = false;
+
+            ClearFilters();
+
+            if (activeGroup == "All")
+                activeGroup = (activeListType == "Game") ? "Playing" : "Watching";
+            
+            WireUpLibraryForm();
+
+            fpListItemPanel.Focus();
+        }
+
         private void ClearFilters()
         {
             pbToggleFilter.Visible = false;
             txbTitleSearch.Text = "";
             txbYearSearch.Text = "";
+            lbTitleSearch.Visible = true;
+            lbYearSearch.Visible = true;
             chFavouriteSearch.Checked = false;
             chDubbedSearch.CheckState = CheckState.Indeterminate;
             chFinishedSearch.CheckState = CheckState.Indeterminate;
             chOwnedSearch.CheckState = CheckState.Indeterminate;
         }
 
-        private void pbSorting_Click(object sender, EventArgs e)
-        {
-            isAscending = !isAscending;
-            pbOrderBy.Image = isAscending ? Resources.sort_asc : Resources.sort_desc;
-
-            WireUpLibraryForm();
-        }
+        /* Filtering */
 
         private void pbSearch_Click(object sender, EventArgs e)
         {
@@ -381,25 +409,134 @@ namespace ListUI
             }
         }
 
-        private void pbToggleSorting_Click_1(object sender, EventArgs e)
-        {
-            pbOrderBy.Visible = !pbOrderBy.Visible;
-            pbOrderBy.Enabled = !pbOrderBy.Enabled;
-            cbOrderBy.Visible = !cbOrderBy.Visible;
-            cbOrderBy.Enabled = !cbOrderBy.Enabled;
-        }
+        /* Show settings form */
 
         private void pbSettings_Click(object sender, EventArgs e)
         {
-            OverlayForm overlay = new OverlayForm();
-            overlay.Show(this);
-            overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
-            SettingsForm frm = new SettingsForm();
+            OverlayForm overlay = ShowOverlay();
+            SettingsForm frm = new SettingsForm(activeListType);
             frm.ShowDialog(this);
             fpListItemPanel.Focus();
             overlay.Close();
 
             WireUpLibraryForm();
+        }
+
+        /* Switching pages */
+
+        private void pbFirstPage_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage = 1;
+                fpListItemPanel.VerticalScroll.Value = 0;
+                WireUpLibraryForm();
+            }
+        }
+
+        private void pbPreviousPage_Click(object sender, EventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                fpListItemPanel.VerticalScroll.Value = 0;
+                WireUpLibraryForm();
+            }
+        }
+
+        private void pbNextPage_Click(object sender, EventArgs e)
+        {
+            if (currentPage < pageCount)
+            {
+                currentPage++;
+                fpListItemPanel.VerticalScroll.Value = 0;
+                WireUpLibraryForm();
+            }
+        }
+
+        private void pbLastPage_Click(object sender, EventArgs e)
+        {
+            if (currentPage < pageCount)
+            {
+                currentPage = pageCount;
+                fpListItemPanel.VerticalScroll.Value = 0;
+                WireUpLibraryForm();
+            }
+        }
+
+        /* Filter color change OnCheckStateChanged */
+
+        private void chFavouriteSearch_CheckStateChanged(object sender, EventArgs e)
+        {
+            chFavouriteSearch.ForeColor = (chFavouriteSearch.CheckState == CheckState.Unchecked) ? SystemColors.ControlDarkDark : Color.White;
+        }
+
+        private void chOwnedSearch_CheckStateChanged(object sender, EventArgs e)
+        {
+            chOwnedSearch.ForeColor = (chOwnedSearch.CheckState == CheckState.Indeterminate) ? SystemColors.ControlDarkDark : Color.White;
+        }
+
+        private void chDubbedSearch_CheckStateChanged(object sender, EventArgs e)
+        {
+            chDubbedSearch.ForeColor = (chDubbedSearch.CheckState == CheckState.Indeterminate) ? SystemColors.ControlDarkDark : Color.White;
+        }
+
+        private void chFinishedSearch_CheckStateChanged(object sender, EventArgs e)
+        {
+            chFinishedSearch.ForeColor = (chFinishedSearch.CheckState == CheckState.Indeterminate) ? SystemColors.ControlDarkDark : Color.White;
+        }
+
+        /* Sorting */
+
+        private void pbSorting_Click(object sender, EventArgs e)
+        {
+            isAscending = !isAscending;
+            pbOrderBy.Image = isAscending ? Resources.sort_asc : Resources.sort_desc;
+
+            WireUpLibraryForm();
+        }
+
+        private void rbScore_MouseClick(object sender, MouseEventArgs e)
+        {
+            InitializeSorting();
+        }
+
+        private void rbTitle_MouseClick(object sender, MouseEventArgs e)
+        {
+            InitializeSorting();
+        }
+
+        private void InitializeSorting()
+        {
+            if (rbScore.Checked)
+            {
+                isAscending = false;
+                rbScore.ForeColor = Color.White;
+                rbTitle.ForeColor = SystemColors.ControlDarkDark;
+                pbOrderBy.Image = Resources.sort_desc;
+            }
+            if (rbTitle.Checked)
+            {
+                isAscending = true;
+                rbTitle.ForeColor = Color.White;
+                rbScore.ForeColor = SystemColors.ControlDarkDark;
+                pbOrderBy.Image = Resources.sort_asc;
+            }
+            WireUpLibraryForm();
+        }
+
+        // Increase/Decrease button size OnMouseEnter/Leave
+
+        private void DecreasePic(PictureBox pb)
+        {
+            pb.Size = new Size(pb.Width - 2, pb.Height - 2);
+            pb.Location = new Point(pb.Location.X + 1, pb.Location.Y + 1);
+        }
+
+        private void IncreasePic(PictureBox pb)
+        {
+            pb.Size = new Size(pb.Width + 2, pb.Height + 2);
+            pb.Location = new Point(pb.Location.X - 1, pb.Location.Y - 1);
         }
 
         private void pbSelectAnime_MouseEnter(object sender, EventArgs e)
@@ -462,16 +599,79 @@ namespace ListUI
             DecreasePic(pbSearch);
         }
 
-        private void DecreasePic(PictureBox pb)
+        private void pbAddItem_MouseEnter(object sender, EventArgs e)
         {
-            pb.Size = new Size(pb.Width - 2, pb.Height - 2);
-            pb.Location = new Point(pb.Location.X + 1, pb.Location.Y + 1);
+            IncreasePic(pbAddItem);
         }
 
-        private void IncreasePic(PictureBox pb)
+        private void pbAddItem_MouseLeave(object sender, EventArgs e)
         {
-            pb.Size = new Size(pb.Width + 2, pb.Height + 2);
-            pb.Location = new Point(pb.Location.X - 1, pb.Location.Y - 1);
+            DecreasePic(pbAddItem);
+        }
+
+        private void pbFirstPage_MouseEnter(object sender, EventArgs e)
+        {
+            IncreasePic(pbFirstPage);
+        }
+
+        private void pbFirstPage_MouseLeave(object sender, EventArgs e)
+        {
+            DecreasePic(pbFirstPage);
+        }
+
+        private void pbPreviousPage_MouseEnter(object sender, EventArgs e)
+        {
+            IncreasePic(pbPreviousPage);
+        }
+
+        private void pbPreviousPage_MouseLeave(object sender, EventArgs e)
+        {
+            DecreasePic(pbPreviousPage);
+        }
+
+        private void pbNextPage_MouseEnter(object sender, EventArgs e)
+        {
+            IncreasePic(pbNextPage);
+        }
+
+        private void pbNextPage_MouseLeave(object sender, EventArgs e)
+        {
+            DecreasePic(pbNextPage);
+        }
+
+        private void pbLastPage_MouseEnter(object sender, EventArgs e)
+        {
+            IncreasePic(pbLastPage);
+        }
+
+        private void pbLastPage_MouseLeave(object sender, EventArgs e)
+        {
+            DecreasePic(pbLastPage);
+        }
+
+        private void flowLayoutPanel1_Click(object sender, EventArgs e)
+        {
+            fpListItemPanel.Focus();
+        }
+
+        /* Title search events */
+
+        private void txbTitleSearch_Enter(object sender, EventArgs e)
+        {
+            lbTitleSearch.Visible = false;
+        }
+
+        private void txbTitleSearch_Leave(object sender, EventArgs e)
+        {
+            if (txbTitleSearch.Text == "")
+            {
+                lbTitleSearch.Visible = true;
+            }
+        }
+
+        private void lbTitleSearch_MouseClick(object sender, MouseEventArgs e)
+        {
+            txbTitleSearch.Focus();
         }
 
         private void txbTitleSearch_KeyDown(object sender, KeyEventArgs e)
@@ -482,6 +682,33 @@ namespace ListUI
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+            if (e.KeyCode == Keys.Escape)
+            {
+                txbTitleSearch.Text = "";
+                fpListItemPanel.Focus();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        /* Year search events */
+
+        private void txbYearSearch_Enter(object sender, EventArgs e)
+        {
+            lbYearSearch.Visible = false;
+        }
+
+        private void txbYearSearch_Leave(object sender, EventArgs e)
+        {
+            if (txbYearSearch.Text == "")
+            {
+                lbYearSearch.Visible = true;
+            }
+        }
+
+        private void lbYearSearch_MouseClick(object sender, MouseEventArgs e)
+        {
+            txbYearSearch.Focus();
         }
 
         private void txbYearSearch_KeyDown(object sender, KeyEventArgs e)
@@ -492,58 +719,13 @@ namespace ListUI
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
-        }
-
-        private void pbFirstPage_Click(object sender, EventArgs e)
-        {
-            if (currentPage > 1)
+            if (e.KeyCode == Keys.Escape)
             {
-                currentPage = 1;
-                WireUpLibraryForm();
+                txbYearSearch.Text = "";
+                fpListItemPanel.Focus();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
-        }
-
-        private void pbPreviousPage_Click(object sender, EventArgs e)
-        {
-            if (currentPage > 1)
-            {
-                currentPage--;
-                WireUpLibraryForm();
-            }
-        }
-
-        private void pbNextPage_Click(object sender, EventArgs e)
-        {
-            if (currentPage < pageCount)
-            {
-                currentPage++;
-                WireUpLibraryForm();
-            }
-        }
-
-        private void pbLastPage_Click(object sender, EventArgs e)
-        {
-            if (currentPage < pageCount)
-            {
-                currentPage = pageCount;
-                WireUpLibraryForm();
-            }
-        }
-
-        private void pbClose_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void pbAddItem_Click(object sender, EventArgs e)
-        {
-            OverlayForm overlay = new OverlayForm();
-            overlay.Show(this);
-            overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
-            ItemDetailForm frm = new ItemDetailForm(activeListType, this);
-            frm.ShowDialog(this);
-            fpListItemPanel.Focus();
-            overlay.Close();
         }
     }
 }

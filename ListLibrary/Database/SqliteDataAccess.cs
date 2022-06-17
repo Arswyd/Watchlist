@@ -84,7 +84,7 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var i = cnn.Execute("UPDATE Game SET ListGroup='" + newheader + "' WHERE ListGroup='" + oldheader + "'");
+                var i = cnn.Execute("UPDATE Games SET ListGroup='" + newheader + "' WHERE ListGroup='" + oldheader + "'");
             }
         }
 
@@ -229,7 +229,7 @@ namespace ListLibrary.Database
             {
                 cnn.Execute("DELETE FROM Games");
                 cnn.Execute("VACUUM");
-                cnn.Execute("DELETE FROM sqlite_sequence WHERE name='Game'");
+                cnn.Execute("DELETE FROM sqlite_sequence WHERE name='Games'");
             }
         }
 
@@ -246,7 +246,7 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<int>("SELECT COUNT(1) FROM Game LIMIT 1").First();
+                var output = cnn.Query<int>("SELECT COUNT(1) FROM Games LIMIT 1").First();
                 return output;
             }
         }

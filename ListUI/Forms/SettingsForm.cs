@@ -16,11 +16,20 @@ namespace ListUI.Forms
         List<HeaderModel> headers;
         HeaderModel selectedHeader;
  
-        public SettingsForm()
+        public SettingsForm(string listType)
         {
             InitializeComponent();
 
             WireUpDropDown();
+
+            if(listType == "Anime")
+                cbListType.SelectedIndex = 0;
+            else if(listType == "Series")
+                cbListType.SelectedIndex = 1;
+            else if (listType == "Game")
+                cbListType.SelectedIndex = 2;
+
+            lvHeaders.Select();
         }
 
         private void WireUpDropDown()
@@ -30,7 +39,7 @@ namespace ListUI.Forms
             cbListType.Items.Add("Game");
         }
 
-        private void cbListType_SelectionChangeCommitted(object sender, EventArgs e)
+        private void cbListType_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadHeaderListView();
         }
@@ -64,7 +73,7 @@ namespace ListUI.Forms
                     itemlist.AddRange(SqliteDataAccess.LoadAnimeGroup("SELECT 1 FROM Anime WHERE ListGroup='" + selectedHeader.ListGroup + "' LIMIT 1"));
                     break;
                 case "Game":
-                    itemlist.AddRange(SqliteDataAccess.LoadGameGroup("SELECT 1 FROM Game WHERE ListGroup='" + selectedHeader.ListGroup + "' LIMIT 1"));
+                    itemlist.AddRange(SqliteDataAccess.LoadGameGroup("SELECT 1 FROM Games WHERE ListGroup='" + selectedHeader.ListGroup + "' LIMIT 1"));
                     break;
                 case "Series":
                     itemlist.AddRange(SqliteDataAccess.LoadSeriesGroup("SELECT 1 FROM Series WHERE ListGroup='" + selectedHeader.ListGroup + "' LIMIT 1"));
@@ -321,6 +330,11 @@ namespace ListUI.Forms
                 return;
             }
 
+            if (headers.Where(c => c.SortOrder == selectedHeader.SortOrder - 1).Count() == 0)
+            {
+                return;
+            }
+
             var header = headers.Where(c => c.SortOrder == selectedHeader.SortOrder - 1).First();
             header.SortOrder++;
             SqliteDataAccess.UpdateHeader(header);
@@ -339,6 +353,11 @@ namespace ListUI.Forms
                 return;
             }
 
+            if (headers.Where(c => c.SortOrder == selectedHeader.SortOrder + 1).Count() == 0)
+            {
+                return;
+            }
+
             var header = headers.Where(c => c.SortOrder == selectedHeader.SortOrder + 1).First();
             header.SortOrder--;
             SqliteDataAccess.UpdateHeader(header);
@@ -354,7 +373,7 @@ namespace ListUI.Forms
             if (headers != null)
                 neworder = headers.Max(c => c.SortOrder) + 1;
 
-            if (headers != null && headers.Count < 15)
+            if (headers != null && headers.Count < 18)
             {
                 selectedHeader = new HeaderModel() { ListType = cbListType.Text, ListGroup = "New Group", SortOrder = neworder };
                 SqliteDataAccess.SaveHeader(selectedHeader);
@@ -400,8 +419,19 @@ namespace ListUI.Forms
                 return;
             }
             if(MessageBox.Show("Do you want to edit list group?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-            {  
-                SqliteDataAccess.UpdateAnimeListGroup(txbHeaderEdit.Text, selectedHeader.ListGroup);
+            {
+                switch (cbListType.Text)
+                {
+                    case "Anime":
+                        SqliteDataAccess.UpdateAnimeListGroup(txbHeaderEdit.Text, selectedHeader.ListGroup);
+                        break;
+                    case "Game":
+                        SqliteDataAccess.UpdateGameListGroup(txbHeaderEdit.Text, selectedHeader.ListGroup);
+                        break;
+                    case "Series":
+                        SqliteDataAccess.UpdateSeriesListGroup(txbHeaderEdit.Text, selectedHeader.ListGroup);
+                        break;
+                }
                 selectedHeader.ListGroup = txbHeaderEdit.Text;
                 SqliteDataAccess.UpdateHeader(selectedHeader);
                 txbHeaderEdit.Text = "";

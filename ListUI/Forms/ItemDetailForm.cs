@@ -817,6 +817,7 @@ namespace ListUI.Forms
         private void pbDeletePic_Click(object sender, EventArgs e)
         {
             pbPicture.Image = Properties.Resources.nocover;
+            txbPictureUrl.Text = "";
             pictureChange = ChangeType.delete;
         }
 

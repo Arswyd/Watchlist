@@ -72,6 +72,7 @@ namespace ListUI.Forms
             // lvHeaders
             // 
             this.lvHeaders.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lvHeaders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lvHeaders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colOrder,
             this.colName});
@@ -80,10 +81,10 @@ namespace ListUI.Forms
             this.lvHeaders.GridLines = true;
             this.lvHeaders.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvHeaders.HideSelection = false;
-            this.lvHeaders.Location = new System.Drawing.Point(23, 58);
+            this.lvHeaders.Location = new System.Drawing.Point(24, 54);
             this.lvHeaders.MultiSelect = false;
             this.lvHeaders.Name = "lvHeaders";
-            this.lvHeaders.Size = new System.Drawing.Size(260, 328);
+            this.lvHeaders.Size = new System.Drawing.Size(260, 330);
             this.lvHeaders.TabIndex = 1;
             this.lvHeaders.UseCompatibleStateImageBehavior = false;
             this.lvHeaders.View = System.Windows.Forms.View.Details;
@@ -92,22 +93,24 @@ namespace ListUI.Forms
             // colOrder
             // 
             this.colOrder.Text = "Order";
+            this.colOrder.Width = 50;
             // 
             // colName
             // 
             this.colName.Text = "HeaderName";
-            this.colName.Width = 196;
+            this.colName.Width = 208;
             // 
             // cbListType
             // 
             this.cbListType.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.cbListType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbListType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbListType.FormattingEnabled = true;
             this.cbListType.Location = new System.Drawing.Point(24, 24);
             this.cbListType.Name = "cbListType";
             this.cbListType.Size = new System.Drawing.Size(260, 24);
             this.cbListType.TabIndex = 0;
-            this.cbListType.SelectionChangeCommitted += new System.EventHandler(this.cbListType_SelectionChangeCommitted);
+            this.cbListType.SelectedIndexChanged += new System.EventHandler(this.cbListType_SelectedIndexChanged);
             // 
             // groupBox1
             // 
@@ -200,6 +203,7 @@ namespace ListUI.Forms
             // txbHeaderEdit
             // 
             this.txbHeaderEdit.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbHeaderEdit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txbHeaderEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbHeaderEdit.Location = new System.Drawing.Point(23, 392);
             this.txbHeaderEdit.Name = "txbHeaderEdit";

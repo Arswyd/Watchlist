@@ -251,6 +251,18 @@
   <ItemGroup>
     <None Include="Resources\close2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\first page inactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\last page inactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\next page inactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\prev page inactive.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

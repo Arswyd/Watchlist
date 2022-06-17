@@ -42,6 +42,7 @@
             this.chDubbed = new System.Windows.Forms.CheckBox();
             this.cbListGroup = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txbLenght = new System.Windows.Forms.TextBox();
             this.pbDeletePic = new System.Windows.Forms.PictureBox();
             this.pbReloadPic = new System.Windows.Forms.PictureBox();
             this.chOwned = new System.Windows.Forms.CheckBox();
@@ -63,7 +64,6 @@
             this.pbDelete = new System.Windows.Forms.PictureBox();
             this.pbPicture = new System.Windows.Forms.PictureBox();
             this.lbWatchedEp = new System.Windows.Forms.Label();
-            this.txbLenght = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeletePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReloadPic)).BeginInit();
@@ -260,6 +260,20 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(520, 380);
             this.panel1.TabIndex = 10;
+            // 
+            // txbLenght
+            // 
+            this.txbLenght.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbLenght.Enabled = false;
+            this.txbLenght.Font = new System.Drawing.Font("Arial", 10F);
+            this.txbLenght.Location = new System.Drawing.Point(90, 266);
+            this.txbLenght.MaxLength = 6;
+            this.txbLenght.Name = "txbLenght";
+            this.txbLenght.Size = new System.Drawing.Size(63, 23);
+            this.txbLenght.TabIndex = 26;
+            this.txbLenght.Text = "1";
+            this.txbLenght.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txbLenght.Visible = false;
             // 
             // pbDeletePic
             // 
@@ -536,20 +550,6 @@
             this.lbWatchedEp.TabIndex = 4;
             this.lbWatchedEp.Text = "/";
             this.lbWatchedEp.Visible = false;
-            // 
-            // txbLenght
-            // 
-            this.txbLenght.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.txbLenght.Enabled = false;
-            this.txbLenght.Font = new System.Drawing.Font("Arial", 10F);
-            this.txbLenght.Location = new System.Drawing.Point(90, 266);
-            this.txbLenght.MaxLength = 6;
-            this.txbLenght.Name = "txbLenght";
-            this.txbLenght.Size = new System.Drawing.Size(63, 23);
-            this.txbLenght.TabIndex = 26;
-            this.txbLenght.Text = "1";
-            this.txbLenght.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txbLenght.Visible = false;
             // 
             // ItemDetailForm
             // 
