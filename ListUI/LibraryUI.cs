@@ -54,6 +54,10 @@ namespace ListUI
 
         public void CreateMenuItems()
         {
+            for (int i = fpListHeaderPanel.Controls.Count - 1; i >= 0; --i)
+            {
+                fpListHeaderPanel.Controls[i].Dispose();
+            }
             fpListHeaderPanel.Controls.Clear();
 
             if (activeListType == "Anime")
@@ -209,13 +213,18 @@ namespace ListUI
         {
             int yscroll = fpListItemPanel.AutoScrollPosition.Y;
 
+            for (int i = fpListItemPanel.Controls.Count - 1; i >= 0; --i)
+            {
+                fpListItemPanel.Controls[i].Dispose();
+            }
             fpListItemPanel.Controls.Clear();
             fpListItemPanel.SuspendLayout();
 
             PopulateMainFlowlayout();
 
             fpListItemPanel.ResumeLayout();
-            fpListItemPanel.VerticalScroll.Value = (-1) * yscroll;
+            fpListItemPanel.AutoScrollPosition = new Point(0, (-1) * yscroll);
+            //fpListItemPanel.VerticalScroll.Value = (-1) * yscroll;
         }
 
         private void PopulateMainFlowlayout()
@@ -260,8 +269,9 @@ namespace ListUI
                 frm = new ItemDetailForm(activeListType, item, index, libraryUI);
             }
             frm.ShowDialog(this);
+            frm.Dispose();
             fpListItemPanel.Focus();
-            overlay.Close();
+            overlay.Dispose();
         }
 
         private OverlayForm ShowOverlay()
@@ -318,7 +328,8 @@ namespace ListUI
 
         public void WireUpRequest(string listGroup)
         {
-            fpListItemPanel.VerticalScroll.Value = 0;
+            //fpListItemPanel.VerticalScroll.Value = 0;
+            fpListItemPanel.AutoScrollPosition = new Point(0, 0);
             if (activeGroup != listGroup)
             {
                 currentPage = 1;
@@ -348,7 +359,8 @@ namespace ListUI
 
         private void SwitchListType(string type, string group)
         {
-            fpListItemPanel.VerticalScroll.Value = 0;
+            //fpListItemPanel.VerticalScroll.Value = 0;
+            fpListItemPanel.AutoScrollPosition = new Point(0, 0);
             currentPage = 1;
             activeListType = type;
             activeGroup = group;
@@ -416,10 +428,11 @@ namespace ListUI
             OverlayForm overlay = ShowOverlay();
             SettingsForm frm = new SettingsForm(activeListType);
             frm.ShowDialog(this);
+            frm.Dispose();
             fpListItemPanel.Focus();
-            overlay.Close();
 
             WireUpLibraryForm();
+            overlay.Dispose();
         }
 
         /* Switching pages */
@@ -429,7 +442,8 @@ namespace ListUI
             if (currentPage > 1)
             {
                 currentPage = 1;
-                fpListItemPanel.VerticalScroll.Value = 0;
+                //fpListItemPanel.VerticalScroll.Value = 0;
+                fpListItemPanel.AutoScrollPosition = new Point(0, 0);
                 WireUpLibraryForm();
             }
         }
@@ -439,7 +453,8 @@ namespace ListUI
             if (currentPage > 1)
             {
                 currentPage--;
-                fpListItemPanel.VerticalScroll.Value = 0;
+                //fpListItemPanel.VerticalScroll.Value = 0;
+                fpListItemPanel.AutoScrollPosition = new Point(0, 0);
                 WireUpLibraryForm();
             }
         }
@@ -449,7 +464,8 @@ namespace ListUI
             if (currentPage < pageCount)
             {
                 currentPage++;
-                fpListItemPanel.VerticalScroll.Value = 0;
+                //fpListItemPanel.VerticalScroll.Value = 0;
+                fpListItemPanel.AutoScrollPosition = new Point(0, 0);
                 WireUpLibraryForm();
             }
         }
@@ -459,7 +475,8 @@ namespace ListUI
             if (currentPage < pageCount)
             {
                 currentPage = pageCount;
-                fpListItemPanel.VerticalScroll.Value = 0;
+                //fpListItemPanel.VerticalScroll.Value = 0;
+                fpListItemPanel.AutoScrollPosition = new Point(0, 0);
                 WireUpLibraryForm();
             }
         }
