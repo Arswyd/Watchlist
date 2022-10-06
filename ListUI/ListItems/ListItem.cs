@@ -64,23 +64,23 @@ namespace ListUI.ListItems
                 lbItemScore.Text = item.Score.ToString();
             }
 
-            if (item is AnimeModel)
+            if (item is AnimeModel animeModel)
             {
-                lbItemEpisodes.Text = ((AnimeModel)item).TotalEp.ToString() + " / " + ((AnimeModel)item).WatchedEp.ToString();
+                lbItemEpisodes.Text = animeModel.TotalEp.ToString() + " / " + animeModel.WatchedEp.ToString();
 
-                SetCheckAndNoteIcon(((AnimeModel)item).Dubbed, !String.IsNullOrWhiteSpace(item.Notes));
+                SetCheckAndNoteIcon(animeModel.Dubbed, !String.IsNullOrWhiteSpace(item.Notes));
             }
-            else if (item is SeriesModel)
+            else if (item is SeriesModel seriesModel)
             {
-                lbItemEpisodes.Text = "S" + ((SeriesModel)item).CurrentSe.ToString() + " E" + ((SeriesModel)item).WatchedEp.ToString();
+                lbItemEpisodes.Text = "S" + seriesModel.CurrentSe.ToString() + " E" + seriesModel.WatchedEp.ToString();
 
-                SetCheckAndNoteIcon(((SeriesModel)item).FinishedRunning, !String.IsNullOrWhiteSpace(item.Notes));
+                SetCheckAndNoteIcon(seriesModel.FinishedRunning, !String.IsNullOrWhiteSpace(item.Notes));
             }
-            else
+            else if (item is GameModel gameModel)
             {
-                lbItemEpisodes.Text = ((GameModel)item).Lenght.ToString() + " h";
+                lbItemEpisodes.Text = gameModel.Lenght.ToString() + " h";
 
-                SetCheckAndNoteIcon(((GameModel)item).Owned, !String.IsNullOrWhiteSpace(item.Notes));
+                SetCheckAndNoteIcon(gameModel.Owned, !String.IsNullOrWhiteSpace(item.Notes));
             }
             if (!String.IsNullOrWhiteSpace(item.Notes))
             {
@@ -129,29 +129,29 @@ namespace ListUI.ListItems
             lbPlusEp.Enabled = false;
             Application.UseWaitCursor = true;
 
-            if (currentItem is AnimeModel)
+            if (currentItem is AnimeModel animeModel)
             {
-                if (((AnimeModel)currentItem).TotalEp == 0)
+                if (animeModel.TotalEp == 0)
                 {
                     MessageBox.Show("Total Episodes were not set!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else if (((AnimeModel)currentItem).WatchedEp < (((AnimeModel)currentItem).TotalEp - 1))
+                else if (animeModel.WatchedEp < (animeModel.TotalEp - 1))
                 {
-                    ((AnimeModel)currentItem).WatchedEp += 1;
+                    animeModel.WatchedEp += 1;
 
-                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + " / " + ((AnimeModel)currentItem).WatchedEp.ToString();
+                    lbItemEpisodes.Text = animeModel.TotalEp.ToString() + " / " + animeModel.WatchedEp.ToString();
 
-                    SqliteDataAccess.UpdateAnime((AnimeModel)currentItem);
+                    SqliteDataAccess.UpdateAnime(animeModel);
                 }
-                else if (((AnimeModel)currentItem).WatchedEp == (((AnimeModel)currentItem).TotalEp - 1))
+                else if (animeModel.WatchedEp == (animeModel.TotalEp - 1))
                 {
-                    ((AnimeModel)currentItem).WatchedEp += 1;
+                    animeModel.WatchedEp += 1;
 
-                    lbItemEpisodes.Text = ((AnimeModel)currentItem).TotalEp.ToString() + " / " + ((AnimeModel)currentItem).WatchedEp.ToString();
+                    lbItemEpisodes.Text = animeModel.TotalEp.ToString() + " / " + animeModel.WatchedEp.ToString();
 
                     currentItem.ListGroup = "Completed";
 
-                    SqliteDataAccess.UpdateAnime((AnimeModel)currentItem);
+                    SqliteDataAccess.UpdateAnime(animeModel);
 
                     MessageBox.Show("Anime Completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -162,35 +162,35 @@ namespace ListUI.ListItems
                     //MessageBox.Show("NOT");
                 }
             }
-            else if (currentItem is SeriesModel)
+            else if (currentItem is SeriesModel seriesModel)
             {
-                if (String.IsNullOrWhiteSpace(((SeriesModel)currentItem).TotalEp))
+                if (String.IsNullOrWhiteSpace(seriesModel.TotalEp))
                 {
                     MessageBox.Show("Total Episodes were not set!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                if (((SeriesModel)currentItem).FinishedRunning && ((SeriesModel)currentItem).CurrentSe == ((SeriesModel)currentItem).TotalSe && ((SeriesModel)currentItem).WatchedEp == (((SeriesModel)currentItem).CurrentSeasonTotalEp - 1))
+                if (seriesModel.FinishedRunning && seriesModel.CurrentSe == seriesModel.TotalSe && seriesModel.WatchedEp == (seriesModel.CurrentSeasonTotalEp - 1))
                 {
-                    ((SeriesModel)currentItem).WatchedEp += 1;
+                    seriesModel.WatchedEp += 1;
 
-                    lbItemEpisodes.Text = "S" + ((SeriesModel)currentItem).CurrentSe.ToString() + " E" + ((SeriesModel)currentItem).WatchedEp.ToString();
+                    lbItemEpisodes.Text = "S" + seriesModel.CurrentSe.ToString() + " E" + seriesModel.WatchedEp.ToString();
 
                     currentItem.ListGroup = "Completed";
 
-                    SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
+                    SqliteDataAccess.UpdateSeries(seriesModel);
 
                     MessageBox.Show("Series Completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     callerForm.WireUpRequest(listGroup);
                 }
-                else if (!((SeriesModel)currentItem).FinishedRunning && ((SeriesModel)currentItem).CurrentSe == ((SeriesModel)currentItem).TotalSe && ((SeriesModel)currentItem).WatchedEp == (((SeriesModel)currentItem).CurrentSeasonTotalEp - 1))
+                else if (!(seriesModel.FinishedRunning && seriesModel.CurrentSe == seriesModel.TotalSe && seriesModel.WatchedEp == (seriesModel.CurrentSeasonTotalEp - 1)))
                 {
-                    ((SeriesModel)currentItem).WatchedEp += 1;
+                    seriesModel.WatchedEp += 1;
 
-                    lbItemEpisodes.Text = "S" + ((SeriesModel)currentItem).CurrentSe.ToString() + " E" + ((SeriesModel)currentItem).WatchedEp.ToString();
+                    lbItemEpisodes.Text = "S" + seriesModel.CurrentSe.ToString() + " E" + seriesModel.WatchedEp.ToString();
 
                     currentItem.ListGroup = "Season Completed";
 
-                    SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
+                    SqliteDataAccess.UpdateSeries(seriesModel);
 
                     MessageBox.Show("Season Completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
@@ -198,23 +198,23 @@ namespace ListUI.ListItems
                 }
                 else
                 {
-                    if (((SeriesModel)currentItem).WatchedEp < (((SeriesModel)currentItem).CurrentSeasonTotalEp - 1))
+                    if (seriesModel.WatchedEp < (seriesModel.CurrentSeasonTotalEp - 1))
                     {
-                        ((SeriesModel)currentItem).WatchedEp += 1;
+                        seriesModel.WatchedEp += 1;
 
-                        lbItemEpisodes.Text = "S" + ((SeriesModel)currentItem).CurrentSe.ToString() + " E" + ((SeriesModel)currentItem).WatchedEp.ToString();
+                        lbItemEpisodes.Text = "S" + seriesModel.CurrentSe.ToString() + " E" + seriesModel.WatchedEp.ToString();
 
-                        SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
+                        SqliteDataAccess.UpdateSeries(seriesModel);
                     }
-                    else if (((SeriesModel)currentItem).WatchedEp == (((SeriesModel)currentItem).CurrentSeasonTotalEp - 1))
+                    else if (seriesModel.WatchedEp == (seriesModel.CurrentSeasonTotalEp - 1))
                     {
-                        ((SeriesModel)currentItem).CurrentSe += 1;
+                        seriesModel.CurrentSe += 1;
 
-                        ((SeriesModel)currentItem).WatchedEp = 0;
+                        seriesModel.WatchedEp = 0;
 
-                        lbItemEpisodes.Text = "S" + ((SeriesModel)currentItem).CurrentSe.ToString() + " E" + ((SeriesModel)currentItem).WatchedEp.ToString();
+                        lbItemEpisodes.Text = "S" + seriesModel.CurrentSe.ToString() + " E" + seriesModel.WatchedEp.ToString();
 
-                        SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
+                        SqliteDataAccess.UpdateSeries(seriesModel);
                     }
                     else
                     {

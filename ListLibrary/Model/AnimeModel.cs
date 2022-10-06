@@ -36,6 +36,7 @@ namespace ListLibrary.Model
             Dubbed = false;
             ListGroup = "Not Aired Yet";
             Season = "Spring";
+            TotalEp = 12;
         }
     }
 }

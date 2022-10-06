@@ -18,6 +18,8 @@ namespace ListUI
         public List<ItemModel> itemlist = new List<ItemModel>();
         private string activeGroup;
         private string activeListType;
+        private string lastActiveGroup;
+        private string lastActiveListType;
         bool isFiltered = false;
         bool isAscending = false;
         int currentPage = 1;
@@ -46,7 +48,7 @@ namespace ListUI
             InitializeMainFlowlayoutPopulation();
             fpListItemPanel.Focus();
             CheckButtons();
-            ShowFilterControls();
+            SetupFilterControls();
             lbPages.Text = currentPage.ToString() + " / " + pageCount.ToString();
         }
 
@@ -73,7 +75,6 @@ namespace ListUI
             if (activeGroup == "All")
             {
                 allMenuItem.ActiveColor();
-                pageCount = (int)Math.Ceiling(headerList.Where(n => n.ListGroup != "Completed").Sum(n => n.Count) / 60.0);
             }
             fpListHeaderPanel.Controls.Add(allMenuItem);
 
@@ -85,7 +86,6 @@ namespace ListUI
                 if (listsetting.ListGroup == activeGroup)
                 {
                     menuItem.ActiveColor();
-                    pageCount = (int)Math.Ceiling(listsetting.Count / 60.0);
                 }
                 fpListHeaderPanel.Controls.Add(menuItem);
             }
@@ -109,24 +109,27 @@ namespace ListUI
                     itemlist.AddRange(SqliteDataAccess.LoadSeriesGroup(CreateFilteredSqlString(activeGroup)));
                     break;
             }
+
+            if(activeGroup != lastActiveGroup || activeListType != lastActiveListType || isFiltered)
+              pageCount = (int)Math.Ceiling(SqliteDataAccess.LoadGroupCount(CreateFilteredSqlCountString(activeGroup)) / 60.0);
+
+            lastActiveGroup = activeGroup;
+            lastActiveListType = activeListType;
         }
 
-        private string CreateFilteredSqlString(string activeGroup)
+        private string CreateFilteredSqlCountString(string activeGroup)
         {
             if (activeListType == "Anime")
             {
-                return "SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.PicFormat, A.Score, A.Year, A.Favourite, A.Notes, A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed " +
-                       "FROM Anime AS A" + CreateWhereString();
+                return "SELECT COUNT(*) FROM Anime AS A" + CreateWhereString(true);
             }
             if (activeListType == "Game")
             {
-                return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup, G.Owned, G.Lenght " +
-                       "FROM Games AS G" + CreateWhereString();
+                return "SELECT COUNT(*) FROM Games AS G" + CreateWhereString(true);
             }
             if (activeListType == "Series")
             {
-                return "SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, S.ListGroup, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning " +
-                       "FROM Series AS S" + CreateWhereString();
+                return "SELECT COUNT(*) FROM Series AS S" + CreateWhereString(true);
             }
             else
             {
@@ -134,19 +137,42 @@ namespace ListUI
             }
         }
 
-        private string CreateWhereString()
+        private string CreateFilteredSqlString(string activeGroup)
+        {
+            if (activeListType == "Anime")
+            {
+                return "SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.PicFormat, A.Score, A.Year, A.Favourite, A.Notes, A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed " +
+                       "FROM Anime AS A" + CreateWhereString(false);
+            }
+            if (activeListType == "Game")
+            {
+                return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup, G.Platform, G.Owned, G.Lenght " +
+                       "FROM Games AS G" + CreateWhereString(false);
+            }
+            if (activeListType == "Series")
+            {
+                return "SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, S.ListGroup, S.Platform, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning " +
+                       "FROM Series AS S" + CreateWhereString(false);
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private string CreateWhereString(bool isPageCount)
         {
             string c = "";
             string sWhere = " WHERE (1=1)";
 
             if (activeListType == "Anime")
-                c = "A";            
+                c = "A";
             else if (activeListType == "Game")
                 c = "G";
             else if (activeListType == "Series")
                 c = "S";
 
-            if(activeGroup !="All")
+            if (activeGroup != "All")
             {
                 sWhere = sWhere + " AND ListGroup = '" + activeGroup + "'";
             }
@@ -158,13 +184,16 @@ namespace ListUI
             if (isFiltered)
             {
                 if (txbTitleSearch.Text != "")
-                    sWhere = sWhere + " AND " + c +".Title LIKE '%" + txbTitleSearch.Text.Replace("'", "'+CHAR(39)+'") + "%'";
+                    sWhere = sWhere + " AND " + c + ".Title LIKE '%" + txbTitleSearch.Text.Replace("'", "'+CHAR(39)+'") + "%'";
                 if (txbYearSearch.Text != "")
                     sWhere = sWhere + " AND " + c + ".Year =" + Convert.ToInt32(txbYearSearch.Text);
                 if (chFavouriteSearch.CheckState == CheckState.Checked)
                     sWhere = sWhere + " AND " + c + ".Favourite = 1";
                 if (activeListType == "Anime")
                 {
+                    if (cbSeasonPlatformSearch.Text != "")
+                        sWhere = sWhere + " AND " + c + ".Season = '" + cbSeasonPlatformSearch.Text + "'";
+
                     if (chDubbedSearch.CheckState == CheckState.Checked)
                         sWhere = sWhere + " AND " + c + ".Dubbed = 1";
                     else if (chDubbedSearch.CheckState == CheckState.Unchecked)
@@ -172,6 +201,9 @@ namespace ListUI
                 }
                 if (activeListType == "Series")
                 {
+                    if (cbSeasonPlatformSearch.Text != "")
+                        sWhere = sWhere + " AND " + c + ".Platform = '" + cbSeasonPlatformSearch.Text + "'";
+
                     if (chFinishedSearch.CheckState == CheckState.Checked)
                         sWhere = sWhere + " AND " + c + ".FinishedRunning = 1";
                     else if (chFinishedSearch.CheckState == CheckState.Unchecked)
@@ -179,6 +211,9 @@ namespace ListUI
                 }
                 if (activeListType == "Game")
                 {
+                    if (cbSeasonPlatformSearch.Text != "")
+                        sWhere = sWhere + " AND " + c + ".Platform = '" + cbSeasonPlatformSearch.Text + "'";
+
                     if (chOwnedSearch.CheckState == CheckState.Checked)
                         sWhere = sWhere + " AND " + c + ".Owned = 1";
                     else if (chOwnedSearch.CheckState == CheckState.Unchecked)
@@ -186,22 +221,25 @@ namespace ListUI
                 }
             }
 
-            if (rbScore.Checked)
-            {
-                if (isAscending)
-                    sWhere = sWhere + " ORDER BY " + c + ".Score ASC, " + c + ".Title ASC";
-                else
-                    sWhere = sWhere + " ORDER BY " + c + ".Score DESC, " + c + ".Title ASC";
-            }
-            else if (rbTitle.Checked)
-            {
-                if (isAscending)
-                    sWhere = sWhere + " ORDER BY " + c + ".Title ASC";
-                else
-                    sWhere = sWhere + " ORDER BY " + c + ".Title DESC";
-            }
+            if (!isPageCount)
+            { 
+                if (rbScore.Checked)
+                {
+                    if (isAscending)
+                        sWhere = sWhere + " ORDER BY " + c + ".Score ASC, " + c + ".Title ASC";
+                    else
+                        sWhere = sWhere + " ORDER BY " + c + ".Score DESC, " + c + ".Title ASC";
+                }
+                else if (rbTitle.Checked)
+                {
+                    if (isAscending)
+                        sWhere = sWhere + " ORDER BY " + c + ".Title ASC";
+                    else
+                        sWhere = sWhere + " ORDER BY " + c + ".Title DESC";
+                }
 
-            sWhere = sWhere + " LIMIT 60 OFFSET " + (currentPage - 1) * 60;
+                sWhere = sWhere + " LIMIT 60 OFFSET " + (currentPage - 1) * 60;
+            }
 
             return sWhere;
         }
@@ -314,7 +352,7 @@ namespace ListUI
 
         /* Showing filter controls according to list type */
 
-        private void ShowFilterControls()
+        private void SetupFilterControls()
         {
             chDubbedSearch.Enabled = (activeListType == "Anime");
             chDubbedSearch.Visible = (activeListType == "Anime");
@@ -322,6 +360,31 @@ namespace ListUI
             chFinishedSearch.Visible = (activeListType == "Series");
             chOwnedSearch.Enabled = (activeListType == "Game");
             chOwnedSearch.Visible = (activeListType == "Game");
+
+            cbSeasonPlatformSearch.Items.Clear();
+
+            if (activeListType == "Anime")
+            {
+                cbSeasonPlatformSearch.Items.Add("Spring");
+                cbSeasonPlatformSearch.Items.Add("Summer");
+                cbSeasonPlatformSearch.Items.Add("Fall");
+                cbSeasonPlatformSearch.Items.Add("Winter");
+                cbSeasonPlatformSearch.Items.Add("");
+            }
+            else if(activeListType == "Series")
+            {
+                cbSeasonPlatformSearch.Items.Add("Netflix");
+                cbSeasonPlatformSearch.Items.Add("HBO");
+                cbSeasonPlatformSearch.Items.Add("");
+            }
+            else if(activeListType == "Game")
+            {
+                cbSeasonPlatformSearch.Items.Add("Steam");
+                cbSeasonPlatformSearch.Items.Add("Epic");
+                cbSeasonPlatformSearch.Items.Add("GoG");
+                cbSeasonPlatformSearch.Items.Add("Ubisoft");
+                cbSeasonPlatformSearch.Items.Add("");
+            }
         }
 
         /* Wireup request*/
@@ -375,6 +438,7 @@ namespace ListUI
         private void pbFilter_Click(object sender, EventArgs e)
         {
             isFiltered = false;
+            currentPage = 1;
 
             ClearFilters();
 
@@ -391,6 +455,7 @@ namespace ListUI
             pbToggleFilter.Visible = false;
             txbTitleSearch.Text = "";
             txbYearSearch.Text = "";
+            cbSeasonPlatformSearch.Text = "";
             lbTitleSearch.Visible = true;
             lbYearSearch.Visible = true;
             chFavouriteSearch.Checked = false;
@@ -411,6 +476,7 @@ namespace ListUI
             if (txbYearSearch.Text.All(c => c >= '0' && c <= '9'))
             {
                 isFiltered = true;
+                currentPage = 1;
                 pbToggleFilter.Visible = true;
                 WireUpLibraryForm();
             }

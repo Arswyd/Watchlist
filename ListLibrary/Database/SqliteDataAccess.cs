@@ -88,6 +88,17 @@ namespace ListLibrary.Database
             }
         }
 
+        // Global
+
+        public static int LoadGroupCount(string sqlString)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<int>(sqlString).First();
+                return output;
+            }
+        }
+
         // Anime SQL
 
         #region Anime SQL
@@ -192,8 +203,8 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("INSERT INTO Games (Title, Url, PictureUrl, PicFormat, Score, Year, Favourite, Notes, ListGroup, Owned, Lenght) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Favourite, @Notes, @ListGroup, @Owned, @Lenght)", game);
+                cnn.Execute("INSERT INTO Games (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, Owned, Lenght) " +
+                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @Owned, @Lenght)", game);
             }
         }
 
@@ -201,8 +212,8 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("INSERT OR IGNORE INTO Games (Title, Url, PictureUrl, PicFormat, Score, Year, Favourite, Notes, ListGroup, Owned, Lenght) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Favourite, @Notes, @ListGroup, @Owned, @Lenght)", game);
+                cnn.Execute("INSERT OR IGNORE INTO Games (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, Owned, Lenght) " +
+                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @Owned, @Lenght)", game);
             }
         }
 
@@ -210,7 +221,7 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("UPDATE Games SET Title=@Title, Url=@Url, PictureUrl=@PictureUrl, PicFormat=@PicFormat, Score=@Score, Year=@Year, Favourite=@Favourite, " +
+                cnn.Execute("UPDATE Games SET Title=@Title, Url=@Url, PictureUrl=@PictureUrl, PicFormat=@PicFormat, Score=@Score, Year=@Year, Platform=@Platform, Favourite=@Favourite, " +
                     "Notes=@Notes, ListGroup=@ListGroup, Owned=@Owned, Lenght=@Lenght WHERE ID=@ID", game);
             }
         }
@@ -270,8 +281,8 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("INSERT INTO Series (Title, Url, PictureUrl, PicFormat, Score, Year, Favourite, Notes, ListGroup, TotalSe, CurrentSe, TotalEp, WatchedEp, FinishedRunning) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Favourite, @Notes, @ListGroup, @TotalSe, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning)", series);
+                cnn.Execute("INSERT INTO Series (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, TotalSe, CurrentSe, TotalEp, WatchedEp, FinishedRunning) " +
+                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @TotalSe, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning)", series);
             }
         }
 
@@ -279,8 +290,8 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("INSERT OR IGNORE INTO Series (Title, Url, PictureUrl, PicFormat, Score, Year, Favourite, Notes, ListGroup, TotalSe, CurrentSe, TotalEp, WatchedEp, FinishedRunning) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Favourite, @Notes, @ListGroup, @TotalSe, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning)", series);
+                cnn.Execute("INSERT OR IGNORE INTO Series (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, TotalSe, CurrentSe, TotalEp, WatchedEp, FinishedRunning) " +
+                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @TotalSe, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning)", series);
             }
         }
 
@@ -288,7 +299,7 @@ namespace ListLibrary.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("UPDATE Series SET Title=@Title, Url=@Url, PictureUrl=@PictureUrl, PicFormat=@PicFormat, Score=@Score, Year=@Year, Favourite=@Favourite, Notes=@Notes, " + 
+                cnn.Execute("UPDATE Series SET Title=@Title, Url=@Url, PictureUrl=@PictureUrl, PicFormat=@PicFormat, Score=@Score, Year=@Year, Platform=@Platform, Favourite=@Favourite, Notes=@Notes, " + 
                     "ListGroup=@ListGroup, TotalSe=@TotalSe, CurrentSe=@CurrentSe, TotalEp=@TotalEp, WatchedEp=@WatchedEp, FinishedRunning=@FinishedRunning WHERE ID=@ID", series);
             }
         }

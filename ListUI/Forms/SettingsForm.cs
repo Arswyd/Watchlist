@@ -154,17 +154,17 @@ namespace ListUI.Forms
             {
                 foreach (ItemModel item in items)
                 {
-                    if (item is AnimeModel)
+                    if (item is AnimeModel animeModel)
                     {
-                        SqliteDataAccess.SaveAnime((AnimeModel)item, 0);
+                        SqliteDataAccess.SaveAnime(animeModel, 0);
                     }
-                    else if (item is SeriesModel)
+                    else if (item is SeriesModel seriesModel)
                     {
-                        SqliteDataAccess.SaveSeries((SeriesModel)item, 0);
+                        SqliteDataAccess.SaveSeries(seriesModel, 0);
                     }
-                    else if (item is GameModel)
+                    else if (item is GameModel gameModel)
                     {
-                        SqliteDataAccess.SaveGame((GameModel)item, 0);
+                        SqliteDataAccess.SaveGame(gameModel, 0);
                     }
 
                     progressBar1.Increment(1);
@@ -174,17 +174,17 @@ namespace ListUI.Forms
             {
                 foreach (ItemModel item in items)
                 {
-                    if (item is AnimeModel)
+                    if (item is AnimeModel animeModel)
                     {
-                        SqliteDataAccess.ImportAnime((AnimeModel)item);
+                        SqliteDataAccess.ImportAnime(animeModel);
                     }
-                    else if (item is SeriesModel)
+                    else if (item is SeriesModel seriesModel)
                     {
-                        SqliteDataAccess.ImportSeries((SeriesModel)item);
+                        SqliteDataAccess.ImportSeries(seriesModel);
                     }
-                    else if (item is GameModel)
+                    else if (item is GameModel gameModel)
                     {
-                        SqliteDataAccess.ImportGame((GameModel)item);
+                        SqliteDataAccess.ImportGame(gameModel);
                     }
 
                     progressBar1.Increment(1);

@@ -89,12 +89,9 @@ namespace ListUI.Forms
                 lbWatchedEp.Visible = true;
                 txbWatchedEp.Enabled = true;
                 txbWatchedEp.Visible = true;
-                lbSeason.Enabled = true;
-                lbSeason.Visible = true;
-                cbSeason.Enabled = true;
-                cbSeason.Visible = true;
                 chDubbed.Enabled = true;
                 chDubbed.Visible = true;
+                lbSeason_Platform.Text = "Season";
             }
             else if (listType == "Series")
             {
@@ -117,14 +114,15 @@ namespace ListUI.Forms
                 txbCurrentSe.Visible = true;
                 chFinished.Enabled = true;
                 chFinished.Visible = true;
+                lbSeason_Platform.Text = "Platform";
             }
             else if (listType == "Game")
             {
                 chOwned.Enabled = true;
                 chOwned.Visible = true;
-                lbSeason.Enabled = true;
-                lbSeason.Visible = true;
-                lbSeason.Text = "Lenght";
+                lbSeason_Platform.Text = "Platform";
+                lbLenght.Enabled = true;
+                lbLenght.Visible = true;
                 txbLenght.Enabled = true;
                 txbLenght.Visible = true;
             }
@@ -136,11 +134,25 @@ namespace ListUI.Forms
 
             if (listType == "Anime")
             {
-                cbSeason.Items.Add("Spring");
-                cbSeason.Items.Add("Summer");
-                cbSeason.Items.Add("Fall");
-                cbSeason.Items.Add("Winter");
-                cbSeason.Items.Add("");
+                cbSeason_Platform.Items.Add("Spring");
+                cbSeason_Platform.Items.Add("Summer");
+                cbSeason_Platform.Items.Add("Fall");
+                cbSeason_Platform.Items.Add("Winter");
+                cbSeason_Platform.Items.Add("");
+            }
+            else if (listType == "Series")
+            {
+                cbSeason_Platform.Items.Add("Netflix");
+                cbSeason_Platform.Items.Add("HBO");
+                cbSeason_Platform.Items.Add("");
+            }
+            else if (listType == "Game")
+            {
+                cbSeason_Platform.Items.Add("Steam");
+                cbSeason_Platform.Items.Add("Epic");
+                cbSeason_Platform.Items.Add("GoG");
+                cbSeason_Platform.Items.Add("Ubisoft");
+                cbSeason_Platform.Items.Add("");
             }
         }
 
@@ -165,25 +177,27 @@ namespace ListUI.Forms
             cbListGroup.Text = item.ListGroup;
             txbNotes.Text = item.Notes;
             txbYear.Text = item.Year.ToString();
-            if (item is AnimeModel)
+            if (item is AnimeModel animeModel)
             {
-                cbSeason.Text = ((AnimeModel)item).Season;
-                txbTotalEp.Text = ((AnimeModel)item).TotalEp.ToString();
-                txbWatchedEp.Text = ((AnimeModel)item).WatchedEp.ToString();
-                chDubbed.Checked = ((AnimeModel)item).Dubbed;
+                cbSeason_Platform.Text = animeModel.Season;
+                txbTotalEp.Text = animeModel.TotalEp.ToString();
+                txbWatchedEp.Text = animeModel.WatchedEp.ToString();
+                chDubbed.Checked = animeModel.Dubbed;
             }
-            if (item is SeriesModel)
+            if (item is SeriesModel seriesModel)
             {
-                txbTotalSe.Text = ((SeriesModel)item).TotalSe.ToString();
-                txbCurrentSe.Text = ((SeriesModel)item).CurrentSe.ToString();
-                txbTotalEp.Text = ((SeriesModel)item).TotalEp;
-                txbWatchedEp.Text = ((SeriesModel)item).WatchedEp.ToString();
-                chFinished.Checked = ((SeriesModel)item).FinishedRunning;
+                txbTotalSe.Text = seriesModel.TotalSe.ToString();
+                txbCurrentSe.Text = seriesModel.CurrentSe.ToString();
+                txbTotalEp.Text = seriesModel.TotalEp;
+                txbWatchedEp.Text = seriesModel.WatchedEp.ToString();
+                chFinished.Checked = seriesModel.FinishedRunning;
+                cbSeason_Platform.Text = seriesModel.Platform;
             }
-            if (item is GameModel)
+            if (item is GameModel gameModel)
             {
-                chOwned.Checked = ((GameModel)item).Owned;
-                txbLenght.Text = ((GameModel)item).Lenght.ToString();
+                chOwned.Checked = gameModel.Owned;
+                txbLenght.Text = gameModel.Lenght.ToString();
+                cbSeason_Platform.Text = gameModel.Platform;
             }
         }
 
@@ -213,9 +227,9 @@ namespace ListUI.Forms
 
                 if (newitem == true)
                 {
-                    if (currentItem is AnimeModel)
+                    if (currentItem is AnimeModel animeModel)
                     {
-                        if (SqliteDataAccess.LoadAnimeGroup("SELECT 1 FROM Anime WHERE Title='" + currentItem.Title.Replace("'","'+CHAR(39)+'") + "' LIMIT 1").Count == 1)
+                        if (SqliteDataAccess.LoadAnimeGroup("SELECT 1 FROM Anime WHERE Title='" + animeModel.Title.Replace("'","'+CHAR(39)+'") + "' LIMIT 1").Count == 1)
                         {
                             txbTitle.BackColor = Color.LightCoral;
                             MessageBox.Show("Title already Exists", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -223,11 +237,11 @@ namespace ListUI.Forms
                         }
                         else
                         {
-                            SqliteDataAccess.SaveAnime((AnimeModel)currentItem, 1);
-                            currentItem.ID = SqliteDataAccess.GetLastAnimeID();
+                            SqliteDataAccess.SaveAnime(animeModel, 1);
+                            animeModel.ID = SqliteDataAccess.GetLastAnimeID();
                         }
                     }
-                    else if (currentItem is SeriesModel)
+                    else if (currentItem is SeriesModel seriesModel)
                     {
                         if (SqliteDataAccess.LoadSeriesGroup("SELECT 1 FROM Series WHERE Title='" + txbTitle.Text.Replace("'", "'+CHAR(39)+'") + "' LIMIT 1").Count == 1)
                         {
@@ -237,11 +251,11 @@ namespace ListUI.Forms
                         }
                         else
                         {
-                            SqliteDataAccess.SaveSeries((SeriesModel)currentItem, 1);
-                            currentItem.ID = SqliteDataAccess.GetLastSeriesID();
+                            SqliteDataAccess.SaveSeries(seriesModel, 1);
+                            seriesModel.ID = SqliteDataAccess.GetLastSeriesID();
                         }
                     }
-                    else if (currentItem is GameModel)
+                    else if (currentItem is GameModel gameModel)
                     {
                         if (SqliteDataAccess.LoadGameGroup("SELECT 1 FROM Games WHERE Title='" + txbTitle.Text.Replace("'", "'+CHAR(39)+'") + "' LIMIT 1").Count == 1)
                         {
@@ -251,24 +265,24 @@ namespace ListUI.Forms
                         }
                         else
                         {
-                            SqliteDataAccess.SaveGame((GameModel)currentItem, 1);
-                            currentItem.ID = SqliteDataAccess.GetLastGameID();
+                            SqliteDataAccess.SaveGame(gameModel, 1);
+                            gameModel.ID = SqliteDataAccess.GetLastGameID();
                         }
                     }
                 }
                 else
                 {
-                    if (currentItem is AnimeModel)
+                    if (currentItem is AnimeModel animeModel)
                     {
-                        SqliteDataAccess.UpdateAnime((AnimeModel)currentItem);
+                        SqliteDataAccess.UpdateAnime(animeModel);
                     }
-                    else if (currentItem is SeriesModel)
+                    else if (currentItem is SeriesModel seriesModel)
                     {
-                        SqliteDataAccess.UpdateSeries((SeriesModel)currentItem);
+                        SqliteDataAccess.UpdateSeries(seriesModel);
                     }
-                    else if (currentItem is GameModel)
+                    else if (currentItem is GameModel gameModel)
                     {
-                        SqliteDataAccess.UpdateGame((GameModel)currentItem);
+                        SqliteDataAccess.UpdateGame(gameModel);
                     }
                 }
 
@@ -505,25 +519,27 @@ namespace ListUI.Forms
             currentItem.Score = decimal.Round(Convert.ToDecimal(txbScore.Text), 1);
             currentItem.Notes = txbNotes.Text;
             currentItem.Year = Convert.ToInt32(txbYear.Text);
-            if (currentItem is AnimeModel)
+            if (currentItem is AnimeModel animeModel)
             {
-                ((AnimeModel)currentItem).Season = cbSeason.Text;
-                ((AnimeModel)currentItem).TotalEp = Convert.ToInt32(txbTotalEp.Text);
-                ((AnimeModel)currentItem).WatchedEp = Convert.ToInt32(txbWatchedEp.Text);
-                ((AnimeModel)currentItem).Dubbed = chDubbed.Checked;
+                animeModel.Season = cbSeason_Platform.Text;
+                animeModel.TotalEp = Convert.ToInt32(txbTotalEp.Text);
+                animeModel.WatchedEp = Convert.ToInt32(txbWatchedEp.Text);
+                animeModel.Dubbed = chDubbed.Checked;
             }
-            else if (currentItem is SeriesModel)
+            else if (currentItem is SeriesModel seriesModel)
             {
-                ((SeriesModel)currentItem).TotalSe = Convert.ToInt32(txbTotalSe.Text);
-                ((SeriesModel)currentItem).CurrentSe = Convert.ToInt32(txbCurrentSe.Text);
-                ((SeriesModel)currentItem).TotalEp = txbTotalEp.Text;
-                ((SeriesModel)currentItem).WatchedEp = Convert.ToInt32(txbWatchedEp.Text);
-                ((SeriesModel)currentItem).FinishedRunning = chFinished.Checked;
+                seriesModel.Platform = cbSeason_Platform.Text;
+                seriesModel.TotalSe = Convert.ToInt32(txbTotalSe.Text);
+                seriesModel.CurrentSe = Convert.ToInt32(txbCurrentSe.Text);
+                seriesModel.TotalEp = txbTotalEp.Text;
+                seriesModel.WatchedEp = Convert.ToInt32(txbWatchedEp.Text);
+                seriesModel.FinishedRunning = chFinished.Checked;
             }
-            else if (currentItem is GameModel)
+            else if (currentItem is GameModel gameModel)
             {
-                ((GameModel)currentItem).Owned = chOwned.Checked;
-                ((GameModel)currentItem).Lenght = decimal.Round(Convert.ToDecimal(txbLenght.Text), 1);
+                gameModel.Platform = cbSeason_Platform.Text;
+                gameModel.Owned = chOwned.Checked;
+                gameModel.Lenght = decimal.Round(Convert.ToDecimal(txbLenght.Text), 1);
             }
         }
 
@@ -572,17 +588,17 @@ namespace ListUI.Forms
 
             if(MessageBox.Show("Do you want to delete this?","Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                if (currentItem is AnimeModel)
+                if (currentItem is AnimeModel animeModel)
                 {
-                    SqliteDataAccess.DeleteAnime((AnimeModel)currentItem);
+                    SqliteDataAccess.DeleteAnime(animeModel);
                 }
-                else if (currentItem is SeriesModel)
+                else if (currentItem is SeriesModel seriesModel)
                 {
-                    SqliteDataAccess.DeleteSeries((SeriesModel)currentItem);
+                    SqliteDataAccess.DeleteSeries(seriesModel);
                 }
-                else if (currentItem is GameModel)
+                else if (currentItem is GameModel gameModel)
                 {
-                    SqliteDataAccess.DeleteGame((GameModel)currentItem);
+                    SqliteDataAccess.DeleteGame(gameModel);
                 }
 
                 DeleteItemPicture();
@@ -650,55 +666,63 @@ namespace ListUI.Forms
             {
                 output = true;
             }
-            else if (currentItem is AnimeModel)
+            else if (currentItem is AnimeModel animeModel)
             {
-                if (((AnimeModel)currentItem).TotalEp.ToString() != txbTotalEp.Text)
+                if (animeModel.TotalEp.ToString() != txbTotalEp.Text)
                 {
                     output = true;
                 }
-                else if (((AnimeModel)currentItem).WatchedEp.ToString() != txbWatchedEp.Text)
+                else if (animeModel.WatchedEp.ToString() != txbWatchedEp.Text)
                 {
                     output = true;
                 }
-                else if (((AnimeModel)currentItem).Dubbed != chDubbed.Checked)
+                else if (animeModel.Dubbed != chDubbed.Checked)
                 {
                     output = true;
                 }
-                else if (((AnimeModel)currentItem).Season != cbSeason.Text)
+                else if (animeModel.Season != cbSeason_Platform.Text)
                 {
                     output = true;
                 }
             }
-            else if (currentItem is SeriesModel)
+            else if (currentItem is SeriesModel seriesModel)
             {
-                if (((SeriesModel)currentItem).TotalSe.ToString() != txbTotalSe.Text)
+                if (seriesModel.TotalSe.ToString() != txbTotalSe.Text)
                 {
                     output = true;
                 }
-                else if (((SeriesModel)currentItem).TotalEp != txbTotalEp.Text)
+                else if (seriesModel.TotalEp != txbTotalEp.Text)
                 {
                     output = true;
                 }
-                else if (((SeriesModel)currentItem).CurrentSe.ToString() != txbCurrentSe.Text)
+                else if (seriesModel.CurrentSe.ToString() != txbCurrentSe.Text)
                 {
                     output = true;
                 }
-                else if (((SeriesModel)currentItem).WatchedEp.ToString() != txbWatchedEp.Text)
+                else if (seriesModel.WatchedEp.ToString() != txbWatchedEp.Text)
                 {
                     output = true;
                 }
-                else if (((SeriesModel)currentItem).FinishedRunning != chFinished.Checked)
+                else if (seriesModel.FinishedRunning != chFinished.Checked)
+                {
+                    output = true;
+                }
+                else if (seriesModel.Platform != cbSeason_Platform.Text)
                 {
                     output = true;
                 }
             }
-            else if (currentItem is SeriesModel)
+            else if (currentItem is GameModel gameModel)
             {
-                if (((GameModel)currentItem).Owned != chOwned.Checked)
+                if (gameModel.Owned != chOwned.Checked)
                 {
                     output = true;
                 }
-                if (((GameModel)currentItem).Lenght.ToString() != txbLenght.Text)
+                else if (gameModel.Lenght.ToString() != txbLenght.Text)
+                {
+                    output = true;
+                }
+                else if (gameModel.Platform != cbSeason_Platform.Text)
                 {
                     output = true;
                 }

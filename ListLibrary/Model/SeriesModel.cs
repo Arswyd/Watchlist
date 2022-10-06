@@ -10,6 +10,7 @@ namespace ListLibrary.Model
         public int TotalSe { get; set; }
         public string TotalEp { get; set; }
         public bool FinishedRunning { get; set; }
+        public string Platform { get; set; }
 
         public int CurrentSeasonTotalEp
         {
@@ -46,6 +47,7 @@ namespace ListLibrary.Model
             TotalSe = 1;
             CurrentSe = 1;
             WatchedEp = 0;
+            Platform = "";
         }
     }
 }

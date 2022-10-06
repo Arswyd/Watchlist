@@ -47,12 +47,12 @@
             this.pbReloadPic = new System.Windows.Forms.PictureBox();
             this.chOwned = new System.Windows.Forms.CheckBox();
             this.chFinished = new System.Windows.Forms.CheckBox();
-            this.cbSeason = new System.Windows.Forms.ComboBox();
+            this.cbSeason_Platform = new System.Windows.Forms.ComboBox();
             this.lbCurrentSe = new System.Windows.Forms.Label();
             this.txbCurrentSe = new System.Windows.Forms.TextBox();
             this.lbTotalSe = new System.Windows.Forms.Label();
             this.txbTotalSe = new System.Windows.Forms.TextBox();
-            this.lbSeason = new System.Windows.Forms.Label();
+            this.lbSeason_Platform = new System.Windows.Forms.Label();
             this.lbYear = new System.Windows.Forms.Label();
             this.txbYear = new System.Windows.Forms.TextBox();
             this.txbPictureUrl = new System.Windows.Forms.TextBox();
@@ -64,6 +64,7 @@
             this.pbDelete = new System.Windows.Forms.PictureBox();
             this.pbPicture = new System.Windows.Forms.PictureBox();
             this.lbWatchedEp = new System.Windows.Forms.Label();
+            this.lbLenght = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeletePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbReloadPic)).BeginInit();
@@ -210,7 +211,6 @@
             // cbListGroup
             // 
             this.cbListGroup.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.cbListGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbListGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbListGroup.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbListGroup.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -222,17 +222,18 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lbLenght);
             this.panel1.Controls.Add(this.txbLenght);
             this.panel1.Controls.Add(this.pbDeletePic);
             this.panel1.Controls.Add(this.pbReloadPic);
             this.panel1.Controls.Add(this.chOwned);
             this.panel1.Controls.Add(this.chFinished);
-            this.panel1.Controls.Add(this.cbSeason);
+            this.panel1.Controls.Add(this.cbSeason_Platform);
             this.panel1.Controls.Add(this.lbCurrentSe);
             this.panel1.Controls.Add(this.txbCurrentSe);
             this.panel1.Controls.Add(this.lbTotalSe);
             this.panel1.Controls.Add(this.txbTotalSe);
-            this.panel1.Controls.Add(this.lbSeason);
+            this.panel1.Controls.Add(this.lbSeason_Platform);
             this.panel1.Controls.Add(this.lbYear);
             this.panel1.Controls.Add(this.txbYear);
             this.panel1.Controls.Add(this.txbPictureUrl);
@@ -266,7 +267,7 @@
             this.txbLenght.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.txbLenght.Enabled = false;
             this.txbLenght.Font = new System.Drawing.Font("Arial", 10F);
-            this.txbLenght.Location = new System.Drawing.Point(90, 266);
+            this.txbLenght.Location = new System.Drawing.Point(10, 316);
             this.txbLenght.MaxLength = 6;
             this.txbLenght.Name = "txbLenght";
             this.txbLenght.Size = new System.Drawing.Size(63, 23);
@@ -332,20 +333,17 @@
             this.chFinished.Visible = false;
             this.chFinished.Enter += new System.EventHandler(this.chFinished_Enter);
             // 
-            // cbSeason
+            // cbSeason_Platform
             // 
-            this.cbSeason.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.cbSeason.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSeason.Enabled = false;
-            this.cbSeason.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbSeason.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.cbSeason.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.cbSeason.FormattingEnabled = true;
-            this.cbSeason.Location = new System.Drawing.Point(90, 266);
-            this.cbSeason.Name = "cbSeason";
-            this.cbSeason.Size = new System.Drawing.Size(80, 24);
-            this.cbSeason.TabIndex = 7;
-            this.cbSeason.Visible = false;
+            this.cbSeason_Platform.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.cbSeason_Platform.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbSeason_Platform.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cbSeason_Platform.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.cbSeason_Platform.FormattingEnabled = true;
+            this.cbSeason_Platform.Location = new System.Drawing.Point(90, 266);
+            this.cbSeason_Platform.Name = "cbSeason_Platform";
+            this.cbSeason_Platform.Size = new System.Drawing.Size(80, 24);
+            this.cbSeason_Platform.TabIndex = 7;
             // 
             // lbCurrentSe
             // 
@@ -401,17 +399,16 @@
             this.txbTotalSe.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txbTotalSe.Visible = false;
             // 
-            // lbSeason
+            // lbSeason_Platform
             // 
-            this.lbSeason.AutoSize = true;
-            this.lbSeason.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbSeason.ForeColor = System.Drawing.SystemColors.Menu;
-            this.lbSeason.Location = new System.Drawing.Point(86, 244);
-            this.lbSeason.Name = "lbSeason";
-            this.lbSeason.Size = new System.Drawing.Size(67, 19);
-            this.lbSeason.TabIndex = 19;
-            this.lbSeason.Text = "Season";
-            this.lbSeason.Visible = false;
+            this.lbSeason_Platform.AutoSize = true;
+            this.lbSeason_Platform.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbSeason_Platform.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbSeason_Platform.Location = new System.Drawing.Point(86, 244);
+            this.lbSeason_Platform.Name = "lbSeason_Platform";
+            this.lbSeason_Platform.Size = new System.Drawing.Size(67, 19);
+            this.lbSeason_Platform.TabIndex = 19;
+            this.lbSeason_Platform.Text = "Season";
             // 
             // lbYear
             // 
@@ -551,6 +548,18 @@
             this.lbWatchedEp.Text = "/";
             this.lbWatchedEp.Visible = false;
             // 
+            // lbLenght
+            // 
+            this.lbLenght.AutoSize = true;
+            this.lbLenght.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lbLenght.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbLenght.Location = new System.Drawing.Point(8, 294);
+            this.lbLenght.Name = "lbLenght";
+            this.lbLenght.Size = new System.Drawing.Size(63, 19);
+            this.lbLenght.TabIndex = 27;
+            this.lbLenght.Text = "Lenght";
+            this.lbLenght.Visible = false;
+            // 
             // ItemDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -608,14 +617,15 @@
         private System.Windows.Forms.TextBox txbCurrentSe;
         private System.Windows.Forms.Label lbTotalSe;
         private System.Windows.Forms.TextBox txbTotalSe;
-        private System.Windows.Forms.Label lbSeason;
+        private System.Windows.Forms.Label lbSeason_Platform;
         private System.Windows.Forms.Label lbYear;
         private System.Windows.Forms.TextBox txbYear;
-        private System.Windows.Forms.ComboBox cbSeason;
+        private System.Windows.Forms.ComboBox cbSeason_Platform;
         private System.Windows.Forms.CheckBox chFinished;
         private System.Windows.Forms.CheckBox chOwned;
         private System.Windows.Forms.PictureBox pbReloadPic;
         private System.Windows.Forms.PictureBox pbDeletePic;
         private System.Windows.Forms.TextBox txbLenght;
+        private System.Windows.Forms.Label lbLenght;
     }
 }

@@ -8,6 +8,8 @@ namespace ListLibrary.Model
 
         public decimal Lenght { get; set; }
 
+        public string Platform { get; set; }
+
         public override string PictureDir
         {
             get
@@ -33,6 +35,7 @@ namespace ListLibrary.Model
             ListGroup = "Not Released Yet";
             Owned = false;
             Lenght = 0;
+            Platform = "";
         }
     }
 }

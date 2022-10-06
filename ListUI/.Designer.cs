@@ -63,6 +63,7 @@
             this.pAnime = new System.Windows.Forms.Panel();
             this.pbIndicatorA = new System.Windows.Forms.PictureBox();
             this.pbAddItem = new System.Windows.Forms.PictureBox();
+            this.cbSeasonPlatformSearch = new System.Windows.Forms.ComboBox();
             this.pMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLastPage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbNextPage)).BeginInit();
@@ -104,7 +105,7 @@
             this.txbTitleSearch.ForeColor = System.Drawing.Color.White;
             this.txbTitleSearch.Location = new System.Drawing.Point(36, 20);
             this.txbTitleSearch.Name = "txbTitleSearch";
-            this.txbTitleSearch.Size = new System.Drawing.Size(300, 29);
+            this.txbTitleSearch.Size = new System.Drawing.Size(250, 29);
             this.txbTitleSearch.TabIndex = 5;
             this.txbTitleSearch.Enter += new System.EventHandler(this.txbTitleSearch_Enter);
             this.txbTitleSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txbTitleSearch_KeyDown);
@@ -121,6 +122,7 @@
             // pMain
             // 
             this.pMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.pMain.Controls.Add(this.cbSeasonPlatformSearch);
             this.pMain.Controls.Add(this.rbTitle);
             this.pMain.Controls.Add(this.rbScore);
             this.pMain.Controls.Add(this.lbYearSearch);
@@ -182,7 +184,7 @@
             this.lbYearSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lbYearSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbYearSearch.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lbYearSearch.Location = new System.Drawing.Point(346, 22);
+            this.lbYearSearch.Location = new System.Drawing.Point(296, 22);
             this.lbYearSearch.Name = "lbYearSearch";
             this.lbYearSearch.Size = new System.Drawing.Size(53, 24);
             this.lbYearSearch.TabIndex = 30;
@@ -265,7 +267,7 @@
             this.chOwnedSearch.Enabled = false;
             this.chOwnedSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chOwnedSearch.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.chOwnedSearch.Location = new System.Drawing.Point(550, 21);
+            this.chOwnedSearch.Location = new System.Drawing.Point(607, 21);
             this.chOwnedSearch.Name = "chOwnedSearch";
             this.chOwnedSearch.Size = new System.Drawing.Size(96, 28);
             this.chOwnedSearch.TabIndex = 23;
@@ -300,7 +302,7 @@
             // 
             this.pbSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbSearch.Image = global::ListUI.Properties.Resources.search;
-            this.pbSearch.Location = new System.Drawing.Point(675, 18);
+            this.pbSearch.Location = new System.Drawing.Point(732, 18);
             this.pbSearch.Name = "pbSearch";
             this.pbSearch.Size = new System.Drawing.Size(30, 30);
             this.pbSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -314,7 +316,7 @@
             // 
             this.pbToggleFilter.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbToggleFilter.Image = global::ListUI.Properties.Resources.clear_filter;
-            this.pbToggleFilter.Location = new System.Drawing.Point(711, 18);
+            this.pbToggleFilter.Location = new System.Drawing.Point(768, 18);
             this.pbToggleFilter.Name = "pbToggleFilter";
             this.pbToggleFilter.Size = new System.Drawing.Size(30, 30);
             this.pbToggleFilter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -334,7 +336,7 @@
             this.chDubbedSearch.Enabled = false;
             this.chDubbedSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chDubbedSearch.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.chDubbedSearch.Location = new System.Drawing.Point(550, 21);
+            this.chDubbedSearch.Location = new System.Drawing.Point(607, 21);
             this.chDubbedSearch.Name = "chDubbedSearch";
             this.chDubbedSearch.Size = new System.Drawing.Size(103, 28);
             this.chDubbedSearch.TabIndex = 8;
@@ -350,7 +352,7 @@
             this.chFavouriteSearch.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chFavouriteSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chFavouriteSearch.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.chFavouriteSearch.Location = new System.Drawing.Point(428, 22);
+            this.chFavouriteSearch.Location = new System.Drawing.Point(485, 22);
             this.chFavouriteSearch.Name = "chFavouriteSearch";
             this.chFavouriteSearch.Size = new System.Drawing.Size(116, 28);
             this.chFavouriteSearch.TabIndex = 7;
@@ -378,7 +380,7 @@
             this.txbYearSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txbYearSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbYearSearch.ForeColor = System.Drawing.Color.White;
-            this.txbYearSearch.Location = new System.Drawing.Point(342, 20);
+            this.txbYearSearch.Location = new System.Drawing.Point(292, 20);
             this.txbYearSearch.MaxLength = 4;
             this.txbYearSearch.Name = "txbYearSearch";
             this.txbYearSearch.Size = new System.Drawing.Size(80, 29);
@@ -396,7 +398,7 @@
             this.chFinishedSearch.Enabled = false;
             this.chFinishedSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.chFinishedSearch.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.chFinishedSearch.Location = new System.Drawing.Point(550, 21);
+            this.chFinishedSearch.Location = new System.Drawing.Point(607, 21);
             this.chFinishedSearch.Name = "chFinishedSearch";
             this.chFinishedSearch.Size = new System.Drawing.Size(110, 28);
             this.chFinishedSearch.TabIndex = 9;
@@ -542,6 +544,20 @@
             this.pbAddItem.MouseEnter += new System.EventHandler(this.pbAddItem_MouseEnter);
             this.pbAddItem.MouseLeave += new System.EventHandler(this.pbAddItem_MouseLeave);
             // 
+            // cbSeasonPlatformSearch
+            // 
+            this.cbSeasonPlatformSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.cbSeasonPlatformSearch.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.cbSeasonPlatformSearch.DropDownWidth = 100;
+            this.cbSeasonPlatformSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbSeasonPlatformSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.cbSeasonPlatformSearch.ForeColor = System.Drawing.Color.White;
+            this.cbSeasonPlatformSearch.FormattingEnabled = true;
+            this.cbSeasonPlatformSearch.Location = new System.Drawing.Point(378, 20);
+            this.cbSeasonPlatformSearch.Name = "cbSeasonPlatformSearch";
+            this.cbSeasonPlatformSearch.Size = new System.Drawing.Size(100, 28);
+            this.cbSeasonPlatformSearch.TabIndex = 33;
+            // 
             // LibraryUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -617,6 +633,7 @@
         private System.Windows.Forms.PictureBox pbIndicatorG;
         private System.Windows.Forms.Panel pSeries;
         private System.Windows.Forms.PictureBox pbIndicatorS;
+        private System.Windows.Forms.ComboBox cbSeasonPlatformSearch;
     }
 }
 
