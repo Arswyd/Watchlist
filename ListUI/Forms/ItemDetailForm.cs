@@ -106,10 +106,6 @@ namespace ListUI.Forms
                 txbWatchedEp.Visible = true;
                 lbTotalSe.Enabled = true;
                 lbTotalSe.Visible = true;
-                txbTotalSe.Enabled = true;
-                txbTotalSe.Visible = true;
-                lbCurrentSe.Enabled = true;
-                lbCurrentSe.Visible = true;
                 txbCurrentSe.Enabled = true;
                 txbCurrentSe.Visible = true;
                 chFinished.Enabled = true;
@@ -186,9 +182,8 @@ namespace ListUI.Forms
             }
             if (item is SeriesModel seriesModel)
             {
-                txbTotalSe.Text = seriesModel.TotalSe.ToString();
                 txbCurrentSe.Text = seriesModel.CurrentSe.ToString();
-                txbTotalEp.Text = seriesModel.TotalEp;
+                txbTotalEp.Text = seriesModel.TotalEp.ToString();
                 txbWatchedEp.Text = seriesModel.WatchedEp.ToString();
                 chFinished.Checked = seriesModel.FinishedRunning;
                 cbSeason_Platform.Text = seriesModel.Platform;
@@ -345,10 +340,10 @@ namespace ListUI.Forms
 
             //Score
 
-            decimal score = 0;
+            decimal score;
             bool scoreValid = decimal.TryParse(txbScore.Text, out score);
 
-            if (scoreValid == false)
+            if (!scoreValid)
             {
                 txbScore.BackColor = Color.LightCoral;
                 return false;
@@ -361,10 +356,10 @@ namespace ListUI.Forms
 
             //Year
 
-            int year = 0;
+            int year;
             bool yearValid = int.TryParse(txbYear.Text, out year);
 
-            if (yearValid == false)
+            if (!yearValid)
             {
                 txbYear.BackColor = Color.LightCoral;
                 return false;
@@ -379,10 +374,10 @@ namespace ListUI.Forms
             {
                 //Anime TotalEp
 
-                int totalEp = 0;
+                int totalEp;
                 bool totalEpValid = int.TryParse(txbTotalEp.Text, out totalEp);
 
-                if (totalEpValid == false)
+                if (!totalEpValid)
                 {
                     txbTotalEp.BackColor = Color.LightCoral;
                     return false;
@@ -395,10 +390,10 @@ namespace ListUI.Forms
 
                 //Anime WatchedEp
 
-                int watchedEp = 0;
+                int watchedEp;
                 bool watchedEpValid = int.TryParse(txbWatchedEp.Text, out watchedEp);
 
-                if (watchedEpValid == false)
+                if (!watchedEpValid)
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
                     return false;
@@ -415,29 +410,13 @@ namespace ListUI.Forms
                 }
             }
             else if (listType == "Series")
-            {
-                //Series TotalSe
-
-                int totalSe = 0;
-                bool totalSeValid = int.TryParse(txbTotalSe.Text, out totalSe);
-
-                if (totalSeValid == false)
-                {
-                    txbTotalSe.BackColor = Color.LightCoral;
-                    return false;
-                }
-                else if (totalSe < 0)
-                {
-                    txbTotalSe.BackColor = Color.LightCoral;
-                    output = false;
-                }
-      
+            {    
                 //Series CurrentSe
 
-                int currentSe = 0;
+                int currentSe;
                 bool currentSeValid = int.TryParse(txbCurrentSe.Text, out currentSe);
 
-                if (currentSeValid == false)
+                if (!currentSeValid)
                 {
                     txbCurrentSe.BackColor = Color.LightCoral;
                     return false;
@@ -447,20 +426,18 @@ namespace ListUI.Forms
                     txbCurrentSe.BackColor = Color.LightCoral;
                     output = false;
                 }
-                else if (currentSe > totalSe)
-                {
-                    txbCurrentSe.BackColor = Color.LightCoral;
-                    output = false;
-                }
 
                 //Series TotalEp
 
-                if (txbTotalEp.Text.Length != 0 && !txbTotalEp.Text.All(c => (c >= '0' && c <= '9') || c.ToString() == "/"))
+                int totalEp;
+                bool totalEpValid = int.TryParse(txbTotalEp.Text, out totalEp);
+
+                if (!totalEpValid)
                 {
                     txbTotalEp.BackColor = Color.LightCoral;
                     output = false;
                 }
-                else if (txbTotalEp.Text.Split('/').Length > totalSe)
+                else if (totalEp < 0)
                 {
                     txbTotalEp.BackColor = Color.LightCoral;
                     output = false;
@@ -468,10 +445,10 @@ namespace ListUI.Forms
 
                 //Series WatchedEp
 
-                int watchedEp = 0;
+                int watchedEp;
                 bool watchedEpValid = int.TryParse(txbWatchedEp.Text, out watchedEp);
 
-                if (watchedEpValid == false)
+                if (!watchedEpValid)
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
                     return false;
@@ -481,7 +458,7 @@ namespace ListUI.Forms
                     txbWatchedEp.BackColor = Color.LightCoral;
                     output = false;
                 }
-                else if (watchedEp > Convert.ToInt32(txbTotalEp.Text.Split('/')[currentSe - 1]))
+                else if (watchedEp > totalEp)
                 {
                     txbWatchedEp.BackColor = Color.LightCoral;
                     output = false;
@@ -491,10 +468,10 @@ namespace ListUI.Forms
             {
                 //Lenght
 
-                decimal lenght = 0;
+                decimal lenght;
                 bool lenghtValid = decimal.TryParse(txbLenght.Text, out lenght);
 
-                if (lenghtValid == false)
+                if (!lenghtValid)
                 {
                     txbLenght.BackColor = Color.LightCoral;
                     return false;
@@ -529,9 +506,8 @@ namespace ListUI.Forms
             else if (currentItem is SeriesModel seriesModel)
             {
                 seriesModel.Platform = cbSeason_Platform.Text;
-                seriesModel.TotalSe = Convert.ToInt32(txbTotalSe.Text);
                 seriesModel.CurrentSe = Convert.ToInt32(txbCurrentSe.Text);
-                seriesModel.TotalEp = txbTotalEp.Text;
+                seriesModel.TotalEp = Convert.ToInt32(txbTotalEp.Text);
                 seriesModel.WatchedEp = Convert.ToInt32(txbWatchedEp.Text);
                 seriesModel.FinishedRunning = chFinished.Checked;
             }
@@ -687,11 +663,7 @@ namespace ListUI.Forms
             }
             else if (currentItem is SeriesModel seriesModel)
             {
-                if (seriesModel.TotalSe.ToString() != txbTotalSe.Text)
-                {
-                    output = true;
-                }
-                else if (seriesModel.TotalEp != txbTotalEp.Text)
+                if (seriesModel.TotalEp.ToString() != txbTotalEp.Text)
                 {
                     output = true;
                 }
@@ -773,27 +745,6 @@ namespace ListUI.Forms
             pb.Location = new Point(pb.Location.X - 1, pb.Location.Y - 1);
         }
 
-        private void txbTotalEp_Enter(object sender, EventArgs e)
-        {
-            if (currentItem is SeriesModel)
-            {
-                txbTotalEp.Width = 125;
-                lbWatchedEp.Visible = false;
-                txbWatchedEp.Visible = false;
-            }
-        }
-
-        private void txbTotalEp_Leave(object sender, EventArgs e)
-        {
-            if (currentItem is SeriesModel)
-            {
-                txbTotalEp.Width = 50;
-                lbWatchedEp.Visible = true;
-                txbWatchedEp.Visible = true;
-                lastActiveControl = ActiveControl.Name;
-            }
-        }
-
         private void txbTitle_DoubleClick(object sender, EventArgs e)
         {
             txbTitle.SelectAll();
@@ -843,13 +794,6 @@ namespace ListUI.Forms
             pbPicture.Image = Properties.Resources.nocover;
             txbPictureUrl.Text = "";
             pictureChange = ChangeType.delete;
-        }
-
-        private void chFinished_Enter(object sender, EventArgs e)
-        {
-            if (lastActiveControl == ActiveControl.Name)
-                txbWatchedEp.Focus();
-            lastActiveControl = string.Empty;
         }
     }
 }

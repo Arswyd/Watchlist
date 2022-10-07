@@ -128,7 +128,7 @@ namespace ListUI.Forms
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = "d:\\";
+                openFileDialog.InitialDirectory = @"..\..\..\ListLibrary\ListBackup\"; // "d:\\";
                 openFileDialog.Title = "Select file to import";
                 openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
                 openFileDialog.RestoreDirectory = true;
@@ -265,7 +265,7 @@ namespace ListUI.Forms
             List<ItemModel> items = new List<ItemModel>();
 
             items.AddRange(SqliteDataAccess.LoadSeriesGroup("SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, " +
-                    "S.ListGroup, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning FROM Series AS S"));
+                    "S.ListGroup, S.Platform, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning FROM Series AS S"));
 
             DownloadPics(items);
 
@@ -289,7 +289,7 @@ namespace ListUI.Forms
             List<ItemModel> items = new List<ItemModel>();
 
             items.AddRange(SqliteDataAccess.LoadGameGroup("SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, " +
-                "G.ListGroup FROM Games AS G"));
+                "G.ListGroup, G.Platform FROM Games AS G"));
 
             DownloadPics(items);
 

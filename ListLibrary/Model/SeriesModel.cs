@@ -7,18 +7,9 @@ namespace ListLibrary.Model
 
         public int CurrentSe { get; set; }
         public int WatchedEp { get; set; }
-        public int TotalSe { get; set; }
-        public string TotalEp { get; set; }
+        public int TotalEp { get; set; }
         public bool FinishedRunning { get; set; }
         public string Platform { get; set; }
-
-        public int CurrentSeasonTotalEp
-        {
-            get
-            {
-                return Convert.ToInt32(TotalEp.Split('/')[CurrentSe-1]);
-            }
-        }
         public override string PictureDir
         {
             get
@@ -43,8 +34,7 @@ namespace ListLibrary.Model
             Favourite = false;
             FinishedRunning = false;
             ListGroup = "Not Aired Yet";
-            TotalEp = "0";
-            TotalSe = 1;
+            TotalEp = 0;
             CurrentSe = 1;
             WatchedEp = 0;
             Platform = "";

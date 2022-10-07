@@ -308,16 +308,21 @@ namespace ListUI
             }
             frm.ShowDialog(this);
             frm.Dispose();
-            fpListItemPanel.Focus();
+            ReturnFocusToFlowlayout();
             overlay.Dispose();
         }
 
-        private OverlayForm ShowOverlay()
+        public OverlayForm ShowOverlay()
         {
             OverlayForm overlay = new OverlayForm();
             overlay.Show(this);
             overlay.Location = new Point(this.Location.X + 8, this.Location.Y + 30);
             return overlay;
+        }
+
+        public void ReturnFocusToFlowlayout()
+        {
+            fpListItemPanel.Focus();
         }
 
         /*Check buttons*/
