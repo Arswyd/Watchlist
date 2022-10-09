@@ -194,9 +194,9 @@ namespace ListUI
                     if (cbSeasonPlatformSearch.Text != "")
                         sWhere = sWhere + " AND " + c + ".Season = '" + cbSeasonPlatformSearch.Text + "'";
 
-                    if (chDubbedSearch.CheckState == CheckState.Checked)
+                    if (chFinOwnDubSearch.CheckState == CheckState.Checked)
                         sWhere = sWhere + " AND " + c + ".Dubbed = 1";
-                    else if (chDubbedSearch.CheckState == CheckState.Unchecked)
+                    else if (chFinOwnDubSearch.CheckState == CheckState.Unchecked)
                         sWhere = sWhere + " AND " + c + ".Dubbed = 0";
                 }
                 if (activeListType == "Series")
@@ -204,9 +204,9 @@ namespace ListUI
                     if (cbSeasonPlatformSearch.Text != "")
                         sWhere = sWhere + " AND " + c + ".Platform = '" + cbSeasonPlatformSearch.Text + "'";
 
-                    if (chFinishedSearch.CheckState == CheckState.Checked)
+                    if (chFinOwnDubSearch.CheckState == CheckState.Checked)
                         sWhere = sWhere + " AND " + c + ".FinishedRunning = 1";
-                    else if (chFinishedSearch.CheckState == CheckState.Unchecked)
+                    else if (chFinOwnDubSearch.CheckState == CheckState.Unchecked)
                         sWhere = sWhere + " AND " + c + ".FinishedRunning = 0";
                 }
                 if (activeListType == "Game")
@@ -214,9 +214,9 @@ namespace ListUI
                     if (cbSeasonPlatformSearch.Text != "")
                         sWhere = sWhere + " AND " + c + ".Platform = '" + cbSeasonPlatformSearch.Text + "'";
 
-                    if (chOwnedSearch.CheckState == CheckState.Checked)
+                    if (chFinOwnDubSearch.CheckState == CheckState.Checked)
                         sWhere = sWhere + " AND " + c + ".Owned = 1";
-                    else if (chOwnedSearch.CheckState == CheckState.Unchecked)
+                    else if (chFinOwnDubSearch.CheckState == CheckState.Unchecked)
                         sWhere = sWhere + " AND " + c + ".Owned = 0";
                 }
             }
@@ -359,17 +359,11 @@ namespace ListUI
 
         private void SetupFilterControls()
         {
-            chDubbedSearch.Enabled = (activeListType == "Anime");
-            chDubbedSearch.Visible = (activeListType == "Anime");
-            chFinishedSearch.Enabled = (activeListType == "Series");
-            chFinishedSearch.Visible = (activeListType == "Series");
-            chOwnedSearch.Enabled = (activeListType == "Game");
-            chOwnedSearch.Visible = (activeListType == "Game");
-
             cbSeasonPlatformSearch.Items.Clear();
 
             if (activeListType == "Anime")
             {
+                chFinOwnDubSearch.Text = "Dubbed";
                 cbSeasonPlatformSearch.Items.Add("Spring");
                 cbSeasonPlatformSearch.Items.Add("Summer");
                 cbSeasonPlatformSearch.Items.Add("Fall");
@@ -378,12 +372,14 @@ namespace ListUI
             }
             else if(activeListType == "Series")
             {
+                chFinOwnDubSearch.Text = "Finished";
                 cbSeasonPlatformSearch.Items.Add("Netflix");
                 cbSeasonPlatformSearch.Items.Add("HBO");
                 cbSeasonPlatformSearch.Items.Add("");
             }
             else if(activeListType == "Game")
             {
+                chFinOwnDubSearch.Text = "Owned";
                 cbSeasonPlatformSearch.Items.Add("Steam");
                 cbSeasonPlatformSearch.Items.Add("Epic");
                 cbSeasonPlatformSearch.Items.Add("GoG");
@@ -464,9 +460,7 @@ namespace ListUI
             lbTitleSearch.Visible = true;
             lbYearSearch.Visible = true;
             chFavouriteSearch.Checked = false;
-            chDubbedSearch.CheckState = CheckState.Indeterminate;
-            chFinishedSearch.CheckState = CheckState.Indeterminate;
-            chOwnedSearch.CheckState = CheckState.Indeterminate;
+            chFinOwnDubSearch.CheckState = CheckState.Indeterminate;
         }
 
         /* Filtering */
@@ -559,19 +553,9 @@ namespace ListUI
             chFavouriteSearch.ForeColor = (chFavouriteSearch.CheckState == CheckState.Unchecked) ? SystemColors.ControlDarkDark : Color.White;
         }
 
-        private void chOwnedSearch_CheckStateChanged(object sender, EventArgs e)
-        {
-            chOwnedSearch.ForeColor = (chOwnedSearch.CheckState == CheckState.Indeterminate) ? SystemColors.ControlDarkDark : Color.White;
-        }
-
-        private void chDubbedSearch_CheckStateChanged(object sender, EventArgs e)
-        {
-            chDubbedSearch.ForeColor = (chDubbedSearch.CheckState == CheckState.Indeterminate) ? SystemColors.ControlDarkDark : Color.White;
-        }
-
         private void chFinishedSearch_CheckStateChanged(object sender, EventArgs e)
         {
-            chFinishedSearch.ForeColor = (chFinishedSearch.CheckState == CheckState.Indeterminate) ? SystemColors.ControlDarkDark : Color.White;
+            chFinOwnDubSearch.ForeColor = (chFinOwnDubSearch.CheckState == CheckState.Indeterminate) ? SystemColors.ControlDarkDark : Color.White;
         }
 
         /* Sorting */

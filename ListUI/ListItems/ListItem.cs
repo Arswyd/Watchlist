@@ -82,6 +82,8 @@ namespace ListUI.ListItems
                 SetItemEpisodeText(gameModel.Lenght.ToString() + " h");
 
                 SetCheckAndNoteIcon(gameModel.Owned, !String.IsNullOrWhiteSpace(item.Notes));
+
+                toolTip1.SetToolTip(pbCheck, gameModel.Platform);
             }
             if (!String.IsNullOrWhiteSpace(item.Notes))
             {
