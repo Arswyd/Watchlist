@@ -28,7 +28,7 @@ namespace ListUI.Forms
             seriesModel.ListGroup = "Season Completed";
 
             SqliteDataAccess.UpdateSeries(seriesModel);
-            mainForm.WireUpLibraryForm();
+            mainForm.WireUpLibraryForm(true, false);
             this.Close();
         }
 
@@ -38,7 +38,7 @@ namespace ListUI.Forms
             seriesModel.ListGroup = "Completed";
 
             SqliteDataAccess.UpdateSeries(seriesModel);
-            mainForm.WireUpLibraryForm();
+            mainForm.WireUpLibraryForm(true, false);
             this.Close();
         }
 

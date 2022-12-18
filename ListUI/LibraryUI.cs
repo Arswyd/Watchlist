@@ -16,14 +16,18 @@ namespace ListUI
     {
         public List<HeaderModel> headerList;
         public List<ItemModel> itemlist = new List<ItemModel>();
+        private List<int> randomItemIDList = new List<int>();
         private string activeGroup;
         private string activeListType;
         private string lastActiveGroup;
         private string lastActiveListType;
+        private bool lastIsFiltered;
         bool isFiltered = false;
         bool isAscending = false;
+        bool wasRandom = false;
         int currentPage = 1;
         int pageCount = 1;
+        Random random = new Random();
 
         public LibraryUI(string startuplist)
         {
@@ -35,21 +39,24 @@ namespace ListUI
 
             rbScore.Checked = true;
 
-            WireUpLibraryForm();
+            WireUpLibraryForm(true, false);
         }
 
         /* Wire up form */
 
-        public void WireUpLibraryForm()
+        public void WireUpLibraryForm(bool refreshMenu, bool loadRandom)
         {
-            CreateMenuItems();
-            LoadItemList();
+            if (refreshMenu)
+                CreateMenuItems();
+            LoadItemList(loadRandom);
             fpListHeaderPanel.Refresh();
             InitializeMainFlowlayoutPopulation();
             fpListItemPanel.Focus();
             CheckButtons();
             SetupFilterControls();
             lbPages.Text = currentPage.ToString() + " / " + pageCount.ToString();
+            if (!loadRandom)
+                randomItemIDList.Clear();
         }
 
         /* Populating the menu flowlayout with the menu */
@@ -93,43 +100,76 @@ namespace ListUI
 
         /* List loading */
 
-        public void LoadItemList()
+        public void LoadItemList(bool loadRandom)
         {
-            itemlist.Clear();
-
-            switch (activeListType)
+            if (loadRandom && randomItemIDList.Count == 0)
             {
-                case "Anime":
-                    itemlist.AddRange(SqliteDataAccess.LoadAnimeGroup(CreateFilteredSqlString(activeGroup)));
-                    break;
-                case "Game":
-                    itemlist.AddRange(SqliteDataAccess.LoadGameGroup(CreateFilteredSqlString(activeGroup)));
-                    break;
-                case "Series":
-                    itemlist.AddRange(SqliteDataAccess.LoadSeriesGroup(CreateFilteredSqlString(activeGroup)));
-                    break;
+                randomItemIDList.AddRange(SqliteDataAccess.LoadIDGroup(CreateRandomSqlString()));
             }
 
-            if(activeGroup != lastActiveGroup || activeListType != lastActiveListType || isFiltered)
-              pageCount = (int)Math.Ceiling(SqliteDataAccess.LoadGroupCount(CreateFilteredSqlCountString(activeGroup)) / 60.0);
+            itemlist.Clear();
 
-            lastActiveGroup = activeGroup;
-            lastActiveListType = activeListType;
+            if (loadRandom)
+            {
+
+                int randomID = randomItemIDList[random.Next(0, randomItemIDList.Count - 1)];
+
+                switch (activeListType)
+                {
+                    case "Anime":
+                        itemlist.AddRange(SqliteDataAccess.LoadAnimeByID(randomID));
+                        break;
+                    case "Game":
+                        itemlist.AddRange(SqliteDataAccess.LoadGameByID(randomID));
+                        break;
+                    case "Series":
+                        itemlist.AddRange(SqliteDataAccess.LoadSeriesByID(randomID));
+                        break;
+                }
+
+                randomItemIDList.Remove(randomID);
+
+                pageCount = 1;
+                wasRandom = true;
+            }
+            else
+            {
+                switch (activeListType)
+                {
+                    case "Anime":
+                        itemlist.AddRange(SqliteDataAccess.LoadAnimeGroup(CreateFilteredSqlString()));
+                        break;
+                    case "Game":
+                        itemlist.AddRange(SqliteDataAccess.LoadGameGroup(CreateFilteredSqlString()));
+                        break;
+                    case "Series":
+                        itemlist.AddRange(SqliteDataAccess.LoadSeriesGroup(CreateFilteredSqlString()));
+                        break;
+                }
+
+                if (activeGroup != lastActiveGroup || activeListType != lastActiveListType || isFiltered != lastIsFiltered || wasRandom)
+                    pageCount = (int)Math.Ceiling(SqliteDataAccess.LoadGroupCount(CreateFilteredSqlCountString()) / 60.0);
+
+                lastActiveGroup = activeGroup;
+                lastActiveListType = activeListType;
+                lastIsFiltered = isFiltered;
+                wasRandom = false;
+            }
         }
 
-        private string CreateFilteredSqlCountString(string activeGroup)
+        private string CreateFilteredSqlCountString()
         {
             if (activeListType == "Anime")
             {
-                return "SELECT COUNT(*) FROM Anime AS A" + CreateWhereString(true);
+                return "SELECT COUNT(*) FROM Anime AS A" + CreateWhereString(false);
             }
             if (activeListType == "Game")
             {
-                return "SELECT COUNT(*) FROM Games AS G" + CreateWhereString(true);
+                return "SELECT COUNT(*) FROM Games AS G" + CreateWhereString(false);
             }
             if (activeListType == "Series")
             {
-                return "SELECT COUNT(*) FROM Series AS S" + CreateWhereString(true);
+                return "SELECT COUNT(*) FROM Series AS S" + CreateWhereString(false);
             }
             else
             {
@@ -137,22 +177,22 @@ namespace ListUI
             }
         }
 
-        private string CreateFilteredSqlString(string activeGroup)
+        private string CreateFilteredSqlString()
         {
             if (activeListType == "Anime")
             {
                 return "SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.PicFormat, A.Score, A.Year, A.Favourite, A.Notes, A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed " +
-                       "FROM Anime AS A" + CreateWhereString(false);
+                       "FROM Anime AS A" + CreateWhereString(true);
             }
             if (activeListType == "Game")
             {
                 return "SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup, G.Platform, G.Owned, G.Lenght " +
-                       "FROM Games AS G" + CreateWhereString(false);
+                       "FROM Games AS G" + CreateWhereString(true);
             }
             if (activeListType == "Series")
             {
                 return "SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, S.ListGroup, S.Platform, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning " +
-                       "FROM Series AS S" + CreateWhereString(false);
+                       "FROM Series AS S" + CreateWhereString(true);
             }
             else
             {
@@ -160,7 +200,27 @@ namespace ListUI
             }
         }
 
-        private string CreateWhereString(bool isPageCount)
+        private string CreateRandomSqlString()
+        {
+            if (activeListType == "Anime")
+            {
+                return "SELECT A.ID FROM Anime AS A" + CreateWhereString(false);
+            }
+            if (activeListType == "Game")
+            {
+                return "SELECT G.ID FROM Games AS G" + CreateWhereString(false);
+            }
+            if (activeListType == "Series")
+            {
+                return "SELECT S.ID FROM Series AS S" + CreateWhereString(false);
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private string CreateWhereString(bool hasOrderAndPaging)
         {
             string c = "";
             string sWhere = " WHERE (1=1)";
@@ -221,7 +281,7 @@ namespace ListUI
                 }
             }
 
-            if (!isPageCount)
+            if (hasOrderAndPaging)
             { 
                 if (rbScore.Checked)
                 {
@@ -401,7 +461,7 @@ namespace ListUI
             activeGroup = listGroup;
 
             //TODO: Elimination of reloading flowlayout panel
-            WireUpLibraryForm();
+            WireUpLibraryForm(true, false);
         }
 
         /* Switch list type */
@@ -431,7 +491,7 @@ namespace ListUI
             isFiltered = false;
 
             ClearFilters();
-            WireUpLibraryForm();
+            WireUpLibraryForm(true, false);
         }
 
         /* Clear filters */
@@ -441,12 +501,8 @@ namespace ListUI
             isFiltered = false;
             currentPage = 1;
 
-            ClearFilters();
-
-            if (activeGroup == "All")
-                activeGroup = (activeListType == "Game") ? "Playing" : "Watching";
-            
-            WireUpLibraryForm();
+            ClearFilters();          
+            WireUpLibraryForm(false, false);
 
             fpListItemPanel.Focus();
         }
@@ -477,7 +533,7 @@ namespace ListUI
                 isFiltered = true;
                 currentPage = 1;
                 pbToggleFilter.Visible = true;
-                WireUpLibraryForm();
+                WireUpLibraryForm(false, false);
             }
             else
             {
@@ -496,7 +552,7 @@ namespace ListUI
             frm.Dispose();
             fpListItemPanel.Focus();
 
-            WireUpLibraryForm();
+            WireUpLibraryForm(true, false);
             overlay.Dispose();
         }
 
@@ -509,7 +565,7 @@ namespace ListUI
                 currentPage = 1;
                 //fpListItemPanel.VerticalScroll.Value = 0;
                 fpListItemPanel.AutoScrollPosition = new Point(0, 0);
-                WireUpLibraryForm();
+                WireUpLibraryForm(false, false);
             }
         }
 
@@ -520,7 +576,7 @@ namespace ListUI
                 currentPage--;
                 //fpListItemPanel.VerticalScroll.Value = 0;
                 fpListItemPanel.AutoScrollPosition = new Point(0, 0);
-                WireUpLibraryForm();
+                WireUpLibraryForm(false, false);
             }
         }
 
@@ -531,7 +587,7 @@ namespace ListUI
                 currentPage++;
                 //fpListItemPanel.VerticalScroll.Value = 0;
                 fpListItemPanel.AutoScrollPosition = new Point(0, 0);
-                WireUpLibraryForm();
+                WireUpLibraryForm(false, false);
             }
         }
 
@@ -542,7 +598,7 @@ namespace ListUI
                 currentPage = pageCount;
                 //fpListItemPanel.VerticalScroll.Value = 0;
                 fpListItemPanel.AutoScrollPosition = new Point(0, 0);
-                WireUpLibraryForm();
+                WireUpLibraryForm(false, false);
             }
         }
 
@@ -565,7 +621,7 @@ namespace ListUI
             isAscending = !isAscending;
             pbOrderBy.Image = isAscending ? Resources.sort_asc : Resources.sort_desc;
 
-            WireUpLibraryForm();
+            WireUpLibraryForm(false, false);
         }
 
         private void rbScore_MouseClick(object sender, MouseEventArgs e)
@@ -594,7 +650,7 @@ namespace ListUI
                 rbScore.ForeColor = SystemColors.ControlDarkDark;
                 pbOrderBy.Image = Resources.sort_asc;
             }
-            WireUpLibraryForm();
+            WireUpLibraryForm(false, false);
         }
 
         // Increase/Decrease button size OnMouseEnter/Leave
@@ -721,6 +777,16 @@ namespace ListUI
             DecreasePic(pbLastPage);
         }
 
+        private void pbRandom_MouseEnter(object sender, EventArgs e)
+        {
+            IncreasePic(pbRandom);
+        }
+
+        private void pbRandom_MouseLeave(object sender, EventArgs e)
+        {
+            DecreasePic(pbRandom);
+        }
+
         private void flowLayoutPanel1_Click(object sender, EventArgs e)
         {
             fpListItemPanel.Focus();
@@ -798,6 +864,13 @@ namespace ListUI
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+        }
+
+        /* Random item wire up form */
+
+        private void pbRandom_Click(object sender, EventArgs e)
+        {
+            WireUpLibraryForm(false, true);
         }
     }
 }

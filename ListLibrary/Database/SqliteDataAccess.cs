@@ -99,6 +99,15 @@ namespace ListLibrary.Database
             }
         }
 
+        public static List<int> LoadIDGroup(string sqlString)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<int>(sqlString);
+                return output.ToList();
+            }
+        }
+
         // Anime SQL
 
         #region Anime SQL
@@ -112,12 +121,13 @@ namespace ListLibrary.Database
             }
         }
 
-        public static AnimeModel LoadAnimeByID(int id)
+        public static List<AnimeModel> LoadAnimeByID(int id)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<AnimeModel>("SELECT * FROM Anime WHERE ID=" + id).First();
-                return output;
+                var output = cnn.Query<AnimeModel>("SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.PicFormat, A.Score, A.Year, A.Favourite, A.Notes, A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed " + 
+                                                   "FROM Anime A WHERE A.ID=" + id);
+                return output.ToList();
             }
         }
 
@@ -126,7 +136,7 @@ namespace ListLibrary.Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("INSERT INTO Anime (Title, Url, PictureUrl, PicFormat, Score, Year, Favourite, Notes, ListGroup, Season, TotalEp, WatchedEp, Dubbed) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Favourite, @Notes, @ListGroup, @Season, @TotalEp, @WatchedEp, @Dubbed)", anime);
+                            "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Favourite, @Notes, @ListGroup, @Season, @TotalEp, @WatchedEp, @Dubbed)", anime);
             }
         }
 
@@ -135,7 +145,7 @@ namespace ListLibrary.Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("INSERT OR IGNORE INTO Anime (Title, Url, PictureUrl, PicFormat, Score, Year, Favourite, Notes, ListGroup, Season, TotalEp, WatchedEp, Dubbed) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Favourite, @Notes, @ListGroup, @Season, @TotalEp, @WatchedEp, @Dubbed)", anime);
+                            "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Favourite, @Notes, @ListGroup, @Season, @TotalEp, @WatchedEp, @Dubbed)", anime);
             }
         }
 
@@ -144,7 +154,7 @@ namespace ListLibrary.Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("UPDATE Anime SET Title=@Title, Url=@Url, PictureUrl=@PictureUrl, PicFormat=@PicFormat, Score=@Score, Year=@Year, Favourite=@Favourite, " +
-                    "Notes=@Notes, ListGroup=@ListGroup, Season=@Season, TotalEp=@TotalEp, WatchedEp=@WatchedEp, Dubbed=@Dubbed WHERE ID=@ID", anime);
+                            "Notes=@Notes, ListGroup=@ListGroup, Season=@Season, TotalEp=@TotalEp, WatchedEp=@WatchedEp, Dubbed=@Dubbed WHERE ID=@ID", anime);
             }
         }
 
@@ -199,12 +209,22 @@ namespace ListLibrary.Database
             }
         }
 
+        public static List<GameModel> LoadGameByID(int id)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<GameModel>("SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, G.ListGroup, G.Platform, G.Owned, G.Lenght " + 
+                                                   "FROM Games G WHERE G.ID=" + id);
+                return output.ToList();
+            }
+        }
+
         public static void SaveGame(GameModel game, int isSingleSave)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("INSERT INTO Games (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, Owned, Lenght) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @Owned, @Lenght)", game);
+                            "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @Owned, @Lenght)", game);
             }
         }
 
@@ -213,7 +233,7 @@ namespace ListLibrary.Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("INSERT OR IGNORE INTO Games (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, Owned, Lenght) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @Owned, @Lenght)", game);
+                            "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @Owned, @Lenght)", game);
             }
         }
 
@@ -222,7 +242,7 @@ namespace ListLibrary.Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("UPDATE Games SET Title=@Title, Url=@Url, PictureUrl=@PictureUrl, PicFormat=@PicFormat, Score=@Score, Year=@Year, Platform=@Platform, Favourite=@Favourite, " +
-                    "Notes=@Notes, ListGroup=@ListGroup, Owned=@Owned, Lenght=@Lenght WHERE ID=@ID", game);
+                            "Notes=@Notes, ListGroup=@ListGroup, Owned=@Owned, Lenght=@Lenght WHERE ID=@ID", game);
             }
         }
 
@@ -277,12 +297,22 @@ namespace ListLibrary.Database
             }
         }
 
+        public static List<SeriesModel> LoadSeriesByID(int id)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            {
+                var output = cnn.Query<SeriesModel>("SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, S.ListGroup, S.Platform, S.TotalSe, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning " +
+                                                    "FROM Series S WHERE S.ID=" + id);
+                return output.ToList();
+            }
+        }
+
         public static void SaveSeries(SeriesModel series, int isSingleSave)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("INSERT INTO Series (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, CurrentSe, TotalEp, WatchedEp, FinishedRunning) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning)", series);
+                            "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning)", series);
             }
         }
 
@@ -291,7 +321,7 @@ namespace ListLibrary.Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("INSERT OR IGNORE INTO Series (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, CurrentSe, TotalEp, WatchedEp, FinishedRunning) " +
-                    "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning)", series);
+                            "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning)", series);
             }
         }
 
@@ -300,7 +330,7 @@ namespace ListLibrary.Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
                 cnn.Execute("UPDATE Series SET Title=@Title, Url=@Url, PictureUrl=@PictureUrl, PicFormat=@PicFormat, Score=@Score, Year=@Year, Platform=@Platform, Favourite=@Favourite, Notes=@Notes, " + 
-                    "ListGroup=@ListGroup, CurrentSe=@CurrentSe, TotalEp=@TotalEp, WatchedEp=@WatchedEp, FinishedRunning=@FinishedRunning WHERE ID=@ID", series);
+                            "ListGroup=@ListGroup, CurrentSe=@CurrentSe, TotalEp=@TotalEp, WatchedEp=@WatchedEp, FinishedRunning=@FinishedRunning WHERE ID=@ID", series);
             }
         }
 

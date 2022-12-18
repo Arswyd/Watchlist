@@ -55,6 +55,7 @@
             this.pbSelectAnime = new System.Windows.Forms.PictureBox();
             this.pbSettings = new System.Windows.Forms.PictureBox();
             this.pSidebar = new System.Windows.Forms.Panel();
+            this.pbRandom = new System.Windows.Forms.PictureBox();
             this.pGames = new System.Windows.Forms.Panel();
             this.pbIndicatorG = new System.Windows.Forms.PictureBox();
             this.pSeries = new System.Windows.Forms.Panel();
@@ -75,6 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectAnime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).BeginInit();
             this.pSidebar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbRandom)).BeginInit();
             this.pGames.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbIndicatorG)).BeginInit();
             this.pSeries.SuspendLayout();
@@ -437,6 +439,7 @@
             // pSidebar
             // 
             this.pSidebar.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pSidebar.Controls.Add(this.pbRandom);
             this.pSidebar.Controls.Add(this.pGames);
             this.pSidebar.Controls.Add(this.pSeries);
             this.pSidebar.Controls.Add(this.pAnime);
@@ -448,6 +451,20 @@
             this.pSidebar.Name = "pSidebar";
             this.pSidebar.Size = new System.Drawing.Size(70, 761);
             this.pSidebar.TabIndex = 7;
+            // 
+            // pbRandom
+            // 
+            this.pbRandom.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pbRandom.Image = global::ListUI.Properties.Resources.random;
+            this.pbRandom.Location = new System.Drawing.Point(12, 643);
+            this.pbRandom.Name = "pbRandom";
+            this.pbRandom.Size = new System.Drawing.Size(50, 50);
+            this.pbRandom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbRandom.TabIndex = 33;
+            this.pbRandom.TabStop = false;
+            this.pbRandom.Click += new System.EventHandler(this.pbRandom_Click);
+            this.pbRandom.MouseEnter += new System.EventHandler(this.pbRandom_MouseEnter);
+            this.pbRandom.MouseLeave += new System.EventHandler(this.pbRandom_MouseLeave);
             // 
             // pGames
             // 
@@ -504,7 +521,7 @@
             // 
             this.pbAddItem.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pbAddItem.Image = global::ListUI.Properties.Resources.add_item;
-            this.pbAddItem.Location = new System.Drawing.Point(12, 643);
+            this.pbAddItem.Location = new System.Drawing.Point(12, 587);
             this.pbAddItem.Name = "pbAddItem";
             this.pbAddItem.Size = new System.Drawing.Size(50, 50);
             this.pbAddItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -543,6 +560,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbSelectAnime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSettings)).EndInit();
             this.pSidebar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbRandom)).EndInit();
             this.pGames.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbIndicatorG)).EndInit();
             this.pSeries.ResumeLayout(false);
@@ -588,6 +606,7 @@
         private System.Windows.Forms.Panel pSeries;
         private System.Windows.Forms.PictureBox pbIndicatorS;
         private System.Windows.Forms.ComboBox cbSeasonPlatformSearch;
+        private System.Windows.Forms.PictureBox pbRandom;
     }
 }
 

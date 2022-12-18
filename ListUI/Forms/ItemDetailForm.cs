@@ -18,7 +18,6 @@ namespace ListUI.Forms
         bool userclosing = true;
         bool favouriteChanged = false;
         string listType;
-        string lastActiveControl;
         int itemIndex;
         enum ChangeType { nochange, update, delete}
         ChangeType pictureChange = ChangeType.nochange;
@@ -598,7 +597,7 @@ namespace ListUI.Forms
             }
             else if (userclosing == false)
             {
-                callingForm.WireUpLibraryForm();
+                callingForm.WireUpLibraryForm(true, false);
             }
         }
 
