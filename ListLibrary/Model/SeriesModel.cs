@@ -38,6 +38,7 @@ namespace ListLibrary.Model
             CurrentSe = 1;
             WatchedEp = 0;
             Platform = "";
+            ModDate = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss"); ;
         }
     }
 }

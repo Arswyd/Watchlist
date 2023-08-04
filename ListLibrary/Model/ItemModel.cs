@@ -13,5 +13,6 @@
         public string Notes { get; set; }
         public string ListGroup { get; set; }
         public virtual string PictureDir { get; set; }
+        public string ModDate { get; set; }
     }
 }

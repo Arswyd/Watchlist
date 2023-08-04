@@ -1,4 +1,5 @@
-﻿using ListLibrary.Model;
+﻿using Dropbox.Api.Users;
+using ListLibrary.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +36,7 @@ namespace ListLibrary.Database
                 p.TotalEp = int.Parse(cols[10]);
                 p.WatchedEp = int.Parse(cols[11]);
                 p.Dubbed = bool.Parse(cols[12]);
+                p.ModDate = cols[13];
 
                 output.Add(p);
             }
@@ -65,6 +67,7 @@ namespace ListLibrary.Database
                 p.TotalEp = int.Parse(cols[11]);
                 p.WatchedEp = int.Parse(cols[12]);
                 p.FinishedRunning = bool.Parse(cols[13]);
+                p.ModDate = cols[14];
 
                 output.Add(p);
             }
@@ -92,6 +95,7 @@ namespace ListLibrary.Database
                 p.ListGroup = cols[8];
                 p.Platform = cols[9];
                 p.Owned = bool.Parse(cols[10]);
+                p.ModDate = cols[11];
 
                 output.Add(p);
             }
@@ -99,49 +103,115 @@ namespace ListLibrary.Database
             return output;
         }
 
-        public static void ExportAnime()
+        public static void ExportAnime(bool isSyncing)
         {
-            List<AnimeModel> anime = SqliteDataAccess.LoadAnimeGroup("SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.PicFormat, A.Score, A.Year, A.Favourite, A.Notes, " +
-                "A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed FROM Anime AS A");
+            List<AnimeModel> anime;
+
+            if (isSyncing)
+            {
+                anime = SqliteDataAccess.LoadAnimeForSync();
+            }
+            else
+            {
+                anime = SqliteDataAccess.LoadAnimeGroup("SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.PicFormat, A.Score, A.Year, A.Favourite, A.Notes, " +
+                    "A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed, A.ModDate FROM Anime AS A");
+            }
 
             List<string> lines = new List<string>();
 
             foreach (AnimeModel p in anime)
             {
-                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.PicFormat};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup};{p.Season};{p.TotalEp};{p.WatchedEp};{p.Dubbed}");
+                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.PicFormat};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup};{p.Season};{p.TotalEp};{p.WatchedEp};{p.Dubbed};{p.ModDate}");
             }
 
-            File.WriteAllLines(@"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Anime_Backup.csv", lines);
+            if (isSyncing)
+            {
+                string localFilePath = @"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Anime_Sync.csv";
+                string dropboxFilePath = @"\WatchListBackupFiles\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Anime_Sync.csv";
+
+                File.WriteAllLines(localFilePath, lines);
+                DropboxSyncProcessor.UploadSyncFiles(localFilePath, dropboxFilePath);
+            }
+            else
+            {
+                string localFilePath = @"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Anime_Backup.csv";
+
+                File.WriteAllLines(localFilePath, lines);
+            }
         }
 
-        public static void ExportSeries()
+        public static void ExportSeries(bool isSyncing)
         {
-            List<SeriesModel> series = SqliteDataAccess.LoadSeriesGroup("SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, " +
-                "S.ListGroup, S.Platform, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning FROM Series AS S");
+            List<SeriesModel> series;
+
+            if (isSyncing)
+            {
+                series = SqliteDataAccess.LoadSeriesForSync();
+            }
+            else
+            {
+                series = SqliteDataAccess.LoadSeriesGroup("SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, " +
+                  "S.ListGroup, S.Platform, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning, S.ModDate FROM Series AS S");
+            }
 
             List<string> lines = new List<string>();
 
             foreach (SeriesModel p in series)
             {
-                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.PicFormat};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup};{p.Platform};{p.CurrentSe};{p.TotalEp};{p.WatchedEp};{p.FinishedRunning}");
+                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.PicFormat};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup};{p.Platform};{p.CurrentSe};{p.TotalEp};{p.WatchedEp};{p.FinishedRunning};{p.ModDate}");
             }
 
-            File.WriteAllLines(@"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Series_Backup.csv", lines);
+            if (isSyncing)
+            {
+                string localFilePath = @"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Series_Sync.csv";
+                string dropboxFilePath = @"\WatchListBackupFiles\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Series_Sync.csv";
+
+                File.WriteAllLines(localFilePath, lines);
+                DropboxSyncProcessor.UploadSyncFiles(localFilePath, dropboxFilePath);
+            }
+            else
+            {
+                string localFilePath = @"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Series_Backup.csv";
+
+                File.WriteAllLines(localFilePath, lines);
+            }
         }
 
-        public static void ExportGame()
+        public static void ExportGame(bool isSyncing)
         {
-            List<GameModel> game = SqliteDataAccess.LoadGameGroup("SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, " +
-                "G.ListGroup, G.Platform, G.Owned FROM Games AS G");
+            List<GameModel> game;
+
+            if (isSyncing)
+            {
+                game = SqliteDataAccess.LoadGameForSync();
+            }
+            else
+            {
+                game = SqliteDataAccess.LoadGameGroup("SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, " +
+                  "G.ListGroup, G.Platform, G.Owned, G.ModNum FROM Games AS G");
+            }
 
             List<string> lines = new List<string>();
 
             foreach (GameModel p in game)
             {
-                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.PicFormat};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup};{p.Platform};{p.Owned}");
+                lines.Add($"{p.Title};{p.Url};{p.PictureUrl};{p.PicFormat};{p.Score};{p.Year};{p.Favourite};{p.Notes};{p.ListGroup};{p.Platform};{p.Owned};{p.ModDate}");
             }
 
-            File.WriteAllLines(@"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Game_Backup.csv", lines);
+            if (isSyncing)
+            {
+                string localFilePath = @"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Game_Sync.csv";
+                string dropboxFilePath = @"\WatchListBackupFiles\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Game_Sync.csv";
+
+                File.WriteAllLines(localFilePath, lines);
+                DropboxSyncProcessor.UploadSyncFiles(localFilePath, dropboxFilePath);
+            }
+            else
+            {
+                string localFilePath = @"..\..\..\ListLibrary\ListBackup\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Game_Backup.csv";
+
+                File.WriteAllLines(localFilePath, lines);
+            }
         }
     }
 }

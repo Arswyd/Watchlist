@@ -36,6 +36,7 @@ namespace ListLibrary.Model
             Owned = false;
             Lenght = 0;
             Platform = "";
+            ModDate = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
         }
     }
 }

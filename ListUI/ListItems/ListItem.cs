@@ -249,7 +249,7 @@ namespace ListUI.ListItems
 
         private void menuPicture_Click(object sender, EventArgs e)
         {
-            callerForm.ModifyItem(currentItem, this.Parent.Controls.GetChildIndex(this));
+            callerForm.ModifyItem(currentItem, this);
         }
 
         public void HidePanel()

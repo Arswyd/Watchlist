@@ -11,6 +11,8 @@
 *.sln.docstates
 *.db
 *.csv
+*Token.cs
+*ConnectionStrings.cs
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

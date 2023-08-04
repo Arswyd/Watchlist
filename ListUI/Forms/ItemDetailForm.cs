@@ -1,7 +1,9 @@
 ﻿using ListLibrary.Database;
 using ListLibrary.Model;
+using ListUI.ListItems;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -18,12 +20,12 @@ namespace ListUI.Forms
         bool userclosing = true;
         bool favouriteChanged = false;
         string listType;
-        int itemIndex;
         enum ChangeType { nochange, update, delete}
         ChangeType pictureChange = ChangeType.nochange;
 
         ItemModel currentItem;
         LibraryUI callingForm;
+        ListItem listItem;
 
         public ItemDetailForm(string activeListType, LibraryUI libraryUI)
         {
@@ -35,16 +37,19 @@ namespace ListUI.Forms
             if (listType == "Anime")
             {
                 currentItem = new AnimeModel();
+                currentItem.ID = SqliteDataAccess.GetLastAnimeID() + 1;
                 listHeaders = SqliteDataAccess.LoadAnimeListHeaders();
             }
             else if (listType == "Game")
             {
                 currentItem = new GameModel();
+                currentItem.ID = SqliteDataAccess.GetLastGameID() + 1;
                 listHeaders = SqliteDataAccess.LoadGameListHeaders();
             }
             else if (listType == "Series")
             {
                 currentItem = new SeriesModel();
+                currentItem.ID = SqliteDataAccess.GetLastSeriesID() + 1;
                 listHeaders = SqliteDataAccess.LoadSeriesListHeaders();
             }
 
@@ -52,18 +57,15 @@ namespace ListUI.Forms
             LoadForm(currentItem);
         }
 
-        public ItemDetailForm(string activeListType, ItemModel item, int index, LibraryUI libraryUI)
+        public ItemDetailForm(string activeListType, ItemModel item, LibraryUI libraryUI, ListItem _listItem)
         {
             InitializeComponent();
 
             newitem = false;
-            itemIndex = index;
             listType = activeListType;
             callingForm = libraryUI;
             currentItem = item;
-
-            pbDelete.Enabled = true;
-            pbDelete.Visible = true;
+            listItem = _listItem;
 
             if (listType == "Anime")
                 listHeaders = SqliteDataAccess.LoadAnimeListHeaders();
@@ -80,45 +82,45 @@ namespace ListUI.Forms
         {
             if (listType == "Anime")
             {
+                txbTotalEp.Enabled = true;
+                txbWatchedEp.Enabled = true;
+                chDubbed.Enabled = true;
+                lbWatchedEp.Enabled = true;
                 lbTotalEp.Enabled = true;
                 lbTotalEp.Visible = true;
-                txbTotalEp.Enabled = true;
                 txbTotalEp.Visible = true;
-                lbWatchedEp.Enabled = true;
                 lbWatchedEp.Visible = true;
-                txbWatchedEp.Enabled = true;
                 txbWatchedEp.Visible = true;
-                chDubbed.Enabled = true;
                 chDubbed.Visible = true;
                 lbSeason_Platform.Text = "Season";
             }
             else if (listType == "Series")
             {
-                lbTotalEp.Enabled = true;
-                lbTotalEp.Visible = true;
                 txbTotalEp.Enabled = true;
+                txbWatchedEp.Enabled = true;
+                txbCurrentSe.Enabled = true;
+                chFinished.Enabled = true;
+                lbTotalEp.Enabled = true;
+                lbWatchedEp.Enabled = true;
+                lbTotalSe.Enabled = true;
+                lbTotalEp.Visible = true;
                 txbTotalEp.Visible = true;
                 txbTotalEp.MaxLength = 100;
-                lbWatchedEp.Enabled = true;
                 lbWatchedEp.Visible = true;
-                txbWatchedEp.Enabled = true;
                 txbWatchedEp.Visible = true;
-                lbTotalSe.Enabled = true;
                 lbTotalSe.Visible = true;
-                txbCurrentSe.Enabled = true;
                 txbCurrentSe.Visible = true;
-                chFinished.Enabled = true;
                 chFinished.Visible = true;
                 lbSeason_Platform.Text = "Platform";
             }
             else if (listType == "Game")
             {
+                txbLenght.Enabled = true;
                 chOwned.Enabled = true;
+                lbLenght.Enabled = true;
                 chOwned.Visible = true;
                 lbSeason_Platform.Text = "Platform";
-                lbLenght.Enabled = true;
                 lbLenght.Visible = true;
-                txbLenght.Enabled = true;
                 txbLenght.Visible = true;
             }
 
@@ -133,7 +135,7 @@ namespace ListUI.Forms
                 cbSeason_Platform.Items.Add("Summer");
                 cbSeason_Platform.Items.Add("Fall");
                 cbSeason_Platform.Items.Add("Winter");
-                cbSeason_Platform.Items.Add("");
+                cbSeason_Platform.Items.Add("-");
             }
             else if (listType == "Series")
             {
@@ -231,7 +233,7 @@ namespace ListUI.Forms
                         }
                         else
                         {
-                            SqliteDataAccess.SaveAnime(animeModel, 1);
+                            SqliteDataAccess.SaveAnime(animeModel);
                             animeModel.ID = SqliteDataAccess.GetLastAnimeID();
                         }
                     }
@@ -245,7 +247,7 @@ namespace ListUI.Forms
                         }
                         else
                         {
-                            SqliteDataAccess.SaveSeries(seriesModel, 1);
+                            SqliteDataAccess.SaveSeries(seriesModel);
                             seriesModel.ID = SqliteDataAccess.GetLastSeriesID();
                         }
                     }
@@ -259,10 +261,14 @@ namespace ListUI.Forms
                         }
                         else
                         {
-                            SqliteDataAccess.SaveGame(gameModel, 1);
+                            SqliteDataAccess.SaveGame(gameModel);
                             gameModel.ID = SqliteDataAccess.GetLastGameID();
                         }
                     }
+
+                    UpdatePicture();
+
+                    callingForm.WireUpRequest(currentItem);
                 }
                 else
                 {
@@ -278,15 +284,10 @@ namespace ListUI.Forms
                     {
                         SqliteDataAccess.UpdateGame(gameModel);
                     }
-                }
 
-                if (pictureChange == ChangeType.update)
-                {
-                    SaveItemPicture();
-                }
-                else if (pictureChange == ChangeType.delete)
-                {
-                    DeleteItemPicture();
+                    UpdatePicture();
+
+                    listItem.AddItem(currentItem);
                 }
             }
             else
@@ -294,8 +295,6 @@ namespace ListUI.Forms
                 MessageBox.Show("Inputs are invalid!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-
-            //TODO: modify according to listitem index
 
             this.Close();
         }
@@ -371,6 +370,13 @@ namespace ListUI.Forms
 
             if (listType == "Anime")
             {
+                //Season
+                if (cbSeason_Platform.Text.Length == 0)
+                {
+                    txbTitle.BackColor = Color.LightCoral;
+                    output = false;
+                }
+
                 //Anime TotalEp
 
                 int totalEp;
@@ -518,6 +524,19 @@ namespace ListUI.Forms
             }
         }
 
+        private void UpdatePicture()
+        {
+            if (pictureChange == ChangeType.update)
+            {
+                //DeleteItemPicture();
+                SaveItemPicture();
+            }
+            else if (pictureChange == ChangeType.delete)
+            {
+                DeleteItemPicture();
+            }
+        }
+
         private void SaveItemPicture()
         {
             try
@@ -528,9 +547,6 @@ namespace ListUI.Forms
                     {
                         client.DownloadFile(currentItem.PictureUrl, currentItem.PictureDir);
                     }
-
-                    currentItem.PicFormat = 1;
-                    DeleteItemPicture();
                 }
                 else
                 {
@@ -539,9 +555,6 @@ namespace ListUI.Forms
                         pbPicture.DrawToBitmap(bitmap, new Rectangle(0, 0, 160, 220));
                         bitmap.Save(currentItem.PictureDir, ImageFormat.Png);
                     }
-
-                    currentItem.PicFormat = 0;
-                    DeleteItemPicture();
                 }
             }
             catch (Exception)
@@ -549,6 +562,7 @@ namespace ListUI.Forms
                 MessageBox.Show("Picture Url does not exist!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
+
         private void DeleteItemPicture()
         {
             if (File.Exists(currentItem.PictureDir))
@@ -576,8 +590,6 @@ namespace ListUI.Forms
                     SqliteDataAccess.DeleteGame(gameModel);
                 }
 
-                DeleteItemPicture();
-
                 this.Close();
             }
         }
@@ -597,7 +609,7 @@ namespace ListUI.Forms
             }
             else if (userclosing == false)
             {
-                callingForm.WireUpLibraryForm(true, false);
+                //callingForm.WireUpLibraryForm(true, false);
             }
         }
 

@@ -1,8 +1,4 @@
-﻿using ListLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace ListUI
@@ -17,9 +13,6 @@ namespace ListUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            //GlobalConfig.InitializeSettings();
-            //GlobalConfig.InitializeConnections(true);
 
             Application.Run(new StartUpUI());
         }

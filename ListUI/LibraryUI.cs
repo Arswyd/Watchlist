@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ListLibrary.Database;
 using ListUI.Properties;
+using ListItem = ListUI.ListItems.ListItem;
 
 namespace ListUI
 {
@@ -22,6 +23,7 @@ namespace ListUI
         private string lastActiveGroup;
         private string lastActiveListType;
         private bool lastIsFiltered;
+        bool isPrimaryClient = false;
         bool isFiltered = false;
         bool isAscending = false;
         bool wasRandom = false;
@@ -29,17 +31,34 @@ namespace ListUI
         int pageCount = 1;
         Random random = new Random();
 
-        public LibraryUI(string startuplist)
+        public LibraryUI(string listType, bool isPrimaryClient)
         {
             InitializeComponent();
 
-            activeListType = startuplist;
+            SetIsPrimaryClient(isPrimaryClient);
+
+            activeListType = listType;
 
             activeGroup = (activeListType == "Game") ? "Playing" : "Watching";
 
             rbScore.Checked = true;
 
             WireUpLibraryForm(true, false);
+        }
+
+        /* Get/Set isPrimaryClient */
+
+        public void SetIsPrimaryClient(bool _isPrimaryClient)
+        {
+            isPrimaryClient = _isPrimaryClient;
+
+            pbAddItem.Enabled = _isPrimaryClient;
+            pbAddItem.Visible = _isPrimaryClient;
+        }
+
+        public bool GetIsPrimaryClient()
+        {
+            return isPrimaryClient;
         }
 
         /* Wire up form */
@@ -117,13 +136,13 @@ namespace ListUI
                 switch (activeListType)
                 {
                     case "Anime":
-                        itemlist.AddRange(SqliteDataAccess.LoadAnimeByID(randomID));
+                        itemlist.Add(SqliteDataAccess.LoadAnimeByID(randomID));
                         break;
                     case "Game":
-                        itemlist.AddRange(SqliteDataAccess.LoadGameByID(randomID));
+                        itemlist.Add(SqliteDataAccess.LoadGameByID(randomID));
                         break;
                     case "Series":
-                        itemlist.AddRange(SqliteDataAccess.LoadSeriesByID(randomID));
+                        itemlist.Add(SqliteDataAccess.LoadSeriesByID(randomID));
                         break;
                 }
 
@@ -344,17 +363,17 @@ namespace ListUI
 
         /* Modify item and add new item */
 
-        public void ModifyItem(ItemModel item, int index)
+        public void ModifyItem(ItemModel item, ListItem listItem)
         {
-            ShowItemDetailForm(activeListType, item, index, this);
+            ShowItemDetailForm(activeListType, item, this, listItem);
         }
 
         private void pbAddItem_Click(object sender, EventArgs e)
         {
-            ShowItemDetailForm(activeListType, null, -1, this);
+            ShowItemDetailForm(activeListType, null, this, null);
         }
 
-        private void ShowItemDetailForm(string activeListType, ItemModel item, int index, LibraryUI libraryUI)
+        private void ShowItemDetailForm(string activeListType, ItemModel item, LibraryUI libraryUI, ListItem listItem)
         {
             OverlayForm overlay = ShowOverlay();
             ItemDetailForm frm;
@@ -364,7 +383,7 @@ namespace ListUI
             }
             else
             {
-                frm = new ItemDetailForm(activeListType, item, index, libraryUI);
+                frm = new ItemDetailForm(activeListType, item, libraryUI, listItem);
             }
             frm.ShowDialog(this);
             frm.Dispose();
@@ -428,7 +447,7 @@ namespace ListUI
                 cbSeasonPlatformSearch.Items.Add("Summer");
                 cbSeasonPlatformSearch.Items.Add("Fall");
                 cbSeasonPlatformSearch.Items.Add("Winter");
-                cbSeasonPlatformSearch.Items.Add("");
+                cbSeasonPlatformSearch.Items.Add("-");
             }
             else if(activeListType == "Series")
             {
@@ -456,12 +475,90 @@ namespace ListUI
             fpListItemPanel.AutoScrollPosition = new Point(0, 0);
             if (activeGroup != listGroup)
             {
+                activeGroup = listGroup;
                 currentPage = 1;
             }
-            activeGroup = listGroup;
 
-            //TODO: Elimination of reloading flowlayout panel
             WireUpLibraryForm(true, false);
+        }
+
+        public void WireUpRequest(ItemModel itemModel)
+        {
+            if (activeGroup != itemModel.ListGroup)
+            {
+                CreateMenuItems();
+                return;
+            }
+
+            if (itemlist.Count < 60)
+            {
+                fpListItemPanel.AutoScrollPosition = new Point(0, 0);
+                WireUpLibraryForm(true, false);
+                return;
+            }
+
+            ItemModel firstItem = itemlist.First();
+            ItemModel lastItem = itemlist.Last();
+
+
+            if (rbScore.Checked)
+            {
+                if(isAscending)
+                {
+                    if(currentPage != 1 && firstItem.Score > itemModel.Score || currentPage != pageCount && lastItem.Score < itemModel.Score || currentPage != 1 && firstItem.Score == itemModel.Score && string.CompareOrdinal(firstItem.Title, itemModel.Title) > 0 || currentPage != pageCount &&  lastItem.Score == itemModel.Score && string.CompareOrdinal(lastItem.Title, itemModel.Title) < 0)
+                    {
+                        CreateMenuItems();
+                        return;
+                    }
+                    else
+                    {
+                        fpListItemPanel.AutoScrollPosition = new Point(0, 0);
+                        WireUpLibraryForm(true, false);
+                    }
+                }
+                else
+                {
+                    if (currentPage != 1 && firstItem.Score < itemModel.Score || currentPage != pageCount && lastItem.Score > itemModel.Score || currentPage != 1 && firstItem.Score == itemModel.Score && string.CompareOrdinal(firstItem.Title, itemModel.Title) > 0 || currentPage != pageCount && lastItem.Score == itemModel.Score && string.CompareOrdinal(lastItem.Title, itemModel.Title) < 0)
+                    {
+                        CreateMenuItems();
+                        return;
+                    }
+                    else
+                    {
+                        fpListItemPanel.AutoScrollPosition = new Point(0, 0);
+                        WireUpLibraryForm(true, false);
+                    }
+                }
+            }
+            else if(rbTitle.Checked)
+            {
+                if (isAscending)
+                {
+                    if (currentPage != 1 && string.CompareOrdinal(firstItem.Title, itemModel.Title) > 0 || currentPage != pageCount && string.CompareOrdinal(lastItem.Title, itemModel.Title) < 0)
+                    {
+                        CreateMenuItems();
+                        return;
+                    }
+                    else
+                    {
+                        fpListItemPanel.AutoScrollPosition = new Point(0, 0);
+                        WireUpLibraryForm(true, false);
+                    }
+                }
+                else
+                {
+                    if (currentPage != 1 && string.CompareOrdinal(firstItem.Title, itemModel.Title) < 0 || currentPage != pageCount && string.CompareOrdinal(lastItem.Title, itemModel.Title) > 0)
+                    {
+                        CreateMenuItems();
+                        return;
+                    }
+                    else
+                    {
+                        fpListItemPanel.AutoScrollPosition = new Point(0, 0);
+                        WireUpLibraryForm(true, false);
+                    }
+                }
+            }
         }
 
         /* Switch list type */
@@ -547,7 +644,7 @@ namespace ListUI
         private void pbSettings_Click(object sender, EventArgs e)
         {
             OverlayForm overlay = ShowOverlay();
-            SettingsForm frm = new SettingsForm(activeListType);
+            SettingsForm frm = new SettingsForm(this, activeListType);
             frm.ShowDialog(this);
             frm.Dispose();
             fpListItemPanel.Focus();

@@ -57,6 +57,9 @@ namespace ListUI.Forms
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chShowDeleted = new System.Windows.Forms.CheckBox();
+            this.chIsPrimaryClient = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSave)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbDeleteRow)).BeginInit();
@@ -67,6 +70,7 @@ namespace ListUI.Forms
             this.groupBox4.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // lvHeaders
@@ -216,7 +220,7 @@ namespace ListUI.Forms
             this.groupBox3.Controls.Add(this.bExportS);
             this.groupBox3.Controls.Add(this.bExportA);
             this.groupBox3.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox3.Location = new System.Drawing.Point(388, 12);
+            this.groupBox3.Location = new System.Drawing.Point(388, 184);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(238, 80);
             this.groupBox3.TabIndex = 2;
@@ -258,7 +262,7 @@ namespace ListUI.Forms
             // 
             // bDeleteGame
             // 
-            this.bDeleteGame.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDeleteGame.ForeColor = System.Drawing.Color.Red;
             this.bDeleteGame.Location = new System.Drawing.Point(160, 19);
             this.bDeleteGame.Name = "bDeleteGame";
             this.bDeleteGame.Size = new System.Drawing.Size(70, 50);
@@ -269,7 +273,7 @@ namespace ListUI.Forms
             // 
             // bDeleteSeries
             // 
-            this.bDeleteSeries.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDeleteSeries.ForeColor = System.Drawing.Color.Red;
             this.bDeleteSeries.Location = new System.Drawing.Point(84, 19);
             this.bDeleteSeries.Name = "bDeleteSeries";
             this.bDeleteSeries.Size = new System.Drawing.Size(70, 50);
@@ -280,13 +284,14 @@ namespace ListUI.Forms
             // 
             // bDeleteAnime
             // 
-            this.bDeleteAnime.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.bDeleteAnime.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.bDeleteAnime.ForeColor = System.Drawing.Color.Red;
             this.bDeleteAnime.Location = new System.Drawing.Point(8, 19);
             this.bDeleteAnime.Name = "bDeleteAnime";
             this.bDeleteAnime.Size = new System.Drawing.Size(70, 50);
             this.bDeleteAnime.TabIndex = 0;
             this.bDeleteAnime.Text = "Delete Anime";
-            this.bDeleteAnime.UseVisualStyleBackColor = true;
+            this.bDeleteAnime.UseVisualStyleBackColor = false;
             this.bDeleteAnime.Click += new System.EventHandler(this.bDeleteAnime_Click);
             // 
             // groupBox4
@@ -295,7 +300,7 @@ namespace ListUI.Forms
             this.groupBox4.Controls.Add(this.bImportS);
             this.groupBox4.Controls.Add(this.bImportA);
             this.groupBox4.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox4.Location = new System.Drawing.Point(388, 98);
+            this.groupBox4.Location = new System.Drawing.Point(388, 270);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(238, 80);
             this.groupBox4.TabIndex = 3;
@@ -342,9 +347,8 @@ namespace ListUI.Forms
             this.bDownloadPicG.Name = "bDownloadPicG";
             this.bDownloadPicG.Size = new System.Drawing.Size(70, 50);
             this.bDownloadPicG.TabIndex = 2;
-            this.bDownloadPicG.Text = "Download Game Pics";
+            this.bDownloadPicG.Text = "Sync Games";
             this.bDownloadPicG.UseVisualStyleBackColor = true;
-            this.bDownloadPicG.Click += new System.EventHandler(this.bDownloadPicG_Click);
             // 
             // bDownloadPicS
             // 
@@ -353,9 +357,8 @@ namespace ListUI.Forms
             this.bDownloadPicS.Name = "bDownloadPicS";
             this.bDownloadPicS.Size = new System.Drawing.Size(70, 50);
             this.bDownloadPicS.TabIndex = 1;
-            this.bDownloadPicS.Text = "Download Series Pics";
+            this.bDownloadPicS.Text = "Sync Series";
             this.bDownloadPicS.UseVisualStyleBackColor = true;
-            this.bDownloadPicS.Click += new System.EventHandler(this.bDownloadPicS_Click);
             // 
             // bDownloadPicA
             // 
@@ -364,9 +367,8 @@ namespace ListUI.Forms
             this.bDownloadPicA.Name = "bDownloadPicA";
             this.bDownloadPicA.Size = new System.Drawing.Size(70, 50);
             this.bDownloadPicA.TabIndex = 0;
-            this.bDownloadPicA.Text = "Download Anime Pics";
+            this.bDownloadPicA.Text = "Sync Anime";
             this.bDownloadPicA.UseVisualStyleBackColor = true;
-            this.bDownloadPicA.Click += new System.EventHandler(this.bDownloadPicA_Click);
             // 
             // progressBar1
             // 
@@ -381,12 +383,12 @@ namespace ListUI.Forms
             this.groupBox6.Controls.Add(this.bDownloadPicS);
             this.groupBox6.Controls.Add(this.bDownloadPicG);
             this.groupBox6.ForeColor = System.Drawing.SystemColors.Control;
-            this.groupBox6.Location = new System.Drawing.Point(388, 184);
+            this.groupBox6.Location = new System.Drawing.Point(388, 98);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(238, 80);
             this.groupBox6.TabIndex = 4;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Downlod Pics";
+            this.groupBox6.Text = "Sync";
             // 
             // groupBox7
             // 
@@ -401,12 +403,47 @@ namespace ListUI.Forms
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Delete";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.chShowDeleted);
+            this.groupBox2.Controls.Add(this.chIsPrimaryClient);
+            this.groupBox2.ForeColor = System.Drawing.SystemColors.Control;
+            this.groupBox2.Location = new System.Drawing.Point(388, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(238, 80);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Client";
+            // 
+            // chShowDeleted
+            // 
+            this.chShowDeleted.AutoSize = true;
+            this.chShowDeleted.Location = new System.Drawing.Point(8, 54);
+            this.chShowDeleted.Name = "chShowDeleted";
+            this.chShowDeleted.Size = new System.Drawing.Size(118, 17);
+            this.chShowDeleted.TabIndex = 3;
+            this.chShowDeleted.Text = "Show deleted items";
+            this.chShowDeleted.UseVisualStyleBackColor = true;
+            this.chShowDeleted.CheckStateChanged += new System.EventHandler(this.checkBox2_CheckStateChanged);
+            // 
+            // chIsPrimaryClient
+            // 
+            this.chIsPrimaryClient.AutoSize = true;
+            this.chIsPrimaryClient.Location = new System.Drawing.Point(8, 31);
+            this.chIsPrimaryClient.Name = "chIsPrimaryClient";
+            this.chIsPrimaryClient.Size = new System.Drawing.Size(89, 17);
+            this.chIsPrimaryClient.TabIndex = 2;
+            this.chIsPrimaryClient.Text = "Primary Client";
+            this.chIsPrimaryClient.UseVisualStyleBackColor = true;
+            this.chIsPrimaryClient.CheckStateChanged += new System.EventHandler(this.chIsPrimaryClient_CheckStateChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
             this.ClientSize = new System.Drawing.Size(638, 481);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.progressBar1);
@@ -432,6 +469,8 @@ namespace ListUI.Forms
             this.groupBox4.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -466,5 +505,8 @@ namespace ListUI.Forms
         private System.Windows.Forms.PictureBox pbMoveUp;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox chShowDeleted;
+        private System.Windows.Forms.CheckBox chIsPrimaryClient;
     }
 }

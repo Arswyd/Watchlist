@@ -15,10 +15,15 @@ namespace ListUI.Forms
     {
         List<HeaderModel> headers;
         HeaderModel selectedHeader;
- 
-        public SettingsForm(string listType)
+        LibraryUI libraryUI;
+
+        public SettingsForm(LibraryUI _libraryUI, string listType)
         {
             InitializeComponent();
+
+            libraryUI = _libraryUI;
+
+            chIsPrimaryClient.Checked = libraryUI.GetIsPrimaryClient();
 
             WireUpDropDown();
 
@@ -102,7 +107,7 @@ namespace ListUI.Forms
             var path = GetFilePath();
             if (!String.IsNullOrWhiteSpace(path))
             {
-                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToAnimeModel(), SqliteDataAccess.CheckIfEmptyAnime());
+                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToAnimeModel(), SqliteDataAccess.CheckIfAnimeExists());
             }
         }
 
@@ -111,7 +116,7 @@ namespace ListUI.Forms
             var path = GetFilePath();
             if (!String.IsNullOrWhiteSpace(path))
             {
-                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToSeriesModel(), SqliteDataAccess.CheckIfEmptySeries());
+                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToSeriesModel(), SqliteDataAccess.CheckIfSeriesExists());
             }
         }
 
@@ -120,7 +125,7 @@ namespace ListUI.Forms
             var path = GetFilePath();
             if (!String.IsNullOrWhiteSpace(path))
             {
-                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToGameModel(), SqliteDataAccess.CheckIfEmptyGame());
+                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToGameModel(), SqliteDataAccess.CheckIfGameExists());
             }
         }
 
@@ -145,50 +150,77 @@ namespace ListUI.Forms
             }
         }
 
-        private void ImportItemsToDatabase(List<ItemModel> items, int id)
+        private void ImportItemsToDatabase(List<ItemModel> items, bool hasRecord)
         {
             progressBar1.Value = 0;
             progressBar1.Maximum = items.Count;
 
-            if (id == 0)
-            {
-                foreach (ItemModel item in items)
-                {
-                    if (item is AnimeModel animeModel)
-                    {
-                        SqliteDataAccess.SaveAnime(animeModel, 0);
-                    }
-                    else if (item is SeriesModel seriesModel)
-                    {
-                        SqliteDataAccess.SaveSeries(seriesModel, 0);
-                    }
-                    else if (item is GameModel gameModel)
-                    {
-                        SqliteDataAccess.SaveGame(gameModel, 0);
-                    }
+            int id = 1;
 
-                    progressBar1.Increment(1);
-                }
-            }
-            else
+            foreach (ItemModel item in items.OrderBy(x => x.Title))
             {
-                foreach (ItemModel item in items)
+                if (!hasRecord)
                 {
-                    if (item is AnimeModel animeModel)
-                    {
-                        SqliteDataAccess.ImportAnime(animeModel);
-                    }
-                    else if (item is SeriesModel seriesModel)
-                    {
-                        SqliteDataAccess.ImportSeries(seriesModel);
-                    }
-                    else if (item is GameModel gameModel)
-                    {
-                        SqliteDataAccess.ImportGame(gameModel);
-                    }
-
-                    progressBar1.Increment(1);
+                    item.ID = id;
+                    id++;
                 }
+
+                if (item is AnimeModel animeModel)
+                { 
+                    if (hasRecord && SqliteDataAccess.CheckIfAnimeExists(animeModel))
+                        SqliteDataAccess.UpdateAnime(animeModel);
+                    else
+                    {
+                        animeModel.PicFormat = 0;
+                        SqliteDataAccess.SaveAnime(animeModel);
+                        try
+                        {
+                            using (WebClient client = new WebClient())
+                            {
+                                client.DownloadFile(animeModel.PictureUrl, animeModel.PictureDir);
+                            }
+                        }
+                        catch { }
+                    }
+                }
+                else if (item is SeriesModel seriesModel)
+                {
+                    if (hasRecord && SqliteDataAccess.CheckIfSeriesExists(seriesModel))
+                        SqliteDataAccess.UpdateSeries(seriesModel);
+                    else
+                    {
+                        seriesModel.PicFormat= 0;
+                        SqliteDataAccess.SaveSeries(seriesModel);
+                        try
+                        {
+                            using (WebClient client = new WebClient())
+                            {
+                                client.DownloadFile(seriesModel.PictureUrl, seriesModel.PictureDir);
+                            }
+                        }
+                        catch { }
+                    }
+                }
+                else if (item is GameModel gameModel)
+                {
+                    if (hasRecord && SqliteDataAccess.CheckIfGameExists(gameModel))
+                        SqliteDataAccess.UpdateGame(gameModel);
+                    else
+                    {
+                        gameModel.PicFormat= 0;
+                        SqliteDataAccess.SaveGame(gameModel);
+                        try
+                        {
+                            using (WebClient client = new WebClient())
+                            {
+                                client.DownloadFile(gameModel.PictureUrl, gameModel.PictureDir);
+                            }
+                        }
+                        catch { }
+                    }
+                }
+
+                progressBar1.Increment(1);
             }
 
             MessageBox.Show("Import completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -196,19 +228,19 @@ namespace ListUI.Forms
 
         private void bExportA_Click(object sender, EventArgs e)
         {
-            DataImportExportProcessor.ExportAnime();
+            DataImportExportProcessor.ExportAnime(false);
             MessageBox.Show("Export completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void bExportS_Click(object sender, EventArgs e)
         {
-            DataImportExportProcessor.ExportSeries();
+            DataImportExportProcessor.ExportSeries(false);
             MessageBox.Show("Export completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void bExportG_Click(object sender, EventArgs e)
         {
-            DataImportExportProcessor.ExportGame();
+            DataImportExportProcessor.ExportGame(false);
             MessageBox.Show("Export completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
@@ -260,68 +292,6 @@ namespace ListUI.Forms
             }
         }
 
-        private void bDownloadPicS_Click(object sender, EventArgs e)
-        {
-            List<ItemModel> items = new List<ItemModel>();
-
-            items.AddRange(SqliteDataAccess.LoadSeriesGroup("SELECT S.ID, S.Title, S.Url, S.PictureUrl, S.PicFormat, S.Score, S.Year, S.Favourite, S.Notes, " +
-                    "S.ListGroup, S.Platform, S.CurrentSe, S.TotalEp, S.WatchedEp, S.FinishedRunning FROM Series AS S"));
-
-            DownloadPics(items);
-
-            MessageBox.Show("Download completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
-        private void bDownloadPicA_Click(object sender, EventArgs e)
-        {
-            List<ItemModel> items = new List<ItemModel>();
-
-            items.AddRange(SqliteDataAccess.LoadAnimeGroup("SELECT A.ID, A.Title, A.Url, A.PictureUrl, A.PicFormat, A.Score, A.Year, A.Favourite, A.Notes, " +
-                "A.ListGroup, A.Season, A.TotalEp, A.WatchedEp, A.Dubbed FROM Anime AS A"));
-
-            DownloadPics(items);
-
-            MessageBox.Show("Download completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
-        private void bDownloadPicG_Click(object sender, EventArgs e)
-        {
-            List<ItemModel> items = new List<ItemModel>();
-
-            items.AddRange(SqliteDataAccess.LoadGameGroup("SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, " +
-                "G.ListGroup, G.Platform FROM Games AS G"));
-
-            DownloadPics(items);
-
-            MessageBox.Show("Download completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
-        private void DownloadPics(List<ItemModel> items)
-        {
-            progressBar1.Value = 0;
-            progressBar1.Maximum = items.Count;
-
-            foreach (ItemModel p in items.Where(n => n.PicFormat == 0))
-            {
-                if (!File.Exists(p.PictureDir))
-                {
-                    try
-                    {
-                        using (WebClient client = new WebClient())
-                        {
-                            client.DownloadFile(p.PictureUrl, p.PictureDir);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Download failed: " + p.Title, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-
-                progressBar1.Increment(1);
-            }
-        }
-
         private void pbMoveUp_Click(object sender, EventArgs e)
         {
             if (lvHeaders.SelectedItems.Count == 0)
@@ -370,12 +340,18 @@ namespace ListUI.Forms
         private void pbAddRow_Click(object sender, EventArgs e)
         {
             int neworder = 0;
+            int newID = 0;
+            int newListType = 0;
             if (headers != null)
+            {
                 neworder = headers.Max(c => c.SortOrder) + 1;
+                newID = headers.Max(c => c.ID) + 1;
+                newListType = headers.Min(c => c.ListType);
+            }
 
             if (headers != null && headers.Count < 18)
             {
-                selectedHeader = new HeaderModel() { ListType = cbListType.Text, ListGroup = "New Group", SortOrder = neworder };
+                selectedHeader = new HeaderModel() { ID = newID, ListType = newListType, ListGroup = "New Group", SortOrder = neworder };
                 SqliteDataAccess.SaveHeader(selectedHeader);
                 LoadHeaderListView();
                 lvHeaders.Focus();
@@ -499,6 +475,17 @@ namespace ListUI.Forms
         {
             pb.Size = new Size(pb.Width + 2, pb.Height + 2);
             pb.Location = new Point(pb.Location.X - 1, pb.Location.Y - 1);
+        }
+
+        private void chIsPrimaryClient_CheckStateChanged(object sender, EventArgs e)
+        {
+            SqliteDataAccess.ChangeClientType(chIsPrimaryClient.Checked);
+            libraryUI.SetIsPrimaryClient(chIsPrimaryClient.Checked);
+        }
+
+        private void checkBox2_CheckStateChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
