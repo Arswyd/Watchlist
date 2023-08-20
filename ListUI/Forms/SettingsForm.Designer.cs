@@ -75,7 +75,7 @@ namespace ListUI.Forms
             // 
             // lvHeaders
             // 
-            this.lvHeaders.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lvHeaders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lvHeaders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lvHeaders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colOrder,
@@ -106,7 +106,7 @@ namespace ListUI.Forms
             // 
             // cbListType
             // 
-            this.cbListType.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.cbListType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.cbListType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbListType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbListType.FormattingEnabled = true;
@@ -126,7 +126,7 @@ namespace ListUI.Forms
             this.groupBox1.Controls.Add(this.txbHeaderEdit);
             this.groupBox1.Controls.Add(this.cbListType);
             this.groupBox1.Controls.Add(this.lvHeaders);
-            this.groupBox1.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(370, 430);
@@ -137,7 +137,7 @@ namespace ListUI.Forms
             // pbSave
             // 
             this.pbSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSave.Image = global::ListUI.Properties.Resources.save;
+            this.pbSave.Image = global::ListUI.Properties.Resources.item_save;
             this.pbSave.Location = new System.Drawing.Point(300, 375);
             this.pbSave.Name = "pbSave";
             this.pbSave.Size = new System.Drawing.Size(40, 40);
@@ -151,7 +151,7 @@ namespace ListUI.Forms
             // pbDeleteRow
             // 
             this.pbDeleteRow.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbDeleteRow.Image = global::ListUI.Properties.Resources.delete_row;
+            this.pbDeleteRow.Image = global::ListUI.Properties.Resources.settings_delete_row;
             this.pbDeleteRow.Location = new System.Drawing.Point(300, 232);
             this.pbDeleteRow.Name = "pbDeleteRow";
             this.pbDeleteRow.Size = new System.Drawing.Size(40, 40);
@@ -165,7 +165,7 @@ namespace ListUI.Forms
             // pbAddRow
             // 
             this.pbAddRow.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbAddRow.Image = global::ListUI.Properties.Resources.add_row;
+            this.pbAddRow.Image = global::ListUI.Properties.Resources.settings_add_row;
             this.pbAddRow.Location = new System.Drawing.Point(300, 186);
             this.pbAddRow.Name = "pbAddRow";
             this.pbAddRow.Size = new System.Drawing.Size(40, 40);
@@ -179,7 +179,7 @@ namespace ListUI.Forms
             // pbMoveDown
             // 
             this.pbMoveDown.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbMoveDown.Image = global::ListUI.Properties.Resources.down;
+            this.pbMoveDown.Image = global::ListUI.Properties.Resources.settings_arrow_down;
             this.pbMoveDown.Location = new System.Drawing.Point(300, 278);
             this.pbMoveDown.Name = "pbMoveDown";
             this.pbMoveDown.Size = new System.Drawing.Size(40, 40);
@@ -193,7 +193,7 @@ namespace ListUI.Forms
             // pbMoveUp
             // 
             this.pbMoveUp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbMoveUp.Image = global::ListUI.Properties.Resources.up;
+            this.pbMoveUp.Image = global::ListUI.Properties.Resources.settings_arrow_up;
             this.pbMoveUp.Location = new System.Drawing.Point(300, 140);
             this.pbMoveUp.Name = "pbMoveUp";
             this.pbMoveUp.Size = new System.Drawing.Size(40, 40);
@@ -206,7 +206,7 @@ namespace ListUI.Forms
             // 
             // txbHeaderEdit
             // 
-            this.txbHeaderEdit.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbHeaderEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbHeaderEdit.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txbHeaderEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbHeaderEdit.Location = new System.Drawing.Point(23, 392);
@@ -219,7 +219,7 @@ namespace ListUI.Forms
             this.groupBox3.Controls.Add(this.bExportG);
             this.groupBox3.Controls.Add(this.bExportS);
             this.groupBox3.Controls.Add(this.bExportA);
-            this.groupBox3.ForeColor = System.Drawing.SystemColors.Control;
+            this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.groupBox3.Location = new System.Drawing.Point(388, 184);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(238, 80);
@@ -299,7 +299,7 @@ namespace ListUI.Forms
             this.groupBox4.Controls.Add(this.bImportG);
             this.groupBox4.Controls.Add(this.bImportS);
             this.groupBox4.Controls.Add(this.bImportA);
-            this.groupBox4.ForeColor = System.Drawing.SystemColors.Control;
+            this.groupBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.groupBox4.Location = new System.Drawing.Point(388, 270);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(238, 80);
@@ -349,6 +349,7 @@ namespace ListUI.Forms
             this.bDownloadPicG.TabIndex = 2;
             this.bDownloadPicG.Text = "Sync Games";
             this.bDownloadPicG.UseVisualStyleBackColor = true;
+            this.bDownloadPicG.Click += new System.EventHandler(this.bDownloadPicG_Click);
             // 
             // bDownloadPicS
             // 
@@ -359,6 +360,7 @@ namespace ListUI.Forms
             this.bDownloadPicS.TabIndex = 1;
             this.bDownloadPicS.Text = "Sync Series";
             this.bDownloadPicS.UseVisualStyleBackColor = true;
+            this.bDownloadPicS.Click += new System.EventHandler(this.bDownloadPicS_Click);
             // 
             // bDownloadPicA
             // 
@@ -369,6 +371,7 @@ namespace ListUI.Forms
             this.bDownloadPicA.TabIndex = 0;
             this.bDownloadPicA.Text = "Sync Anime";
             this.bDownloadPicA.UseVisualStyleBackColor = true;
+            this.bDownloadPicA.Click += new System.EventHandler(this.bDownloadPicA_Click);
             // 
             // progressBar1
             // 
@@ -382,7 +385,7 @@ namespace ListUI.Forms
             this.groupBox6.Controls.Add(this.bDownloadPicA);
             this.groupBox6.Controls.Add(this.bDownloadPicS);
             this.groupBox6.Controls.Add(this.bDownloadPicG);
-            this.groupBox6.ForeColor = System.Drawing.SystemColors.Control;
+            this.groupBox6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.groupBox6.Location = new System.Drawing.Point(388, 98);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(238, 80);
@@ -395,7 +398,7 @@ namespace ListUI.Forms
             this.groupBox7.Controls.Add(this.bDeleteSeries);
             this.groupBox7.Controls.Add(this.bDeleteAnime);
             this.groupBox7.Controls.Add(this.bDeleteGame);
-            this.groupBox7.ForeColor = System.Drawing.SystemColors.Control;
+            this.groupBox7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.groupBox7.Location = new System.Drawing.Point(388, 362);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(238, 80);
@@ -407,7 +410,7 @@ namespace ListUI.Forms
             // 
             this.groupBox2.Controls.Add(this.chShowDeleted);
             this.groupBox2.Controls.Add(this.chIsPrimaryClient);
-            this.groupBox2.ForeColor = System.Drawing.SystemColors.Control;
+            this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.groupBox2.Location = new System.Drawing.Point(388, 12);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(238, 80);
@@ -441,7 +444,7 @@ namespace ListUI.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(117)))));
             this.ClientSize = new System.Drawing.Size(638, 481);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox6);

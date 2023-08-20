@@ -7,15 +7,17 @@ namespace ListUI.ListItems
 {
     public partial class ListMenuItem : UserControl
     {
-        string active;
+        bool isActive = false;
         LibraryUI callingForm;
+        Color highlightedMenuItemColor = Color.FromArgb(255, 50, 130, 184);
+        Color defaultMenuItemColor = Color.FromArgb(255, 15, 76, 117);
+        Color defaultTextColor = Color.FromArgb(255, 187, 225, 250);
 
-        public ListMenuItem(string activeGroup, LibraryUI libraryUI)
+        public ListMenuItem(LibraryUI libraryUI)
         {
             InitializeComponent();
 
             callingForm = libraryUI;
-            active = activeGroup;
 
             lbListGroupName.Parent = panel1;
         }
@@ -30,12 +32,16 @@ namespace ListUI.ListItems
             lbListGroupCount.Text = r;
         }
 
-        public void ActiveColor()
+        public void SetActive(bool _isActive)
         {
-            Color myColor = Color.FromArgb(255, 40, 40, 60);
-            panel1.BackColor = myColor;
-            lbListGroupName.ForeColor = Color.White;
-            lbListGroupCount.ForeColor = Color.White;
+            isActive = _isActive;
+
+            if (_isActive)
+            {
+                panel1.BackColor = highlightedMenuItemColor;
+                lbListGroupName.ForeColor = Color.White;
+                lbListGroupCount.ForeColor = Color.White;
+            }
         }
 
         private void panel1_MouseEnter(object sender, EventArgs e)
@@ -45,16 +51,21 @@ namespace ListUI.ListItems
                 c.RevertColor();
             }
 
-            if (lbListGroupName.Text != active)
+            if (!isActive)
             {
-                Color myColor = Color.FromArgb(255, 40, 40, 60);
-                panel1.BackColor = myColor;
+                panel1.BackColor = highlightedMenuItemColor;
             }
         }
 
         private void panel1_Click(object sender, EventArgs e)
         {
-            callingForm.WireUpRequest(lbListGroupName.Text);
+            foreach (var c in Parent.Controls.OfType<ListMenuItem>())
+            {
+                c.SetActive(c == this ? true : false);
+                c.RevertColor();
+            }
+
+            callingForm.WireUpRequest(lbListGroupName.Text, false);
         }
 
         private void listGroupName_Click(object sender, EventArgs e)
@@ -69,17 +80,19 @@ namespace ListUI.ListItems
 
         public void RevertColor()
         {
-            if (lbListGroupName.Text != active )
+            if (!isActive)
             {
-                panel1.BackColor = Color.FromArgb(255, 35, 35, 50);
+                panel1.BackColor = defaultMenuItemColor;
+                lbListGroupName.ForeColor = defaultTextColor;
+                lbListGroupCount.ForeColor = defaultTextColor;
             }
         }
 
         private void ListMenuItem_MouseLeave(object sender, EventArgs e)
         {
-            if (lbListGroupName.Text != active)
+            if (!isActive)
             {
-                panel1.BackColor = Color.FromArgb(255, 35, 35, 50);
+                panel1.BackColor = defaultMenuItemColor;
             }
         }
     }

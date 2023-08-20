@@ -76,7 +76,7 @@
             // 
             this.lbTitle.AutoSize = true;
             this.lbTitle.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbTitle.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbTitle.Location = new System.Drawing.Point(196, 10);
             this.lbTitle.Name = "lbTitle";
             this.lbTitle.Size = new System.Drawing.Size(41, 19);
@@ -87,7 +87,7 @@
             // 
             this.lbListGroup.AutoSize = true;
             this.lbListGroup.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbListGroup.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbListGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbListGroup.Location = new System.Drawing.Point(196, 184);
             this.lbListGroup.Name = "lbListGroup";
             this.lbListGroup.Size = new System.Drawing.Size(89, 19);
@@ -96,7 +96,7 @@
             // 
             // txbTitle
             // 
-            this.txbTitle.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbTitle.Font = new System.Drawing.Font("Arial", 10F);
             this.txbTitle.Location = new System.Drawing.Point(200, 30);
             this.txbTitle.Multiline = true;
@@ -107,7 +107,7 @@
             // 
             // txbScore
             // 
-            this.txbScore.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbScore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbScore.Font = new System.Drawing.Font("Arial", 10F);
             this.txbScore.Location = new System.Drawing.Point(420, 206);
             this.txbScore.MaxLength = 4;
@@ -119,7 +119,7 @@
             // 
             // txbNotes
             // 
-            this.txbNotes.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbNotes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbNotes.Font = new System.Drawing.Font("Arial", 10F);
             this.txbNotes.Location = new System.Drawing.Point(200, 266);
             this.txbNotes.Multiline = true;
@@ -129,7 +129,7 @@
             // 
             // txbWatchedEp
             // 
-            this.txbWatchedEp.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbWatchedEp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbWatchedEp.Enabled = false;
             this.txbWatchedEp.Font = new System.Drawing.Font("Arial", 10F);
             this.txbWatchedEp.Location = new System.Drawing.Point(120, 346);
@@ -143,7 +143,7 @@
             // 
             // txbTotalEp
             // 
-            this.txbTotalEp.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbTotalEp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbTotalEp.Enabled = false;
             this.txbTotalEp.Font = new System.Drawing.Font("Arial", 10F);
             this.txbTotalEp.Location = new System.Drawing.Point(45, 346);
@@ -159,7 +159,7 @@
             // 
             this.lbNotes.AutoSize = true;
             this.lbNotes.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbNotes.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbNotes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbNotes.Location = new System.Drawing.Point(196, 243);
             this.lbNotes.Name = "lbNotes";
             this.lbNotes.Size = new System.Drawing.Size(54, 19);
@@ -170,7 +170,7 @@
             // 
             this.lbScore.AutoSize = true;
             this.lbScore.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbScore.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbScore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbScore.Location = new System.Drawing.Point(416, 184);
             this.lbScore.Name = "lbScore";
             this.lbScore.Size = new System.Drawing.Size(54, 19);
@@ -182,7 +182,7 @@
             this.lbTotalEp.AutoSize = true;
             this.lbTotalEp.Enabled = false;
             this.lbTotalEp.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbTotalEp.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbTotalEp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbTotalEp.Location = new System.Drawing.Point(8, 348);
             this.lbTotalEp.Name = "lbTotalEp";
             this.lbTotalEp.Size = new System.Drawing.Size(31, 19);
@@ -195,7 +195,7 @@
             this.chDubbed.AutoSize = true;
             this.chDubbed.Enabled = false;
             this.chDubbed.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.chDubbed.ForeColor = System.Drawing.SystemColors.Menu;
+            this.chDubbed.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.chDubbed.Location = new System.Drawing.Point(205, 346);
             this.chDubbed.Name = "chDubbed";
             this.chDubbed.Size = new System.Drawing.Size(89, 23);
@@ -206,7 +206,7 @@
             // 
             // cbListGroup
             // 
-            this.cbListGroup.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.cbListGroup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.cbListGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbListGroup.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbListGroup.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -218,6 +218,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(117)))));
             this.panel1.Controls.Add(this.lbLenght);
             this.panel1.Controls.Add(this.txbLenght);
             this.panel1.Controls.Add(this.pbDeletePic);
@@ -260,7 +261,7 @@
             // 
             this.lbLenght.AutoSize = true;
             this.lbLenght.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbLenght.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbLenght.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbLenght.Location = new System.Drawing.Point(8, 294);
             this.lbLenght.Name = "lbLenght";
             this.lbLenght.Size = new System.Drawing.Size(63, 19);
@@ -270,7 +271,7 @@
             // 
             // txbLenght
             // 
-            this.txbLenght.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbLenght.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbLenght.Enabled = false;
             this.txbLenght.Font = new System.Drawing.Font("Arial", 10F);
             this.txbLenght.Location = new System.Drawing.Point(10, 316);
@@ -286,7 +287,7 @@
             // 
             this.pbDeletePic.BackColor = System.Drawing.Color.Transparent;
             this.pbDeletePic.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbDeletePic.Image = global::ListUI.Properties.Resources.delete;
+            this.pbDeletePic.Image = global::ListUI.Properties.Resources.item_delete;
             this.pbDeletePic.InitialImage = null;
             this.pbDeletePic.Location = new System.Drawing.Point(476, 154);
             this.pbDeletePic.Name = "pbDeletePic";
@@ -300,7 +301,7 @@
             // 
             this.pbReloadPic.BackColor = System.Drawing.Color.Transparent;
             this.pbReloadPic.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbReloadPic.Image = global::ListUI.Properties.Resources.check;
+            this.pbReloadPic.Image = global::ListUI.Properties.Resources.item_check;
             this.pbReloadPic.InitialImage = null;
             this.pbReloadPic.Location = new System.Drawing.Point(450, 154);
             this.pbReloadPic.Name = "pbReloadPic";
@@ -315,7 +316,7 @@
             this.chOwned.AutoSize = true;
             this.chOwned.Enabled = false;
             this.chOwned.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.chOwned.ForeColor = System.Drawing.SystemColors.Menu;
+            this.chOwned.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.chOwned.Location = new System.Drawing.Point(205, 346);
             this.chOwned.Name = "chOwned";
             this.chOwned.Size = new System.Drawing.Size(82, 23);
@@ -329,7 +330,7 @@
             this.chFinished.AutoSize = true;
             this.chFinished.Enabled = false;
             this.chFinished.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.chFinished.ForeColor = System.Drawing.SystemColors.Menu;
+            this.chFinished.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.chFinished.Location = new System.Drawing.Point(205, 346);
             this.chFinished.Name = "chFinished";
             this.chFinished.Size = new System.Drawing.Size(94, 23);
@@ -340,7 +341,7 @@
             // 
             // cbSeason_Platform
             // 
-            this.cbSeason_Platform.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.cbSeason_Platform.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.cbSeason_Platform.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSeason_Platform.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.cbSeason_Platform.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -352,7 +353,7 @@
             // 
             // txbCurrentSe
             // 
-            this.txbCurrentSe.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbCurrentSe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbCurrentSe.Enabled = false;
             this.txbCurrentSe.Font = new System.Drawing.Font("Arial", 10F);
             this.txbCurrentSe.Location = new System.Drawing.Point(45, 316);
@@ -369,7 +370,7 @@
             this.lbTotalSe.AutoSize = true;
             this.lbTotalSe.Enabled = false;
             this.lbTotalSe.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbTotalSe.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbTotalSe.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbTotalSe.Location = new System.Drawing.Point(8, 320);
             this.lbTotalSe.Name = "lbTotalSe";
             this.lbTotalSe.Size = new System.Drawing.Size(31, 19);
@@ -381,7 +382,7 @@
             // 
             this.lbSeason_Platform.AutoSize = true;
             this.lbSeason_Platform.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbSeason_Platform.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbSeason_Platform.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbSeason_Platform.Location = new System.Drawing.Point(86, 244);
             this.lbSeason_Platform.Name = "lbSeason_Platform";
             this.lbSeason_Platform.Size = new System.Drawing.Size(67, 19);
@@ -392,7 +393,7 @@
             // 
             this.lbYear.AutoSize = true;
             this.lbYear.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbYear.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbYear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbYear.Location = new System.Drawing.Point(6, 244);
             this.lbYear.Name = "lbYear";
             this.lbYear.Size = new System.Drawing.Size(42, 19);
@@ -401,7 +402,7 @@
             // 
             // txbYear
             // 
-            this.txbYear.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbYear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbYear.Font = new System.Drawing.Font("Arial", 10F);
             this.txbYear.Location = new System.Drawing.Point(10, 266);
             this.txbYear.MaxLength = 4;
@@ -413,7 +414,7 @@
             // 
             // txbPictureUrl
             // 
-            this.txbPictureUrl.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbPictureUrl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbPictureUrl.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbPictureUrl.Location = new System.Drawing.Point(200, 155);
             this.txbPictureUrl.Name = "txbPictureUrl";
@@ -425,7 +426,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.ForeColor = System.Drawing.SystemColors.Menu;
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.label2.Location = new System.Drawing.Point(196, 133);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(101, 19);
@@ -434,7 +435,7 @@
             // 
             // txbUrl
             // 
-            this.txbUrl.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbUrl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbUrl.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbUrl.Location = new System.Drawing.Point(200, 100);
             this.txbUrl.Name = "txbUrl";
@@ -446,7 +447,7 @@
             // 
             this.lbUrl.AutoSize = true;
             this.lbUrl.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbUrl.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbUrl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbUrl.Location = new System.Drawing.Point(196, 78);
             this.lbUrl.Name = "lbUrl";
             this.lbUrl.Size = new System.Drawing.Size(79, 19);
@@ -457,7 +458,7 @@
             // 
             this.pbFavourite.BackColor = System.Drawing.Color.Transparent;
             this.pbFavourite.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbFavourite.Image = global::ListUI.Properties.Resources.empty;
+            this.pbFavourite.Image = global::ListUI.Properties.Resources.item_heart_inactive;
             this.pbFavourite.InitialImage = null;
             this.pbFavourite.Location = new System.Drawing.Point(347, 323);
             this.pbFavourite.Name = "pbFavourite";
@@ -472,7 +473,7 @@
             // pbSave
             // 
             this.pbSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSave.Image = global::ListUI.Properties.Resources.save;
+            this.pbSave.Image = global::ListUI.Properties.Resources.item_save;
             this.pbSave.InitialImage = null;
             this.pbSave.Location = new System.Drawing.Point(402, 323);
             this.pbSave.Name = "pbSave";
@@ -487,8 +488,7 @@
             // pbDelete
             // 
             this.pbDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbDelete.Enabled = false;
-            this.pbDelete.Image = global::ListUI.Properties.Resources.delete;
+            this.pbDelete.Image = global::ListUI.Properties.Resources.item_delete;
             this.pbDelete.InitialImage = null;
             this.pbDelete.Location = new System.Drawing.Point(454, 323);
             this.pbDelete.Name = "pbDelete";
@@ -496,7 +496,6 @@
             this.pbDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbDelete.TabIndex = 9;
             this.pbDelete.TabStop = false;
-            this.pbDelete.Visible = false;
             this.pbDelete.Click += new System.EventHandler(this.deletePicture_Click);
             this.pbDelete.MouseEnter += new System.EventHandler(this.pbDelete_MouseEnter);
             this.pbDelete.MouseLeave += new System.EventHandler(this.pbDelete_MouseLeave);
@@ -518,7 +517,7 @@
             this.lbWatchedEp.AutoSize = true;
             this.lbWatchedEp.Enabled = false;
             this.lbWatchedEp.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbWatchedEp.ForeColor = System.Drawing.SystemColors.Menu;
+            this.lbWatchedEp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbWatchedEp.Location = new System.Drawing.Point(101, 348);
             this.lbWatchedEp.Name = "lbWatchedEp";
             this.lbWatchedEp.Size = new System.Drawing.Size(13, 19);
@@ -530,10 +529,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(117)))));
             this.ClientSize = new System.Drawing.Size(538, 399);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;

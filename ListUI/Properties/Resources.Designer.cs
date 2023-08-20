@@ -61,36 +61,6 @@ namespace ListUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap add_item {
-            get {
-                object obj = ResourceManager.GetObject("add_item", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap add_row {
-            get {
-                object obj = ResourceManager.GetObject("add_row", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap anime {
-            get {
-                object obj = ResourceManager.GetObject("anime", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon Bookmark {
@@ -103,9 +73,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap check {
+        internal static System.Drawing.Bitmap item_check {
             get {
-                object obj = ResourceManager.GetObject("check", resourceCulture);
+                object obj = ResourceManager.GetObject("item_check", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +83,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap clear_filter {
+        internal static System.Drawing.Bitmap item_delete {
             get {
-                object obj = ResourceManager.GetObject("clear_filter", resourceCulture);
+                object obj = ResourceManager.GetObject("item_delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +93,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap delete {
+        internal static System.Drawing.Bitmap item_heart {
             get {
-                object obj = ResourceManager.GetObject("delete", resourceCulture);
+                object obj = ResourceManager.GetObject("item_heart", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +103,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap delete_row {
+        internal static System.Drawing.Bitmap item_heart_inactive {
             get {
-                object obj = ResourceManager.GetObject("delete_row", resourceCulture);
+                object obj = ResourceManager.GetObject("item_heart_inactive", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +113,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap down {
+        internal static System.Drawing.Bitmap item_nocover {
             get {
-                object obj = ResourceManager.GetObject("down", resourceCulture);
+                object obj = ResourceManager.GetObject("item_nocover", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +123,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap empty {
+        internal static System.Drawing.Bitmap item_note {
             get {
-                object obj = ResourceManager.GetObject("empty", resourceCulture);
+                object obj = ResourceManager.GetObject("item_note", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +133,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap first_page {
+        internal static System.Drawing.Bitmap item_save {
             get {
-                object obj = ResourceManager.GetObject("first_page", resourceCulture);
+                object obj = ResourceManager.GetObject("item_save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +143,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap first_page_inactive {
+        internal static System.Drawing.Bitmap list_crunchyroll {
             get {
-                object obj = ResourceManager.GetObject("first_page_inactive", resourceCulture);
+                object obj = ResourceManager.GetObject("list_crunchyroll", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +153,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap game {
+        internal static System.Drawing.Bitmap list_crunchyroll_grad {
             get {
-                object obj = ResourceManager.GetObject("game", resourceCulture);
+                object obj = ResourceManager.GetObject("list_crunchyroll_grad", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +163,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap heart {
+        internal static System.Drawing.Bitmap list_game {
             get {
-                object obj = ResourceManager.GetObject("heart", resourceCulture);
+                object obj = ResourceManager.GetObject("list_game", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +173,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap last_page {
+        internal static System.Drawing.Bitmap list_series {
             get {
-                object obj = ResourceManager.GetObject("last_page", resourceCulture);
+                object obj = ResourceManager.GetObject("list_series", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +183,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap last_page_inactive {
+        internal static System.Drawing.Bitmap list_series_grad {
             get {
-                object obj = ResourceManager.GetObject("last_page_inactive", resourceCulture);
+                object obj = ResourceManager.GetObject("list_series_grad", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,9 +193,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap menu {
+        internal static System.Drawing.Bitmap list_steam {
             get {
-                object obj = ResourceManager.GetObject("menu", resourceCulture);
+                object obj = ResourceManager.GetObject("list_steam", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,9 +203,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap next_page {
+        internal static System.Drawing.Bitmap list_steam_grad {
             get {
-                object obj = ResourceManager.GetObject("next_page", resourceCulture);
+                object obj = ResourceManager.GetObject("list_steam_grad", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -243,9 +213,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap next_page_inactive {
+        internal static System.Drawing.Bitmap menu_clear_filter {
             get {
-                object obj = ResourceManager.GetObject("next_page_inactive", resourceCulture);
+                object obj = ResourceManager.GetObject("menu_clear_filter", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,9 +223,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap nocover {
+        internal static System.Drawing.Bitmap menu_item {
             get {
-                object obj = ResourceManager.GetObject("nocover", resourceCulture);
+                object obj = ResourceManager.GetObject("menu_item", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,9 +233,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap note {
+        internal static System.Drawing.Bitmap menu_random {
             get {
-                object obj = ResourceManager.GetObject("note", resourceCulture);
+                object obj = ResourceManager.GetObject("menu_random", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,9 +243,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap prev_page {
+        internal static System.Drawing.Bitmap menu_search {
             get {
-                object obj = ResourceManager.GetObject("prev_page", resourceCulture);
+                object obj = ResourceManager.GetObject("menu_search", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -283,9 +253,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap prev_page_inactive {
+        internal static System.Drawing.Bitmap menu_settings {
             get {
-                object obj = ResourceManager.GetObject("prev_page_inactive", resourceCulture);
+                object obj = ResourceManager.GetObject("menu_settings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,9 +263,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap random {
+        internal static System.Drawing.Bitmap menu_sort_asc {
             get {
-                object obj = ResourceManager.GetObject("random", resourceCulture);
+                object obj = ResourceManager.GetObject("menu_sort_asc", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -303,9 +273,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap save {
+        internal static System.Drawing.Bitmap menu_sort_desc {
             get {
-                object obj = ResourceManager.GetObject("save", resourceCulture);
+                object obj = ResourceManager.GetObject("menu_sort_desc", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -313,9 +283,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap search {
+        internal static System.Drawing.Bitmap page_first {
             get {
-                object obj = ResourceManager.GetObject("search", resourceCulture);
+                object obj = ResourceManager.GetObject("page_first", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -323,9 +293,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap series {
+        internal static System.Drawing.Bitmap page_first_inactive {
             get {
-                object obj = ResourceManager.GetObject("series", resourceCulture);
+                object obj = ResourceManager.GetObject("page_first_inactive", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -333,9 +303,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap settings {
+        internal static System.Drawing.Bitmap page_last {
             get {
-                object obj = ResourceManager.GetObject("settings", resourceCulture);
+                object obj = ResourceManager.GetObject("page_last", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -343,9 +313,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sort_asc {
+        internal static System.Drawing.Bitmap page_last_inactive {
             get {
-                object obj = ResourceManager.GetObject("sort_asc", resourceCulture);
+                object obj = ResourceManager.GetObject("page_last_inactive", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -353,9 +323,9 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sort_desc {
+        internal static System.Drawing.Bitmap page_next {
             get {
-                object obj = ResourceManager.GetObject("sort_desc", resourceCulture);
+                object obj = ResourceManager.GetObject("page_next", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -363,9 +333,79 @@ namespace ListUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap up {
+        internal static System.Drawing.Bitmap page_next_inactive {
             get {
-                object obj = ResourceManager.GetObject("up", resourceCulture);
+                object obj = ResourceManager.GetObject("page_next_inactive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap page_prev {
+            get {
+                object obj = ResourceManager.GetObject("page_prev", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap page_prev_inactive {
+            get {
+                object obj = ResourceManager.GetObject("page_prev_inactive", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_add_item {
+            get {
+                object obj = ResourceManager.GetObject("settings_add_item", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_add_row {
+            get {
+                object obj = ResourceManager.GetObject("settings_add_row", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_arrow_down {
+            get {
+                object obj = ResourceManager.GetObject("settings_arrow_down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_arrow_up {
+            get {
+                object obj = ResourceManager.GetObject("settings_arrow_up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap settings_delete_row {
+            get {
+                object obj = ResourceManager.GetObject("settings_delete_row", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

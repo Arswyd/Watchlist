@@ -36,7 +36,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(117)))));
             this.panel1.Controls.Add(this.lbListGroupCount);
             this.panel1.Controls.Add(this.lbListGroupName);
             this.panel1.Location = new System.Drawing.Point(5, 5);
@@ -49,7 +49,7 @@
             // lbListGroupCount
             // 
             this.lbListGroupCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbListGroupCount.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbListGroupCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbListGroupCount.Location = new System.Drawing.Point(150, 7);
             this.lbListGroupCount.Name = "lbListGroupCount";
             this.lbListGroupCount.Size = new System.Drawing.Size(28, 13);
@@ -63,7 +63,7 @@
             this.lbListGroupName.AutoSize = true;
             this.lbListGroupName.BackColor = System.Drawing.Color.Transparent;
             this.lbListGroupName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbListGroupName.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lbListGroupName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbListGroupName.Location = new System.Drawing.Point(5, 5);
             this.lbListGroupName.Name = "lbListGroupName";
             this.lbListGroupName.Size = new System.Drawing.Size(84, 17);

@@ -42,7 +42,7 @@ namespace ListUI.ListItems
 
             if (!File.Exists(item.PictureDir))
             {
-                pbListItem.Image = Properties.Resources.nocover;
+                pbListItem.Image = Properties.Resources.item_nocover;
             }
             else
             {
@@ -93,6 +93,10 @@ namespace ListUI.ListItems
             {
                 panel2.BackColor = Color.Maroon;
             }
+            else
+            {
+                panel2.BackColor = Color.Transparent;
+            }
             if (item.ListGroup != "Watching")
             {
                 panel1.Enabled = false;
@@ -116,6 +120,11 @@ namespace ListUI.ListItems
             {
                 pbCheck.Show();
                 pbNotes.Show();
+            }
+            else
+            {
+                if (pbCheck.Visible) { pbCheck.Hide(); }
+                if (pbNotes.Visible) { pbNotes.Hide(); }
             }
         }
 
@@ -157,7 +166,7 @@ namespace ListUI.ListItems
 
                     MessageBox.Show("Anime Completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    callerForm.WireUpRequest(listGroup);
+                    callerForm.WireUpRequest(listGroup, true);
                 }
                 else
                 {

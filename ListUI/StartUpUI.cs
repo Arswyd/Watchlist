@@ -8,6 +8,7 @@ namespace ListUI
     {
         string listType;
         bool isPrimaryClient;
+        bool isShowingDeleted;
         public StartUpUI()
         {
             InitializeComponent();
@@ -21,7 +22,7 @@ namespace ListUI
             listType = "Anime";
             this.Enabled = false;
             this.Hide();
-            LibraryUI frm = new LibraryUI(listType, isPrimaryClient);
+            LibraryUI frm = new LibraryUI(listType, isPrimaryClient, isShowingDeleted);
             frm.ShowDialog();
             this.Close();
         }
@@ -31,7 +32,7 @@ namespace ListUI
             listType = "Series";
             this.Enabled = false;
             this.Hide();
-            LibraryUI frm = new LibraryUI(listType, isPrimaryClient);
+            LibraryUI frm = new LibraryUI(listType, isPrimaryClient, isShowingDeleted);
             frm.ShowDialog();
             this.Close();
         }
@@ -41,7 +42,7 @@ namespace ListUI
             listType = "Game";
             this.Enabled = false;
             this.Hide();
-            LibraryUI frm = new LibraryUI(listType, isPrimaryClient);
+            LibraryUI frm = new LibraryUI(listType, isPrimaryClient, isShowingDeleted);
             frm.ShowDialog();
             this.Close();
         }
@@ -56,7 +57,8 @@ namespace ListUI
 
         private void ApplicationStartup()
         {
-            isPrimaryClient = SqliteDataAccess.GetAppClientType() == 1;
+            isPrimaryClient = SqliteDataAccess.GetClientType() == 1;
+            isShowingDeleted = SqliteDataAccess.GetShowingDeleted() == 1;
         }
     }
 }

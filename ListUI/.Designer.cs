@@ -89,7 +89,7 @@
             // fpListItemPanel
             // 
             this.fpListItemPanel.AutoScroll = true;
-            this.fpListItemPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.fpListItemPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(38)))), ((int)(((byte)(44)))));
             this.fpListItemPanel.Location = new System.Drawing.Point(24, 60);
             this.fpListItemPanel.Margin = new System.Windows.Forms.Padding(0);
             this.fpListItemPanel.Name = "fpListItemPanel";
@@ -99,7 +99,7 @@
             // 
             // txbTitleSearch
             // 
-            this.txbTitleSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.txbTitleSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(38)))), ((int)(((byte)(44)))));
             this.txbTitleSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txbTitleSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbTitleSearch.ForeColor = System.Drawing.Color.White;
@@ -113,15 +113,15 @@
             // 
             // fpListHeaderPanel
             // 
-            this.fpListHeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
-            this.fpListHeaderPanel.Location = new System.Drawing.Point(70, 0);
+            this.fpListHeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(117)))));
+            this.fpListHeaderPanel.Location = new System.Drawing.Point(72, 0);
             this.fpListHeaderPanel.Name = "fpListHeaderPanel";
             this.fpListHeaderPanel.Size = new System.Drawing.Size(198, 761);
             this.fpListHeaderPanel.TabIndex = 5;
             // 
             // pMain
             // 
-            this.pMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.pMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(38)))), ((int)(((byte)(44)))));
             this.pMain.Controls.Add(this.cbSeasonPlatformSearch);
             this.pMain.Controls.Add(this.rbTitle);
             this.pMain.Controls.Add(this.rbScore);
@@ -149,7 +149,7 @@
             // 
             // cbSeasonPlatformSearch
             // 
-            this.cbSeasonPlatformSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.cbSeasonPlatformSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(38)))), ((int)(((byte)(44)))));
             this.cbSeasonPlatformSearch.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.cbSeasonPlatformSearch.DropDownWidth = 100;
             this.cbSeasonPlatformSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -192,7 +192,7 @@
             // lbYearSearch
             // 
             this.lbYearSearch.AutoSize = true;
-            this.lbYearSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.lbYearSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(38)))), ((int)(((byte)(44)))));
             this.lbYearSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lbYearSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbYearSearch.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -206,7 +206,7 @@
             // lbPages
             // 
             this.lbPages.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lbPages.ForeColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.lbPages.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.lbPages.Location = new System.Drawing.Point(540, 716);
             this.lbPages.Name = "lbPages";
             this.lbPages.Size = new System.Drawing.Size(85, 26);
@@ -217,7 +217,7 @@
             // pbLastPage
             // 
             this.pbLastPage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbLastPage.Image = global::ListUI.Properties.Resources.last_page;
+            this.pbLastPage.Image = global::ListUI.Properties.Resources.page_last;
             this.pbLastPage.Location = new System.Drawing.Point(666, 714);
             this.pbLastPage.Name = "pbLastPage";
             this.pbLastPage.Size = new System.Drawing.Size(30, 30);
@@ -231,7 +231,7 @@
             // pbNextPage
             // 
             this.pbNextPage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbNextPage.Image = global::ListUI.Properties.Resources.next_page;
+            this.pbNextPage.Image = global::ListUI.Properties.Resources.page_next;
             this.pbNextPage.Location = new System.Drawing.Point(630, 714);
             this.pbNextPage.Name = "pbNextPage";
             this.pbNextPage.Size = new System.Drawing.Size(30, 30);
@@ -245,7 +245,7 @@
             // pbPreviousPage
             // 
             this.pbPreviousPage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbPreviousPage.Image = global::ListUI.Properties.Resources.prev_page;
+            this.pbPreviousPage.Image = global::ListUI.Properties.Resources.page_prev;
             this.pbPreviousPage.Location = new System.Drawing.Point(500, 714);
             this.pbPreviousPage.Name = "pbPreviousPage";
             this.pbPreviousPage.Size = new System.Drawing.Size(30, 30);
@@ -259,7 +259,7 @@
             // pbFirstPage
             // 
             this.pbFirstPage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbFirstPage.Image = global::ListUI.Properties.Resources.first_page;
+            this.pbFirstPage.Image = global::ListUI.Properties.Resources.page_first;
             this.pbFirstPage.Location = new System.Drawing.Point(464, 714);
             this.pbFirstPage.Name = "pbFirstPage";
             this.pbFirstPage.Size = new System.Drawing.Size(30, 30);
@@ -282,7 +282,7 @@
             // pbOrderBy
             // 
             this.pbOrderBy.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbOrderBy.Image = global::ListUI.Properties.Resources.sort_desc;
+            this.pbOrderBy.Image = global::ListUI.Properties.Resources.menu_sort_desc;
             this.pbOrderBy.Location = new System.Drawing.Point(1097, 18);
             this.pbOrderBy.Name = "pbOrderBy";
             this.pbOrderBy.Size = new System.Drawing.Size(30, 30);
@@ -294,7 +294,7 @@
             // pbSearch
             // 
             this.pbSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSearch.Image = global::ListUI.Properties.Resources.search;
+            this.pbSearch.Image = global::ListUI.Properties.Resources.menu_search;
             this.pbSearch.Location = new System.Drawing.Point(732, 18);
             this.pbSearch.Name = "pbSearch";
             this.pbSearch.Size = new System.Drawing.Size(30, 30);
@@ -308,7 +308,7 @@
             // pbToggleFilter
             // 
             this.pbToggleFilter.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbToggleFilter.Image = global::ListUI.Properties.Resources.clear_filter;
+            this.pbToggleFilter.Image = global::ListUI.Properties.Resources.menu_clear_filter;
             this.pbToggleFilter.Location = new System.Drawing.Point(768, 18);
             this.pbToggleFilter.Name = "pbToggleFilter";
             this.pbToggleFilter.Size = new System.Drawing.Size(30, 30);
@@ -337,7 +337,7 @@
             // lbTitleSearch
             // 
             this.lbTitleSearch.AutoSize = true;
-            this.lbTitleSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.lbTitleSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(38)))), ((int)(((byte)(44)))));
             this.lbTitleSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.lbTitleSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lbTitleSearch.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -350,7 +350,7 @@
             // 
             // txbYearSearch
             // 
-            this.txbYearSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.txbYearSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(38)))), ((int)(((byte)(44)))));
             this.txbYearSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txbYearSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbYearSearch.ForeColor = System.Drawing.Color.White;
@@ -382,7 +382,7 @@
             // pbSelectGame
             // 
             this.pbSelectGame.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSelectGame.Image = global::ListUI.Properties.Resources.game;
+            this.pbSelectGame.Image = global::ListUI.Properties.Resources.list_game;
             this.pbSelectGame.Location = new System.Drawing.Point(10, 10);
             this.pbSelectGame.Name = "pbSelectGame";
             this.pbSelectGame.Size = new System.Drawing.Size(50, 50);
@@ -396,7 +396,7 @@
             // pbSelectSeries
             // 
             this.pbSelectSeries.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSelectSeries.Image = global::ListUI.Properties.Resources.series;
+            this.pbSelectSeries.Image = global::ListUI.Properties.Resources.list_series;
             this.pbSelectSeries.Location = new System.Drawing.Point(10, 10);
             this.pbSelectSeries.Name = "pbSelectSeries";
             this.pbSelectSeries.Size = new System.Drawing.Size(50, 50);
@@ -411,7 +411,7 @@
             // 
             this.pbSelectAnime.BackColor = System.Drawing.Color.Transparent;
             this.pbSelectAnime.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSelectAnime.Image = global::ListUI.Properties.Resources.anime;
+            this.pbSelectAnime.Image = global::ListUI.Properties.Resources.list_crunchyroll;
             this.pbSelectAnime.Location = new System.Drawing.Point(10, 10);
             this.pbSelectAnime.Name = "pbSelectAnime";
             this.pbSelectAnime.Size = new System.Drawing.Size(50, 50);
@@ -425,7 +425,7 @@
             // pbSettings
             // 
             this.pbSettings.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbSettings.Image = global::ListUI.Properties.Resources.settings;
+            this.pbSettings.Image = global::ListUI.Properties.Resources.menu_settings;
             this.pbSettings.Location = new System.Drawing.Point(12, 699);
             this.pbSettings.Name = "pbSettings";
             this.pbSettings.Size = new System.Drawing.Size(50, 50);
@@ -438,7 +438,7 @@
             // 
             // pSidebar
             // 
-            this.pSidebar.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
             this.pSidebar.Controls.Add(this.pbRandom);
             this.pSidebar.Controls.Add(this.pGames);
             this.pSidebar.Controls.Add(this.pSeries);
@@ -455,7 +455,7 @@
             // pbRandom
             // 
             this.pbRandom.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbRandom.Image = global::ListUI.Properties.Resources.random;
+            this.pbRandom.Image = global::ListUI.Properties.Resources.menu_random;
             this.pbRandom.Location = new System.Drawing.Point(12, 643);
             this.pbRandom.Name = "pbRandom";
             this.pbRandom.Size = new System.Drawing.Size(50, 50);
@@ -468,6 +468,7 @@
             // 
             // pGames
             // 
+            this.pGames.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
             this.pGames.Controls.Add(this.pbIndicatorG);
             this.pGames.Controls.Add(this.pbSelectGame);
             this.pGames.Location = new System.Drawing.Point(0, 140);
@@ -485,6 +486,7 @@
             // 
             // pSeries
             // 
+            this.pSeries.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
             this.pSeries.Controls.Add(this.pbIndicatorS);
             this.pSeries.Controls.Add(this.pbSelectSeries);
             this.pSeries.Location = new System.Drawing.Point(0, 70);
@@ -502,6 +504,7 @@
             // 
             // pAnime
             // 
+            this.pAnime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(130)))), ((int)(((byte)(184)))));
             this.pAnime.Controls.Add(this.pbSelectAnime);
             this.pAnime.Controls.Add(this.pbIndicatorA);
             this.pAnime.Location = new System.Drawing.Point(0, 0);
@@ -520,7 +523,7 @@
             // pbAddItem
             // 
             this.pbAddItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbAddItem.Image = global::ListUI.Properties.Resources.add_item;
+            this.pbAddItem.Image = global::ListUI.Properties.Resources.settings_add_item;
             this.pbAddItem.Location = new System.Drawing.Point(12, 587);
             this.pbAddItem.Name = "pbAddItem";
             this.pbAddItem.Size = new System.Drawing.Size(50, 50);
@@ -535,7 +538,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.ClientSize = new System.Drawing.Size(1434, 761);
             this.Controls.Add(this.fpListHeaderPanel);
             this.Controls.Add(this.pSidebar);

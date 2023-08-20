@@ -118,97 +118,109 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="note" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="item_note" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\note.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="anime" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\anime.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="series" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="list_series" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\series.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="item_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="item_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="item_heart_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\empty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="heart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="item_heart" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\heart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="menu_settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="game" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="list_game" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\game.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="menu_item" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\menu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="nocover" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="item_nocover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\nocover.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="add_row" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="settings_add_row" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\add_row.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="check" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="item_check" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\check.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="clear_filter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="menu_clear_filter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\clear_filter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="delete_row" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="settings_delete_row" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\delete_row.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="settings_arrow_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="search" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="menu_search" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="sort_asc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="menu_sort_asc" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\sort_asc.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="sort_desc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="menu_sort_desc" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\sort_desc.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="settings_arrow_up" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Bookmark" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Bookmark.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="add_item" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="settings_add_item" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_item.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="first_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="page_first" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\first page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="last_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="page_last" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\last page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="next_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="page_next" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\next page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="prev_page" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="page_prev" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\prev page.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="first_page_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="page_first_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\first page inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="last_page_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="page_last_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\last page inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="next_page_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="page_next_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\next page inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="prev_page_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="page_prev_inactive" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\prev page inactive.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="random" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="menu_random" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\random.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="list_crunchyroll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-crunchyroll-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="list_steam" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-steam-64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="list_crunchyroll_grad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\crunchyroll_gradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="list_series_grad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\series_gradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="list_steam_grad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\steam_gradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

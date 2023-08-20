@@ -35,7 +35,7 @@ namespace ListLibrary.Model
             Favourite = false;
             Dubbed = false;
             ListGroup = "Not Aired Yet";
-            Season = "Spring";
+            Season = "-";
             TotalEp = 12;
             ModDate = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
         }

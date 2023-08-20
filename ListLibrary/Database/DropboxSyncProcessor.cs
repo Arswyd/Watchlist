@@ -23,7 +23,7 @@ namespace ListLibrary.Database
             {
                 using (var fileStream = File.Open(localFilePath, FileMode.Open))
                 {
-                    var uploaded = client.Files.UploadAsync(dropboxFilePath, WriteMode.Overwrite.Instance, body: fileStream).Result;
+                    var uploaded = client.Files.UploadAsync(dropboxFilePath, WriteMode.Add.Instance, body: fileStream).Result;
                 }
             }
             catch (Exception ex)

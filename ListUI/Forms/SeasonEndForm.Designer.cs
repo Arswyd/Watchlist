@@ -37,7 +37,7 @@
             // 
             // btnNextSeason
             // 
-            this.btnNextSeason.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnNextSeason.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.btnNextSeason.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnNextSeason.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnNextSeason.Location = new System.Drawing.Point(392, 69);
@@ -50,7 +50,7 @@
             // 
             // txbNextSeasonEP
             // 
-            this.txbNextSeasonEP.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.txbNextSeasonEP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.txbNextSeasonEP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.txbNextSeasonEP.Location = new System.Drawing.Point(450, 15);
             this.txbNextSeasonEP.Name = "txbNextSeasonEP";
@@ -60,7 +60,7 @@
             // 
             // btnSeasonEnd
             // 
-            this.btnSeasonEnd.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnSeasonEnd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.btnSeasonEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnSeasonEnd.Location = new System.Drawing.Point(12, 69);
             this.btnSeasonEnd.Name = "btnSeasonEnd";
@@ -72,7 +72,7 @@
             // 
             // btnFinishedSeries
             // 
-            this.btnFinishedSeries.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnFinishedSeries.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.btnFinishedSeries.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.btnFinishedSeries.Location = new System.Drawing.Point(138, 69);
             this.btnFinishedSeries.Name = "btnFinishedSeries";
@@ -85,8 +85,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(117)))));
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(225)))), ((int)(((byte)(250)))));
             this.label1.Location = new System.Drawing.Point(12, 18);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(437, 20);
@@ -97,7 +98,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(50)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(76)))), ((int)(((byte)(117)))));
             this.ClientSize = new System.Drawing.Size(524, 121);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnFinishedSeries);

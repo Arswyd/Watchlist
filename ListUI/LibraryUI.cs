@@ -24,6 +24,7 @@ namespace ListUI
         private string lastActiveListType;
         private bool lastIsFiltered;
         bool isPrimaryClient = false;
+        bool isShowingDeleted = false;
         bool isFiltered = false;
         bool isAscending = false;
         bool wasRandom = false;
@@ -31,13 +32,16 @@ namespace ListUI
         int pageCount = 1;
         Random random = new Random();
 
-        public LibraryUI(string listType, bool isPrimaryClient)
+        public LibraryUI(string _listType, bool _isPrimaryClient, bool _isShowingDeleted)
         {
             InitializeComponent();
 
-            SetIsPrimaryClient(isPrimaryClient);
+            CheckSyncDates();
 
-            activeListType = listType;
+            SetIsPrimaryClient(_isPrimaryClient);
+            SetIsShowingDeleted(_isShowingDeleted);
+
+            activeListType = _listType;
 
             activeGroup = (activeListType == "Game") ? "Playing" : "Watching";
 
@@ -46,7 +50,30 @@ namespace ListUI
             WireUpLibraryForm(true, false);
         }
 
-        /* Get/Set isPrimaryClient */
+        public void CheckSyncDates()
+        {
+            string s = "";
+
+            if (SqliteDataAccess.GetAnimeSyncDate().AddMonths(3) < DateTime.Now)
+            {
+                s += "Anime";
+            }
+            if (SqliteDataAccess.GetSeriesSyncDate().AddMonths(3) < DateTime.Now)
+            {
+                s += s == "" ? "Series" : ", Series";
+            }
+            if (SqliteDataAccess.GetGameSyncDate().AddMonths(3) < DateTime.Now)
+            {
+                s += s == "" ? "Game" : ", Game";
+            }
+
+            if (s != "")
+            {
+                MessageBox.Show("Need to sync: " + s, "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        /* isPrimaryClient */
 
         public void SetIsPrimaryClient(bool _isPrimaryClient)
         {
@@ -59,6 +86,18 @@ namespace ListUI
         public bool GetIsPrimaryClient()
         {
             return isPrimaryClient;
+        }
+
+        /* isShowingDeleted */
+
+        public void SetIsShowingDeleted(bool _isShowingDeleted)
+        {
+            isShowingDeleted = _isShowingDeleted;
+        }
+
+        public bool GetIsShowingDeleted()
+        {
+            return isShowingDeleted;
         }
 
         /* Wire up form */
@@ -89,31 +128,47 @@ namespace ListUI
             fpListHeaderPanel.Controls.Clear();
 
             if (activeListType == "Anime")
-                headerList = SqliteDataAccess.LoadAnimeListHeaders();
+                headerList = SqliteDataAccess.LoadAnimeListHeaders(isShowingDeleted);
             else if (activeListType == "Game")
-                headerList = SqliteDataAccess.LoadGameListHeaders();
+                headerList = SqliteDataAccess.LoadGameListHeaders(isShowingDeleted);
             else if (activeListType == "Series")
-                headerList = SqliteDataAccess.LoadSeriesListHeaders();
+                headerList = SqliteDataAccess.LoadSeriesListHeaders(isShowingDeleted);
 
-            ListMenuItem allMenuItem = new ListMenuItem(activeGroup, this);
+            ListMenuItem allMenuItem = new ListMenuItem(this);
             allMenuItem.MenuItemName("All");
             allMenuItem.MenuItemCount(headerList.Where(n => n.ListGroup != "Completed").Sum(n => n.Count).ToString());
             if (activeGroup == "All")
             {
-                allMenuItem.ActiveColor();
+                allMenuItem.SetActive(true);
             }
             fpListHeaderPanel.Controls.Add(allMenuItem);
 
-            foreach (HeaderModel listsetting in headerList.OrderBy(n => n.SortOrder))
+            foreach (HeaderModel listsetting in headerList.Where(n => n.ListGroup != "Deleted").OrderBy(n => n.SortOrder))
             {
-                ListMenuItem menuItem = new ListMenuItem(activeGroup, this);
+                ListMenuItem menuItem = new ListMenuItem(this);
                 menuItem.MenuItemName(listsetting.ListGroup);
                 menuItem.MenuItemCount(listsetting.Count.ToString());
                 if (listsetting.ListGroup == activeGroup)
                 {
-                    menuItem.ActiveColor();
+                    menuItem.SetActive(true);
                 }
                 fpListHeaderPanel.Controls.Add(menuItem);
+            }
+
+            if(isShowingDeleted)
+            {
+                HeaderModel listsetting = headerList.Where(n => n.ListGroup == "Deleted").FirstOrDefault();
+                if (listsetting != null)
+                {
+                    ListMenuItem menuItem = new ListMenuItem(this);
+                    menuItem.MenuItemName(listsetting.ListGroup);
+                    menuItem.MenuItemCount(listsetting.Count.ToString());
+                    if (listsetting.ListGroup == activeGroup)
+                    {
+                        menuItem.SetActive(true);
+                    }
+                    fpListHeaderPanel.Controls.Add(menuItem);
+                }
             }
         }
 
@@ -409,28 +464,28 @@ namespace ListUI
         private void CheckButtons()
         {
             pbSelectAnime.Enabled = (activeListType == "Anime") ? false : true;
-            pAnime.BackColor = (activeListType == "Anime") ? Color.LightSteelBlue : SystemColors.ActiveCaption;
-            pbIndicatorA.BackColor = (activeListType == "Anime") ? Color.White : SystemColors.ActiveCaption;
+            pAnime.BackColor = (activeListType == "Anime") ? Color.FromArgb(255, 15, 76, 117) : Color.FromArgb(255, 50, 130, 184);
+            pbIndicatorA.BackColor = (activeListType == "Anime") ? Color.White : Color.FromArgb(255, 50, 130, 184);
 
             pbSelectSeries.Enabled = (activeListType == "Series") ? false : true;
-            pSeries.BackColor = (activeListType == "Series") ? Color.LightSteelBlue : SystemColors.ActiveCaption;
-            pbIndicatorS.BackColor = (activeListType == "Series") ? Color.White : SystemColors.ActiveCaption;
+            pSeries.BackColor = (activeListType == "Series") ? Color.FromArgb(255, 15, 76, 117) : Color.FromArgb(255, 50, 130, 184);
+            pbIndicatorS.BackColor = (activeListType == "Series") ? Color.White : Color.FromArgb(255, 50, 130, 184);
 
             pbSelectGame.Enabled = (activeListType == "Game") ? false : true;
-            pGames.BackColor = (activeListType == "Game") ? Color.LightSteelBlue : SystemColors.ActiveCaption;
-            pbIndicatorG.BackColor = (activeListType == "Game") ? Color.White : SystemColors.ActiveCaption;
+            pGames.BackColor = (activeListType == "Game") ? Color.FromArgb(255, 15, 76, 117) : Color.FromArgb(255, 50, 130, 184);
+            pbIndicatorG.BackColor = (activeListType == "Game") ? Color.White : Color.FromArgb(255, 50, 130, 184);
 
             pbFirstPage.Enabled = (currentPage == 1) ? false : true;
-            pbFirstPage.Image = (currentPage == 1) ? Resources.first_page_inactive : Resources.first_page;
+            pbFirstPage.Image = (currentPage == 1) ? Resources.page_first_inactive : Resources.page_first;
 
             pbPreviousPage.Enabled = (currentPage == 1) ? false : true;
-            pbPreviousPage.Image = (currentPage == 1) ? Resources.prev_page_inactive : Resources.prev_page;
+            pbPreviousPage.Image = (currentPage == 1) ? Resources.page_prev_inactive : Resources.page_prev;
 
             pbNextPage.Enabled = (currentPage == pageCount) ? false : true;
-            pbNextPage.Image = (currentPage == pageCount) ? Resources.next_page_inactive : Resources.next_page;
+            pbNextPage.Image = (currentPage == pageCount) ? Resources.page_next_inactive : Resources.page_next;
 
             pbLastPage.Enabled = (currentPage == pageCount) ? false : true;
-            pbLastPage.Image = (currentPage == pageCount) ? Resources.last_page_inactive : Resources.last_page;
+            pbLastPage.Image = (currentPage == pageCount) ? Resources.page_last_inactive : Resources.page_last;
 
         }
 
@@ -469,7 +524,7 @@ namespace ListUI
 
         /* Wireup request*/
 
-        public void WireUpRequest(string listGroup)
+        public void WireUpRequest(string listGroup, bool refreshMenu)
         {
             //fpListItemPanel.VerticalScroll.Value = 0;
             fpListItemPanel.AutoScrollPosition = new Point(0, 0);
@@ -479,7 +534,7 @@ namespace ListUI
                 currentPage = 1;
             }
 
-            WireUpLibraryForm(true, false);
+            WireUpLibraryForm(refreshMenu, false);
         }
 
         public void WireUpRequest(ItemModel itemModel)
@@ -716,7 +771,7 @@ namespace ListUI
         private void pbSorting_Click(object sender, EventArgs e)
         {
             isAscending = !isAscending;
-            pbOrderBy.Image = isAscending ? Resources.sort_asc : Resources.sort_desc;
+            pbOrderBy.Image = isAscending ? Resources.menu_sort_asc : Resources.menu_sort_desc;
 
             WireUpLibraryForm(false, false);
         }
@@ -738,14 +793,14 @@ namespace ListUI
                 isAscending = false;
                 rbScore.ForeColor = Color.White;
                 rbTitle.ForeColor = SystemColors.ControlDarkDark;
-                pbOrderBy.Image = Resources.sort_desc;
+                pbOrderBy.Image = Resources.menu_sort_desc;
             }
             if (rbTitle.Checked)
             {
                 isAscending = true;
                 rbTitle.ForeColor = Color.White;
                 rbScore.ForeColor = SystemColors.ControlDarkDark;
-                pbOrderBy.Image = Resources.sort_asc;
+                pbOrderBy.Image = Resources.menu_sort_asc;
             }
             WireUpLibraryForm(false, false);
         }

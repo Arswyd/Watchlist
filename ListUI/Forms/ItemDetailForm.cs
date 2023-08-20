@@ -18,6 +18,7 @@ namespace ListUI.Forms
         List<HeaderModel> listHeaders;
         bool newitem = true;
         bool userclosing = true;
+        bool hasListGroupChanged = false;
         bool favouriteChanged = false;
         string listType;
         enum ChangeType { nochange, update, delete}
@@ -38,19 +39,19 @@ namespace ListUI.Forms
             {
                 currentItem = new AnimeModel();
                 currentItem.ID = SqliteDataAccess.GetLastAnimeID() + 1;
-                listHeaders = SqliteDataAccess.LoadAnimeListHeaders();
+                listHeaders = SqliteDataAccess.LoadAnimeListHeaders(false);
             }
             else if (listType == "Game")
             {
                 currentItem = new GameModel();
                 currentItem.ID = SqliteDataAccess.GetLastGameID() + 1;
-                listHeaders = SqliteDataAccess.LoadGameListHeaders();
+                listHeaders = SqliteDataAccess.LoadGameListHeaders(false);
             }
             else if (listType == "Series")
             {
                 currentItem = new SeriesModel();
                 currentItem.ID = SqliteDataAccess.GetLastSeriesID() + 1;
-                listHeaders = SqliteDataAccess.LoadSeriesListHeaders();
+                listHeaders = SqliteDataAccess.LoadSeriesListHeaders(false);
             }
 
             WireUpFrom();
@@ -68,11 +69,11 @@ namespace ListUI.Forms
             listItem = _listItem;
 
             if (listType == "Anime")
-                listHeaders = SqliteDataAccess.LoadAnimeListHeaders();
+                listHeaders = SqliteDataAccess.LoadAnimeListHeaders(false);
             else if (listType == "Game")
-                listHeaders = SqliteDataAccess.LoadGameListHeaders();
+                listHeaders = SqliteDataAccess.LoadGameListHeaders(false);
             else if (listType == "Series")
-                listHeaders = SqliteDataAccess.LoadSeriesListHeaders();
+                listHeaders = SqliteDataAccess.LoadSeriesListHeaders(false);
 
             WireUpFrom();
             LoadForm(currentItem);
@@ -151,6 +152,12 @@ namespace ListUI.Forms
                 cbSeason_Platform.Items.Add("Ubisoft");
                 cbSeason_Platform.Items.Add("");
             }
+
+            if (newitem || currentItem.ListGroup == "Deleted")
+            {
+                pbDelete.Enabled = false;
+                pbDelete.Visible = false;
+            }
         }
 
         private void LoadForm(ItemModel item)
@@ -160,7 +167,7 @@ namespace ListUI.Forms
             txbPictureUrl.Text = item.PictureUrl;
             if (!File.Exists(item.PictureDir))
             {
-                pbPicture.Image = Properties.Resources.nocover;
+                pbPicture.Image = Properties.Resources.item_nocover;
             }
             else
             {
@@ -170,7 +177,7 @@ namespace ListUI.Forms
                 }
             }
             txbScore.Text = item.Score.ToString();
-            pbFavourite.Image = (item.Favourite) ? Properties.Resources.heart : Properties.Resources.empty;
+            pbFavourite.Image = (item.Favourite) ? Properties.Resources.item_heart : Properties.Resources.item_heart_inactive;
             cbListGroup.Text = item.ListGroup;
             txbNotes.Text = item.Notes;
             txbYear.Text = item.Year.ToString();
@@ -202,13 +209,13 @@ namespace ListUI.Forms
             if (currentItem.Favourite == false)
             {
                 currentItem.Favourite = true;
-                pbFavourite.Image = Properties.Resources.heart;
+                pbFavourite.Image = Properties.Resources.item_heart;
                 favouriteChanged = true;
             }
             else
             {
                 currentItem.Favourite = false;
-                pbFavourite.Image = Properties.Resources.empty;
+                pbFavourite.Image = Properties.Resources.item_heart_inactive;
                 favouriteChanged = true;
             }
         }
@@ -216,6 +223,7 @@ namespace ListUI.Forms
         private void savePicture_Click_1(object sender, EventArgs e)
         {
             userclosing = false;
+            hasListGroupChanged = CheckIfListGroupChanged();
 
             if (ValidateForm())
             {
@@ -234,7 +242,6 @@ namespace ListUI.Forms
                         else
                         {
                             SqliteDataAccess.SaveAnime(animeModel);
-                            animeModel.ID = SqliteDataAccess.GetLastAnimeID();
                         }
                     }
                     else if (currentItem is SeriesModel seriesModel)
@@ -248,7 +255,6 @@ namespace ListUI.Forms
                         else
                         {
                             SqliteDataAccess.SaveSeries(seriesModel);
-                            seriesModel.ID = SqliteDataAccess.GetLastSeriesID();
                         }
                     }
                     else if (currentItem is GameModel gameModel)
@@ -262,11 +268,8 @@ namespace ListUI.Forms
                         else
                         {
                             SqliteDataAccess.SaveGame(gameModel);
-                            gameModel.ID = SqliteDataAccess.GetLastGameID();
                         }
                     }
-
-                    UpdatePicture();
 
                     callingForm.WireUpRequest(currentItem);
                 }
@@ -284,8 +287,6 @@ namespace ListUI.Forms
                     {
                         SqliteDataAccess.UpdateGame(gameModel);
                     }
-
-                    UpdatePicture();
 
                     listItem.AddItem(currentItem);
                 }
@@ -524,58 +525,12 @@ namespace ListUI.Forms
             }
         }
 
-        private void UpdatePicture()
-        {
-            if (pictureChange == ChangeType.update)
-            {
-                //DeleteItemPicture();
-                SaveItemPicture();
-            }
-            else if (pictureChange == ChangeType.delete)
-            {
-                DeleteItemPicture();
-            }
-        }
-
-        private void SaveItemPicture()
-        {
-            try
-            {
-                if (currentItem.PicFormat == 0)
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        client.DownloadFile(currentItem.PictureUrl, currentItem.PictureDir);
-                    }
-                }
-                else
-                {
-                    using (Bitmap bitmap = new Bitmap(pbPicture.Width, pbPicture.Height, PixelFormat.Format32bppRgb))
-                    {
-                        pbPicture.DrawToBitmap(bitmap, new Rectangle(0, 0, 160, 220));
-                        bitmap.Save(currentItem.PictureDir, ImageFormat.Png);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Picture Url does not exist!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-        }
-
-        private void DeleteItemPicture()
-        {
-            if (File.Exists(currentItem.PictureDir))
-            {
-                File.Delete(currentItem.PictureDir);
-            }
-        }
-
         private void deletePicture_Click(object sender, EventArgs e)
         {
             userclosing = false;
+            hasListGroupChanged = true;
 
-            if(MessageBox.Show("Do you want to delete this?","Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Do you want to delete this?","Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 if (currentItem is AnimeModel animeModel)
                 {
@@ -597,7 +552,7 @@ namespace ListUI.Forms
 
         private void ItemDetailForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (newitem == false && userclosing == true)
+            if (userclosing && !newitem)
             {
                 if (CheckIfChanged())
                 {
@@ -607,9 +562,9 @@ namespace ListUI.Forms
                     }
                 }
             }
-            else if (userclosing == false)
+            else if (!userclosing && hasListGroupChanged)
             {
-                //callingForm.WireUpLibraryForm(true, false);
+                callingForm.WireUpLibraryForm(true, false);
             }
         }
 
@@ -714,6 +669,18 @@ namespace ListUI.Forms
             return output;
         }
 
+        private bool CheckIfListGroupChanged()
+        {
+            bool output = false;
+
+            if (currentItem.ListGroup != cbListGroup.Text)
+            {
+                output = true;
+            }
+
+            return output;
+        }
+
         private void pbFavourite_MouseEnter(object sender, EventArgs e)
         {
             IncreasePic(pbFavourite);
@@ -802,7 +769,7 @@ namespace ListUI.Forms
 
         private void pbDeletePic_Click(object sender, EventArgs e)
         {
-            pbPicture.Image = Properties.Resources.nocover;
+            pbPicture.Image = Properties.Resources.item_nocover;
             txbPictureUrl.Text = "";
             pictureChange = ChangeType.delete;
         }

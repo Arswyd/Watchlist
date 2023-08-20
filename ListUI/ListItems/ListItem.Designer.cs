@@ -135,7 +135,7 @@
             // 
             this.pbDetails.BackColor = System.Drawing.Color.Black;
             this.pbDetails.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbDetails.Image = global::ListUI.Properties.Resources.menu;
+            this.pbDetails.Image = global::ListUI.Properties.Resources.menu_item;
             this.pbDetails.Location = new System.Drawing.Point(54, 3);
             this.pbDetails.Name = "pbDetails";
             this.pbDetails.Size = new System.Drawing.Size(50, 50);
@@ -149,7 +149,7 @@
             // pbNotes
             // 
             this.pbNotes.BackColor = System.Drawing.Color.Transparent;
-            this.pbNotes.Image = global::ListUI.Properties.Resources.note;
+            this.pbNotes.Image = global::ListUI.Properties.Resources.item_note;
             this.pbNotes.Location = new System.Drawing.Point(22, 2);
             this.pbNotes.Name = "pbNotes";
             this.pbNotes.Size = new System.Drawing.Size(20, 20);
@@ -161,7 +161,7 @@
             // pbCheck
             // 
             this.pbCheck.BackColor = System.Drawing.Color.Transparent;
-            this.pbCheck.Image = global::ListUI.Properties.Resources.check;
+            this.pbCheck.Image = global::ListUI.Properties.Resources.item_check;
             this.pbCheck.Location = new System.Drawing.Point(2, 2);
             this.pbCheck.Name = "pbCheck";
             this.pbCheck.Size = new System.Drawing.Size(20, 20);

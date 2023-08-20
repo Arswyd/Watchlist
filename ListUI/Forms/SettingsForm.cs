@@ -16,6 +16,8 @@ namespace ListUI.Forms
         List<HeaderModel> headers;
         HeaderModel selectedHeader;
         LibraryUI libraryUI;
+        bool isPrimaryClient;
+        bool isShowingDeleted;
 
         public SettingsForm(LibraryUI _libraryUI, string listType)
         {
@@ -23,7 +25,11 @@ namespace ListUI.Forms
 
             libraryUI = _libraryUI;
 
-            chIsPrimaryClient.Checked = libraryUI.GetIsPrimaryClient();
+            isPrimaryClient = libraryUI.GetIsPrimaryClient();
+            chIsPrimaryClient.Checked = isPrimaryClient;
+
+            isShowingDeleted = libraryUI.GetIsShowingDeleted();
+            chShowDeleted.Checked = isShowingDeleted;
 
             WireUpDropDown();
 
@@ -52,11 +58,11 @@ namespace ListUI.Forms
         private void LoadHeaderListView()
         {
             if (cbListType.SelectedItem.ToString() == "Anime")
-                headers = SqliteDataAccess.LoadAnimeListHeaders();
+                headers = SqliteDataAccess.LoadAnimeListHeaders(false);
             else if (cbListType.SelectedItem.ToString() == "Series")
-                headers = SqliteDataAccess.LoadSeriesListHeaders();
+                headers = SqliteDataAccess.LoadSeriesListHeaders(false);
             else if (cbListType.SelectedItem.ToString() == "Game")
-                headers = SqliteDataAccess.LoadGameListHeaders();
+                headers = SqliteDataAccess.LoadGameListHeaders(false);
 
             lvHeaders.Items.Clear();
 
@@ -104,36 +110,36 @@ namespace ListUI.Forms
 
         private void bImportA_Click(object sender, EventArgs e)
         {
-            var path = GetFilePath();
+            var path = GetFilePath(false);
             if (!String.IsNullOrWhiteSpace(path))
             {
-                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToAnimeModel(), SqliteDataAccess.CheckIfAnimeExists());
+                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToAnimeModel());
             }
         }
 
         private void bImportS_Click(object sender, EventArgs e)
         {
-            var path = GetFilePath();
+            var path = GetFilePath(false);
             if (!String.IsNullOrWhiteSpace(path))
             {
-                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToSeriesModel(), SqliteDataAccess.CheckIfSeriesExists());
+                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToSeriesModel());
             }
         }
 
         private void bImportG_Click(object sender, EventArgs e)
         {
-            var path = GetFilePath();
+            var path = GetFilePath(false);
             if (!String.IsNullOrWhiteSpace(path))
             {
-                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToGameModel(), SqliteDataAccess.CheckIfGameExists());
+                ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToGameModel());
             }
         }
 
-        private static string GetFilePath()
+        private static string GetFilePath(bool isSyncing)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = @"..\..\..\ListLibrary\ListBackup\"; // "d:\\";
+                openFileDialog.InitialDirectory = isSyncing ? @"..\..\..\ListLibrary\ListBackup\SyncFiles\" : @"..\..\..\ListLibrary\ListBackup\"; // "d:\\";
                 openFileDialog.Title = "Select file to import";
                 openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
                 openFileDialog.RestoreDirectory = true;
@@ -150,74 +156,24 @@ namespace ListUI.Forms
             }
         }
 
-        private void ImportItemsToDatabase(List<ItemModel> items, bool hasRecord)
+        private void ImportItemsToDatabase(List<ItemModel> items)
         {
             progressBar1.Value = 0;
             progressBar1.Maximum = items.Count;
 
-            int id = 1;
-
             foreach (ItemModel item in items.OrderBy(x => x.Title))
             {
-                if (!hasRecord)
-                {
-                    item.ID = id;
-                    id++;
-                }
-
                 if (item is AnimeModel animeModel)
-                { 
-                    if (hasRecord && SqliteDataAccess.CheckIfAnimeExists(animeModel))
-                        SqliteDataAccess.UpdateAnime(animeModel);
-                    else
-                    {
-                        animeModel.PicFormat = 0;
-                        SqliteDataAccess.SaveAnime(animeModel);
-                        try
-                        {
-                            using (WebClient client = new WebClient())
-                            {
-                                client.DownloadFile(animeModel.PictureUrl, animeModel.PictureDir);
-                            }
-                        }
-                        catch { }
-                    }
+                {
+                    SqliteDataAccess.SyncAnime(animeModel);
                 }
                 else if (item is SeriesModel seriesModel)
                 {
-                    if (hasRecord && SqliteDataAccess.CheckIfSeriesExists(seriesModel))
-                        SqliteDataAccess.UpdateSeries(seriesModel);
-                    else
-                    {
-                        seriesModel.PicFormat= 0;
-                        SqliteDataAccess.SaveSeries(seriesModel);
-                        try
-                        {
-                            using (WebClient client = new WebClient())
-                            {
-                                client.DownloadFile(seriesModel.PictureUrl, seriesModel.PictureDir);
-                            }
-                        }
-                        catch { }
-                    }
+                    SqliteDataAccess.SyncSeries(seriesModel);
                 }
                 else if (item is GameModel gameModel)
                 {
-                    if (hasRecord && SqliteDataAccess.CheckIfGameExists(gameModel))
-                        SqliteDataAccess.UpdateGame(gameModel);
-                    else
-                    {
-                        gameModel.PicFormat= 0;
-                        SqliteDataAccess.SaveGame(gameModel);
-                        try
-                        {
-                            using (WebClient client = new WebClient())
-                            {
-                                client.DownloadFile(gameModel.PictureUrl, gameModel.PictureDir);
-                            }
-                        }
-                        catch { }
-                    }
+                    SqliteDataAccess.SyncGame(gameModel);
                 }
 
                 progressBar1.Increment(1);
@@ -481,11 +437,71 @@ namespace ListUI.Forms
         {
             SqliteDataAccess.ChangeClientType(chIsPrimaryClient.Checked);
             libraryUI.SetIsPrimaryClient(chIsPrimaryClient.Checked);
+            isPrimaryClient = chIsPrimaryClient.Checked;
         }
 
         private void checkBox2_CheckStateChanged(object sender, EventArgs e)
         {
+            SqliteDataAccess.ChangeShowingDeleted(chShowDeleted.Checked);
+            libraryUI.SetIsShowingDeleted(chShowDeleted.Checked);
+            isShowingDeleted = chShowDeleted.Checked;
+        }
 
+        private void bDownloadPicA_Click(object sender, EventArgs e)
+        {
+            if (isPrimaryClient)
+            {
+                DataImportExportProcessor.ExportAnime(true);
+                MessageBox.Show("Export completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                var path = GetFilePath(true);
+                if (!String.IsNullOrWhiteSpace(path))
+                {
+                    ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToAnimeModel());
+                }
+            }
+
+            SqliteDataAccess.SetAnimeSyncDate();
+        }
+
+        private void bDownloadPicS_Click(object sender, EventArgs e)
+        {
+            if (isPrimaryClient)
+            {
+                DataImportExportProcessor.ExportSeries(true);
+                MessageBox.Show("Export completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                var path = GetFilePath(true);
+                if (!String.IsNullOrWhiteSpace(path))
+                {
+                    ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToSeriesModel());
+                }
+            }
+
+            SqliteDataAccess.SetSeriesSyncDate();
+        }
+
+        private void bDownloadPicG_Click(object sender, EventArgs e)
+        {
+            if (isPrimaryClient)
+            {
+                DataImportExportProcessor.ExportGame(true);
+                MessageBox.Show("Export completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                var path = GetFilePath(false);
+                if (!String.IsNullOrWhiteSpace(path))
+                {
+                    ImportItemsToDatabase(DataImportExportProcessor.LoadFile(path).ConvertToGameModel());
+                }
+            }
+
+            SqliteDataAccess.SetGameSyncDate();
         }
     }
 }
