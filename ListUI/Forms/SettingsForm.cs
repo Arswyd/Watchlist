@@ -161,6 +161,8 @@ namespace ListUI.Forms
             progressBar1.Value = 0;
             progressBar1.Maximum = items.Count;
 
+            List<string> lines = new List<string>();
+
             foreach (ItemModel item in items.OrderBy(x => x.Title))
             {
                 if (item is AnimeModel animeModel)
@@ -176,8 +178,13 @@ namespace ListUI.Forms
                     SqliteDataAccess.SyncGame(gameModel);
                 }
 
+                lines.Add($"{item.ID};{item.Title};{item.ListGroup};{item.ModDate}");
+
                 progressBar1.Increment(1);
             }
+
+            string localFilePath = @"..\..\..\ListLibrary\ListBackup\LogFiles\" + DateTime.Now.ToString("yyyy_MM_dd") + "_Log.csv";
+            File.AppendAllLines(localFilePath, lines);
 
             MessageBox.Show("Import completed!", "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
