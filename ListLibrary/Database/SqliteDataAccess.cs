@@ -462,7 +462,7 @@ namespace ListLibrary.Database
         public static void SaveGame(GameModel game)
         {
             string sSQL = "INSERT INTO Games (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, Owned, Lenght, ModDate) " +
-                          "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @Owned, @Lenght, @ModDate";
+                          "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @Owned, @Lenght, @ModDate)";
 
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -625,7 +625,7 @@ namespace ListLibrary.Database
         public static void SaveSeries(SeriesModel series)
         {
             string sSQL = "INSERT INTO Series (Title, Url, PictureUrl, PicFormat, Score, Year, Platform, Favourite, Notes, ListGroup, CurrentSe, TotalEp, WatchedEp, FinishedRunning, ModDate) " +
-                          "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning, @ModDate";
+                          "VALUES (@Title, @Url, @PictureUrl, @PicFormat, @Score, @Year, @Platform, @Favourite, @Notes, @ListGroup, @CurrentSe, @TotalEp, @WatchedEp, @FinishedRunning, @ModDate)";
 
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {

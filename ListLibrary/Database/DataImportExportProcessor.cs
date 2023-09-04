@@ -191,7 +191,7 @@ namespace ListLibrary.Database
             else
             {
                 game = SqliteDataAccess.LoadGameGroup("SELECT G.ID, G.Title, G.Url, G.PictureUrl, G.PicFormat, G.Score, G.Year, G.Favourite, G.Notes, " +
-                  "G.ListGroup, G.Platform, G.Owned, G.ModNum FROM Games AS G");
+                  "G.ListGroup, G.Platform, G.Owned, G.ModDate FROM Games AS G");
             }
 
             List<string> lines = new List<string>();
